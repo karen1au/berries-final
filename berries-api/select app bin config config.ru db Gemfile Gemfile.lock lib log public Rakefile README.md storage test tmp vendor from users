@@ -1,0 +1,25 @@
+                 List of relations
+ Schema |         Name         |   Type   |  Owner  
+--------+----------------------+----------+---------
+ public | ar_internal_metadata | table    | vagrant
+ public | chat_users           | table    | vagrant
+ public | chat_users_id_seq    | sequence | vagrant
+ public | chats                | table    | vagrant
+ public | chats_id_seq         | sequence | vagrant
+ public | connections          | table    | vagrant
+ public | connections_id_seq   | sequence | vagrant
+ public | genres               | table    | vagrant
+ public | genres_id_seq        | sequence | vagrant
+ public | instruments          | table    | vagrant
+ public | instruments_id_seq   | sequence | vagrant
+ public | messages             | table    | vagrant
+ public | messages_id_seq      | sequence | vagrant
+ public | schema_migrations    | table    | vagrant
+ public | user_exps            | table    | vagrant
+ public | user_exps_id_seq     | sequence | vagrant
+ public | user_genres          | table    | vagrant
+ public | user_genres_id_seq   | sequence | vagrant
+ public | users                | table    | vagrant
+ public | users_id_seq         | sequence | vagrant
+(20 rows)
+
