@@ -64,6 +64,22 @@ Genre.create!(name: 'funk')
 Genre.create!(name: 'soul')
 Genre.create!(name: 'dance')
 
+UserGenre.create!(genre_id: 1, user_id: 1)
+UserGenre.create!(genre_id: 1, user_id: 2)
+UserGenre.create!(genre_id: 2, user_id: 1)
+UserGenre.create!(genre_id: 3, user_id: 3)
+UserGenre.create!(genre_id: 4, user_id: 3)
+UserGenre.create!(genre_id: 2, user_id: 4)
+UserGenre.create!(genre_id: 5, user_id: 5)
+UserGenre.create!(genre_id: 5, user_id: 6)
+
+
+
+
+
+
+
+
 
 
 
