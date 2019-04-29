@@ -11,7 +11,6 @@ class SearchContainer extends Component {
         <GenreSearch /> 
         <InstrumentSearch />
         <CommitmentSearch handleSelection={this.props.handleSelection} />
-        <button type="submit" onClick={this.queryResults}>Submit</button>
       </div>
     )
   }

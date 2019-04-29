@@ -4,5 +4,10 @@ module Api::V1
       @users = User.where(location: 'Toronto')
       render json: @users
     end
+
+    def search
+      @users = User.where(commitment: params[:q])
+      render json: @users
+    end
   end
 end

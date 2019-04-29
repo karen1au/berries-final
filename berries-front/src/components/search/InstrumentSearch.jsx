@@ -24,7 +24,7 @@ class InstrumentSearch extends Component {
   }
 
   handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
+    this.setState({ selectedOption }, () => { this.props.handleSelection('instrument', selectedOption) });
     console.log(`Option selected:`, selectedOption);
   }
 

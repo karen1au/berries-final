@@ -10,6 +10,7 @@ class UsersContainer extends Component {
             <div key={user.id}>
               <h4>{user.name}</h4>
               <h4>{user.email}</h4>
+              <h4>{user.commitment}</h4>
             </div>
           )
         })}

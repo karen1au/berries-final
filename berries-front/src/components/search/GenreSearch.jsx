@@ -25,7 +25,7 @@ class GenreSearch extends Component {
   }
 
   handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
+    this.setState({ selectedOption }, () => { this.props.handleSelection('genre', selectedOption) });
     console.log(`Option selected:`, selectedOption);
   }
 
