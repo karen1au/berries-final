@@ -14,7 +14,7 @@ require 'faker'
     password: Faker::Number.number(10),
     avatar: Faker::Avatar.image,
     band: true,
-    location: Faker::Address.city,
+    location: 'Toronto',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus'
   )
@@ -28,6 +28,19 @@ end
     avatar: Faker::Avatar.image,
     band: false,
     location: 'Toronto',
+    commitment: 'ongoing jam',
+    youtube: 'SmartBooksMedia'
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: Faker::Number.number(10),
+    avatar: Faker::Avatar.image,
+    band: false,
+    location: 'Montreal',
     commitment: 'ongoing jam',
     youtube: 'SmartBooksMedia'
   )

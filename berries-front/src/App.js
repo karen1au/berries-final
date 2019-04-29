@@ -12,7 +12,8 @@ class App extends Component {
       users: [],
       currentCommitment: '',
       currentInstrument: '',
-      currentGenre: ''
+      currentGenre: '',
+      currentExperience: ''
     } 
   }
 
@@ -34,11 +35,17 @@ class App extends Component {
       this.setState({ currentInstrument : value})
     } else if (key === 'genre') {
       this.setState({ currentGenre : value })
+    } else if (key === 'experience') {
+      this.setState({ currentExperience : value })
     }
   }
 
   queryResults = () => {
-    fetch('http://localhost:3000/api/v1/users/search?q=' + this.state.currentCommitment.value)
+    fetch(`
+      http://localhost:3000/api/v1/users/search?
+      q1=${this.state.currentCommitment.value}
+      &q2=${this.state.currentGenre.value}
+      `)
     .then(res => res.json())
     .then(user => {
       console.log(user)
