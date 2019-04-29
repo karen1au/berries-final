@@ -16,7 +16,9 @@ require 'faker'
     band: true,
     location: Faker::Address.city,
     commitment: 'casual jam',
-    soundcloud: 'hoodasaurus'
+    soundcloud: 'hoodasaurus',
+    lat: 43.089558,
+    lng: -79.084944
   )
 end
 
@@ -29,7 +31,9 @@ end
     band: false,
     location: 'Toronto',
     commitment: 'ongoing jam',
-    youtube: 'SmartBooksMedia'
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
   )
 end
 
