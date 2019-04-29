@@ -17,7 +17,7 @@ class CommitmentSearch extends Component {
   }
 
   handleChange = (selectedOption) => {
-    this.setState({ selectedOption }, () => { this.props.handleSelection(selectedOption) });
+    this.setState({ selectedOption }, () => { this.props.handleSelection('commitment', selectedOption) });
     console.log('Option selected:', selectedOption);
   }
 

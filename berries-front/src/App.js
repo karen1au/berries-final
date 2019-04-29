@@ -9,7 +9,9 @@ class App extends Component {
     super();
     this.state = {
       users: [],
-      currentCommitment: 'test commitment'
+      currentCommitment: '',
+      currentInstrument: '',
+      currentGenre: ''
     } 
   }
 
@@ -24,8 +26,10 @@ class App extends Component {
     })
   }
 
-  handleSelection = (selection) => {
-    this.setState({currentCommitment: selection})
+  handleSelection = (key, value) => {
+    if (key === 'commitment') {
+      this.setState({ currentCommitment : value }, () => {console.log(this.state.currentCommitment)})
+    }
   }
 
   render() {
