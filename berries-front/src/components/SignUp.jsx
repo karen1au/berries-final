@@ -58,12 +58,7 @@ class SignUp extends Component{
         </Form>
         </Grid.Column>
         <Grid.Column>
-        <Form >
-        <Header size='large'>Login</Header>
-          <Form.Input icon='user' iconPosition='left' label='Email' placeholder='Email' name='email' onChange={this.onChange} required/>
-          <Form.Input icon='lock' iconPosition='left' label='Password' type='password' name='password' onChange={this.onChange} required/>
-          <Button onClick={this.onClick}>Submit</Button>
-        </Form>
+          <Button positive as="a" href={"/"}>Login</Button>
         </Grid.Column>
         </Grid.Row>
         {/* {this.state.redirect && <Redirect to={"/"} />} */}

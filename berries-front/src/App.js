@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route, Switch} from "react-router-dom";
 import './App.css';
-import UsersContainer from './components/UsersContainer'
-import SignUp from './components/SignUp';
+import LogIn from './components/LogIn';
+import Error from './components/Error'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-          <h2>Welcome to Berries</h2>
-          <SignUp />
-          <UsersContainer />
-      </div>
+      <BrowserRouter>
+        <div>
+        <Switch>
+          <Route path="/" component={Home} exact/>
+          <Route path="/login" component={LogIn}/>
+          <Route component={Error}/>
+        </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
