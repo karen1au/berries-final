@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Select from 'react-select'
 
 const options = [
+  { value: null, label: 'No Option' },  
   { value: '0-2', label: '0-2' },
   { value: '2-4', label: '2-4' },
   { value: '4-6', label: '4-6' },

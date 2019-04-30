@@ -12,8 +12,8 @@ class InstrumentSearch extends Component {
     .then(res => res.json())
     .then(instrument => {
       console.log(instrument)
-      const options = instrument.map(i => {
-        const map = {}
+      const options = instrument.map(i => { 
+      const map = { value: null, label: 'No Option' }
         map['value'] = i.name, map['label'] = i.name
         return map
       })
