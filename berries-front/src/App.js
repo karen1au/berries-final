@@ -3,17 +3,18 @@ import logo from './logo.svg';
 import './App.css';
 import UsersContainer from './components/UsersContainer'
 import SearchContainer from './components/search/SearchContainer'
-import $ from 'jquery'
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       users: [],
-      currentCommitment: '',
-      currentInstrument: '',
-      currentGenre: '',
-      currentExperience: ''
+      parameters: {
+        currentCommitment: null,
+        currentInstrument: null,
+        currentGenre: null,
+        currentExperience: null
+      }
     } 
   }
 
@@ -30,18 +31,43 @@ class App extends Component {
 
   handleSelection = (key, value) => {
     if (key === 'commitment') {
-      this.setState({ currentCommitment : value }, () => {console.log(this.state.currentCommitment)})
+      this.setState({ parameters: {...this.state.parameters, currentCommitment: value} })
     } else if (key === 'instrument') {
-      this.setState({ currentInstrument : value})
+      this.setState({ parameters: {...this.state.parameters, currentInstrument: value} })
     } else if (key === 'genre') {
-      this.setState({ currentGenre : value })
+      this.setState({ parameters: {...this.state.parameters, currentGenre: value} })
     } else if (key === 'experience') {
-      this.setState({ currentExperience : value })
+      this.setState({ parameters: {...this.state.parameters, currentExperience: value} })
     }
   }
 
+  createURL = (object = this.state.parameters) => {
+    console.log(object)
+    let i = 1;
+    let fullURL = 'http://localhost:3000/api/v1/users/search?'
+    for (let prop in object) {
+      console.log('prop', prop);
+      console.log('value', object[prop].value)
+      if (object[prop] && i === 1) {
+        fullURL += `q${i}=${object[prop].value}`
+        i += 1 
+        console.log('prop', prop);
+      console.log('value', object[prop].value)
+      } else if (object[prop]) {
+        fullURL += `&q${i}=${object[prop].value}`
+        i += 1 
+        console.log('prop', prop);
+      console.log('value', object[prop].value)
+      }
+    }
+    fullURL = fullURL.replace(/ /g, '%20')
+    console.log(fullURL)
+    return fullURL;
+  }
+
   queryResults = () => {
-    fetch('http://localhost:3000/api/v1/users/search?q1=' + this.state.currentCommitment.value + '&q2=' + this.state.currentGenre.value + '&q3=' + this.state.currentInstrument.value + '&q4=' + this.state.currentExperience.value)
+    // fetch('http://localhost:3000/api/v1/users/search?q1=' + this.state.currentCommitment.value + '&q2=' + this.state.currentGenre.value + '&q3=' + this.state.currentInstrument.value + '&q4=' + this.state.currentExperience.value)
+    fetch(this.createURL())
     .then(res => res.json())
     .then(user => {
       console.log(user)
