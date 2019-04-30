@@ -1,24 +1,20 @@
 module Api::V1
-  class UsersController < ApplicationController
+  class UsersController < ApiController #ApplicationController
+    before_action :require_login, except: [:create]
+    
     def index
       @users = User.where(location: 'Toronto')
       render json: @users
     end
-
-    # def new
-    #   @user = User.new
-    # end
   
     def create  
       @user = User.new(user_params)
-      byebug
       if @user.save
         # geocode_user(@user)
         puts "user created!"
-        render json: {status: 200}
+        render json: { token: @user.auth_token}
       else
         puts @user.errors.full_messages
-        # render :new
       end
     end
 

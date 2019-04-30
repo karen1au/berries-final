@@ -12,21 +12,23 @@ class LogIn extends Component{
       [event.target.name]:event.target.value
     })
   }
-  onClick = (event) =>{
-    const options = {
-      method: 'post',
-      credentials: 'include',
-      headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-      },
-      body: JSON.stringify({user: this.state})
-    }
-    fetch(`http://localhost:3000/api/v1/auth`,options)
-    .then(resp=> {
-      console.log(this.state)
-      resp.json()})
-  }
+  // onClick = (event) =>{
+  //   const options = {
+  //     method: 'post',
+  //     headers: {
+  //       'content-type': 'application/json',
+  //       'accept': 'application/json'
+  //     },
+  //     body: JSON.stringify(this.state)
+  //   }
+  //   fetch(`http://localhost:3000/api/v1/login`,options)
+  //   .then(resp=> {
+  //     console.log(resp.jwt)
+  //     localStorage.setItem("jwt",resp.jwt)
+  //     resp.json()})
+    
+  
+  // }
 
 
   render(){
@@ -36,7 +38,7 @@ class LogIn extends Component{
           <Header size='large'>Login</Header>
           <Form.Input icon='user' iconPosition='left' label='Email' placeholder='Email' name='email' onChange={this.onChange} required/>
           <Form.Input icon='lock' iconPosition='left' label='Password' type='password' name='password' onChange={this.onChange} required/>
-          <Button onClick={()=>this.props.login({auth: this.state})}>Login</Button>
+          <Button onClick={this.onClick}>Login</Button>
         </Form>
         <Button positive as="a" href={"/"}>Not a berry yet? Sign Up</Button>
       </Container>
