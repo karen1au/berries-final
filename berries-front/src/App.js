@@ -46,18 +46,15 @@ class App extends Component {
     let i = 1;
     let fullURL = 'http://localhost:3000/api/v1/users/search?'
     for (let prop in object) {
-      console.log('prop', prop);
-      console.log('value', object[prop].value)
+
       if (object[prop] && i === 1) {
-        fullURL += `q${i}=${object[prop].value}`
+        fullURL += `${prop}=${object[prop].value}`
         i += 1 
-        console.log('prop', prop);
-      console.log('value', object[prop].value)
+   
       } else if (object[prop]) {
-        fullURL += `&q${i}=${object[prop].value}`
+        fullURL += `&${prop}=${object[prop].value}`
         i += 1 
-        console.log('prop', prop);
-      console.log('value', object[prop].value)
+
       }
     }
     fullURL = fullURL.replace(/ /g, '%20')
