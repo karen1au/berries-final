@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-
+import Auth from '../services/Auth'
 class UsersContainer extends Component {
 
   render() {
     return (
       <div>
+
         <table>
           <tr>
             <th>Name</th>
@@ -29,6 +30,9 @@ class UsersContainer extends Component {
             })}
           </tbody>
         </table>
+
+
+
       </div>
     )
   }

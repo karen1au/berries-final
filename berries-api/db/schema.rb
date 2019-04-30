@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2019_04_30_163149) do
 
   # These are extensions that must be enabled in order to support this database
@@ -88,6 +89,9 @@ ActiveRecord::Schema.define(version: 2019_04_30_163149) do
     t.datetime "updated_at", null: false
     t.string "soundcloud"
     t.string "youtube"
+    t.decimal "lat"
+    t.decimal "lng"
+    t.string "auth_token"
   end
 
   add_foreign_key "chat_users", "chats"

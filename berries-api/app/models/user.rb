@@ -1,16 +1,34 @@
 class User < ApplicationRecord
   has_secure_password
+  has_secure_token :auth_token
   has_many :user_exps, dependent: :destroy
   has_many :user_genres, dependent: :destroy
   has_many :chat_users, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :connections, dependent: :destroy
 
-  validates :name, presence: true
-  validates :password, length: { minimum: 7 }
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :location, presence: true
-  validates :commitment, presence: true
+  # validates :name, presence: true  
+  # validates :password, length: { minimum: 7 }
+  validates :email, uniqueness: { case_sensitive: false }, presence: true
+  # validates :location, presence: true
+  # validates :commitment, presence: true
 
-  #before_save { |user| user.email = user.email.downcase! }
+  acts_as_mappable  :default_units => :miles,
+  :default_formula => :sphere,
+  :distance_field_name => :distance,
+  :lat_column_name => :lat,
+  :lng_column_name => :lng
+
+  before_save { |user| user.email.downcase! }
+
+  def invalidate_token
+    self.update_columns(auth_token: nil)
+  end
+
+  def self.validate_login(email, password)
+    user = find_by(email: email)
+    if user && user.authenticate(password)
+      user
+    end
+  end
 end
