@@ -6,10 +6,10 @@ module Api::V1
     end
 
     def search
-      #query = "SELECT * FROM Users INNER JOIN"
+      #
       #puts @users = ActiveRecord::Base.connection.exec_query(query)
       #byebug
-      @users = User.where(location: 'Toronto', commitment: params[:q1])
+      @users = User.where(location: 'Toronto', commitment: params[:q1]).joins(user_genres: :genre).where('genres.name' => params[:q2])
       render json: @users
     end
   end
