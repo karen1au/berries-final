@@ -3,7 +3,6 @@ module Api::V1
     skip_before_action :require_login, only: [:create], raise: false
 
     def create
-      byebug
       if user = User.validate_login(params[:email], params[:password])
         allow_token_to_be_used_only_once_for(user)
         send_token_for_valid_login_of(user)

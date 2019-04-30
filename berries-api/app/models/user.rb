@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :connections, dependent: :destroy
 
   # validates :name, presence: true  
-  validates :password, length: { minimum: 7 }
+  # validates :password, length: { minimum: 7 }
   validates :email, uniqueness: { case_sensitive: false }, presence: true
   # validates :location, presence: true
   # validates :commitment, presence: true
