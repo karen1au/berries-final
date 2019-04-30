@@ -11,7 +11,7 @@ module Api::V1
   
     def create  
       @user = User.new(user_params)
-  
+      byebug
       if @user.save
         # geocode_user(@user)
         puts "user created!"

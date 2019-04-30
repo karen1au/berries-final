@@ -58,7 +58,7 @@ class SignUp extends Component{
         </Form>
         </Grid.Column>
         <Grid.Column>
-          <Button positive as="a" href={"/"}>Login</Button>
+          <Button positive as="a" href={"/login"}>Login</Button>
         </Grid.Column>
         </Grid.Row>
         {/* {this.state.redirect && <Redirect to={"/"} />} */}

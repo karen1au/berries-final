@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Form, Button, Message, Segment, Grid} from 'semantic-ui-react'
+import { Header, Form, Button, Container} from 'semantic-ui-react'
 
 class LogIn extends Component{
   state = {
@@ -26,24 +26,20 @@ class LogIn extends Component{
     .then(resp=> {
       console.log(this.state)
       resp.json()})
-    // .then(this.handleResponse)
   }
 
 
   render(){
     return(
-      <Segment placeholder>
-      {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
-        <Grid.Row verticalAlign='middle'>
+      <Container>
         <Form >
-        <Header size='large'>Login</Header>
+          <Header size='large'>Login</Header>
           <Form.Input icon='user' iconPosition='left' label='Email' placeholder='Email' name='email' onChange={this.onChange} required/>
           <Form.Input icon='lock' iconPosition='left' label='Password' type='password' name='password' onChange={this.onChange} required/>
           <Button onClick={()=>this.props.login({auth: this.state})}>Login</Button>
         </Form>
-        </Grid.Row>
-        {/* {this.state.redirect && <Redirect to={"/"} />} */}
-        </Segment>
+        <Button positive as="a" href={"/"}>Not a berry yet? Sign Up</Button>
+      </Container>
     )
   }
 }

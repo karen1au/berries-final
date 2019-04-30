@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   # validates :name, presence: true  
   validates :password, length: { minimum: 7 }
-  validates :email, uniqueness: { case_sensitive: false }
+  validates :email, uniqueness: { case_sensitive: false }, presence: true
   # validates :location, presence: true
   # validates :commitment, presence: true
 
@@ -18,5 +18,5 @@ class User < ApplicationRecord
   :lat_column_name => :lat,
   :lng_column_name => :lng
 
-  before_save { |user| user.email = user.email.downcase! }
+  before_save { |user| user.email.downcase! }
 end
