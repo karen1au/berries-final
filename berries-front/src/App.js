@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import './App.css';
 
-import UsersContainer from './components/UsersContainer'
-import SearchContainer from './components/search/SearchContainer'
-
 import LogIn from './components/LogIn';
 import Error from './components/Error'
 import Home from './components/Home'
@@ -81,6 +78,7 @@ class App extends Component {
         users: user
       })
     })
+  }
 
 
   handleSignUpSubmit = (e, data) => {
@@ -150,7 +148,7 @@ class App extends Component {
           <Switch>
           <Route exact path="/"
             render={() => (this.state.auth)
-              ? <Home/>
+              ? <Home users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)
@@ -158,17 +156,12 @@ class App extends Component {
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
           <Route component={Error}/>
         </Switch>
-        </div>
 
-        <SearchContainer handleSelection={this.handleSelection}/>
-        <button type="submit" onClick={this.queryResults}>Submit</button>
-        <UsersContainer users={this.state.users}/>
       </div>
-
       </BrowserRouter>
-
-    );
+    );  
   }
 }
+
 
 export default App;
