@@ -1,35 +1,46 @@
 import React, { Component } from 'react'
-
+import Auth from '../services/Auth'
 class UsersContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      users: []
+      users: null,
+      usersLoaded: false
     }
   }
   
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/users.json')
+    const options = {
+      method: 'get',
+      headers: {
+        token: Auth.getToken(),
+        'Authorization': `Token ${Auth.getToken()}`
+      },
+    }
+    fetch('http://localhost:3000/api/v1/users', options)
     .then(res => res.json())
     .then(user => {
-      console.log(user)
+      console.log('hi!')
       this.setState({
-        users: user
+        users: user,
+        usersLoaded: true
       })
-    })
+      console.log(this.state.users)
+    }).catch(err => console.log(err))
   }
 
   render() {
     return (
       <div>
-        {this.state.users.map((user) => {
+        <p>user container</p>
+        {/* {this.state.users.map((user) => {
           return(
             <div key={user.id}>
               <h4>{user.name}</h4>
               <h4>{user.email}</h4>
             </div>
           )
-        })}
+        })} */}
       </div>
     )
   }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_28_213736) do
+ActiveRecord::Schema.define(version: 2019_04_30_013546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2019_04_28_213736) do
     t.string "youtube"
     t.decimal "lat"
     t.decimal "lng"
+    t.string "auth_token"
   end
 
   add_foreign_key "chat_users", "chats"
