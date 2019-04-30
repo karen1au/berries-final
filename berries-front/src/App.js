@@ -31,6 +31,7 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/users`,options)
     .then(res => res.json())
     .then( res => {
+      console.log(res)
       Auth.authenticateToken(res.token);
       this.setState({
         auth: Auth.isUserAuthenticated()
@@ -40,6 +41,7 @@ class App extends Component {
 
   handleLogInSubmit = (e, data) => {
     e.preventDefault();
+    console.log("LOGIN", data)
     const options = {
       method: 'post',
       headers: {
@@ -51,10 +53,12 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/login`,options)
     .then(res => res.json())
     .then( res => {
+      console.log("LOGIN RESP", res)
       Auth.authenticateToken(res.token);
       this.setState({
         auth: Auth.isUserAuthenticated()
       })
+      var ws = new WebSocket("ws://localhost:3000/cable?token="+res.token)
     }).catch(err => console.log(err))
   }
 
