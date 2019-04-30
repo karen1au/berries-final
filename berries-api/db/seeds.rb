@@ -86,6 +86,10 @@ UserGenre.create!(genre_id: 2, user_id: 4)
 UserGenre.create!(genre_id: 5, user_id: 5)
 UserGenre.create!(genre_id: 5, user_id: 6)
 
+UserExp.create!(user_id: 1, instrument_id: 1, years: '0-2')
+UserExp.create!(user_id: 2, instrument_id: 1, years: '0-2')
+UserExp.create!(user_id: 1, instrument_id: 2, years: '2-4')
+UserExp.create!(user_id: 3, instrument_id: 2, years: '2-4')
 
 
 
