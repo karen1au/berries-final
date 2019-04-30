@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2019_04_30_204139) do
+=======
+
+ActiveRecord::Schema.define(version: 2019_04_30_163149) do
+>>>>>>> ab18c9e85e01f5c0470c99c5a24aeb87afcbd612
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,9 +66,9 @@ ActiveRecord::Schema.define(version: 2019_04_30_204139) do
   create_table "user_exps", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "instrument_id"
-    t.integer "years"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "years"
     t.index ["instrument_id"], name: "index_user_exps_on_instrument_id"
     t.index ["user_id"], name: "index_user_exps_on_user_id"
   end

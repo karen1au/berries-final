@@ -14,7 +14,7 @@ require 'faker'
     password: Faker::Number.number(10),
     avatar: Faker::Avatar.image,
     band: true,
-    location: Faker::Address.city,
+    location: 'Toronto',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus',
     lat: 43.089558,
@@ -34,6 +34,19 @@ end
     youtube: 'SmartBooksMedia',
     lat: 43.644175,
     lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: Faker::Number.number(10),
+    avatar: Faker::Avatar.image,
+    band: false,
+    location: 'Montreal',
+    commitment: 'ongoing jam',
+    youtube: 'SmartBooksMedia'
   )
 end
 
@@ -67,6 +80,26 @@ Genre.create!(name: 'jazz')
 Genre.create!(name: 'funk')
 Genre.create!(name: 'soul')
 Genre.create!(name: 'dance')
+
+UserGenre.create!(genre_id: 1, user_id: 1)
+UserGenre.create!(genre_id: 1, user_id: 2)
+UserGenre.create!(genre_id: 2, user_id: 1)
+UserGenre.create!(genre_id: 3, user_id: 3)
+UserGenre.create!(genre_id: 4, user_id: 3)
+UserGenre.create!(genre_id: 2, user_id: 4)
+UserGenre.create!(genre_id: 5, user_id: 5)
+UserGenre.create!(genre_id: 5, user_id: 6)
+
+UserExp.create!(user_id: 1, instrument_id: 1, years: '0-2')
+UserExp.create!(user_id: 2, instrument_id: 1, years: '0-2')
+UserExp.create!(user_id: 1, instrument_id: 2, years: '2-4')
+UserExp.create!(user_id: 3, instrument_id: 2, years: '2-4')
+
+
+
+
+
+
 
 
 
