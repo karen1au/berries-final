@@ -41,11 +41,7 @@ class App extends Component {
   }
 
   queryResults = () => {
-    fetch(`
-      http://localhost:3000/api/v1/users/search?
-      q1=${this.state.currentCommitment.value}
-      &q2=${this.state.currentGenre.value}
-      `)
+    fetch('http://localhost:3000/api/v1/users/search?q1=' + this.state.currentCommitment.value + '&q2=' + this.state.currentGenre.value)
     .then(res => res.json())
     .then(user => {
       console.log(user)
