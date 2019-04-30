@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # devise :database_authenticatable, :registerable,
+  #       :recoverable, :rememberable, :validatable
   has_secure_password
   has_secure_token :auth_token
   has_many :user_exps, dependent: :destroy
@@ -26,9 +30,6 @@ class User < ApplicationRecord
   end
 
   def self.validate_login(email, password)
-    user = find_by(email: email)
-    if user && user.authenticate(password)
-      user
-    end
+    User.find_by(email: email).try(:authenticate, password)
   end
 end
