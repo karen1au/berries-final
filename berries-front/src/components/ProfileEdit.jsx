@@ -18,19 +18,26 @@ class ProfileEdit extends Component{
     // redirect: false
   }
 
-  handleChange = (e, { value }) => this.setState({ band: value }, () => console.log(this.state))
+  toggleChange = (e, { value }) => this.setState({ band: value }, () => console.log(this.state))
+
+  onChange = (event) =>{
+    this.setState({
+      [event.target.name]:event.target.value
+    })
+  } 
 
   onClick = (event) =>{
     const options = {
-      method: 'post',
+      method: 'put',
       headers: {
         'content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({ user: this.state })
     }
-    fetch(`http://localhost:3000/api/v1/users`,options)
-    .then(resp=>resp.json())
+    console.log(options.body)
+    fetch(`http://localhost:3000/api/v1/users/1`, options)
+    .then(res => console.log(res.json()))
     // .then(this.handleResponse)
   }
 
@@ -59,7 +66,7 @@ class ProfileEdit extends Component{
               name='radioGroup'
               value={true}
               checked={this.state.band}
-              onChange={this.handleChange}
+              onChange={this.toggleChange}
             />
           </Form.Field>
           <Form.Field>
@@ -68,7 +75,7 @@ class ProfileEdit extends Component{
               name='radioGroup'
               value={false}
               checked={!this.state.band}
-              onChange={this.handleChange}
+              onChange={this.toggleChange}
             />
           </Form.Field>
           </Form.Group>

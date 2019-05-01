@@ -11,6 +11,11 @@ module Api::V1
       render json: @users
     end
 
+    def show
+      @user = User.find_by_id(params[:id])
+      render json: @user
+    end
+
     def search
       #@somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(current_user.location)
       #@users = User.within(50, :units => :kms, :origin => @somewhere.ll)
@@ -36,19 +41,31 @@ module Api::V1
       end
     end
 
+    def update
+      @user = User.first
+      puts 'user params', user_params
+      if @user.update_attributes(user_params)
+        geocode_user(@user)
+        @user.save!
+        render json: @user
+      else
+        render json: { error: error }
+      end
+    end
+
     private
     def user_params
       params.require(:user).permit(
-        # :name,
+        :name,
         :email,
         :password,
-        :password_confirmation
-        # :avatar,
-        # :band,
-        # :location,
-        # :commitment,
-        # :soundcloud,
-        # :youtube
+        :password_confirmation,
+        #:avatar,
+        :band,
+        :location,
+        :commitment,
+        :soundcloud,
+        :youtube
       )
     end
     

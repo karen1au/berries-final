@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Auth from '../services/Auth'
+
 class UsersContainer extends Component {
 
   render() {
