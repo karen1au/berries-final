@@ -3,12 +3,15 @@ module Api::V1
     #before_action :require_login, except: [:create]
     
     def index
-      @users = User.all
+      @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(User.first.location)
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      puts 'somewhere.ll' 
+      puts @somewhere.ll
       render json: @users
     end
 
     def search
-      @users = User.where(location: 'Toronto')
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
@@ -47,7 +50,7 @@ module Api::V1
     end
     
     def geocode_user(user)
-      address = Geokit::Geocoders::Googlecoder.geocde(user.location)
+      address = Geokit::Geocoders::GoogleGeocoder.geocode(user.location)
       user.lat = address.ll.split(',')[0]
       user.lng = address.ll.split(',')[1]
     end

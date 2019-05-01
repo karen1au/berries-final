@@ -46,7 +46,9 @@ end
     band: false,
     location: 'Montreal',
     commitment: 'ongoing jam',
-    youtube: 'SmartBooksMedia'
+    youtube: 'SmartBooksMedia',
+    lat: 45.5017,
+    lng: -73.5673
   )
 end
 
