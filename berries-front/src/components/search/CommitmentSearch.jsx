@@ -30,6 +30,7 @@ class CommitmentSearch extends Component {
           value={selectedOption}
           onChange={this.handleChange}
           options={options}
+          isClearable
         />
       </div>
     )

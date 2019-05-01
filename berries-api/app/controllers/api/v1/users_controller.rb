@@ -1,6 +1,6 @@
 module Api::V1
   class UsersController < ApiController #ApplicationController
-    before_action :require_login, except: [:create, :index]
+    #before_action :require_login, except: [:create, :index]
     
     def index
       puts 'current_user--->'
