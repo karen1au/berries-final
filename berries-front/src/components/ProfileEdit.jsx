@@ -2,23 +2,36 @@ import React, { Component } from 'react'
 import { Form, Button, Container, Input, Radio, Message, Redirect, Select } from 'semantic-ui-react'
 
 class ProfileEdit extends Component{
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-    avatar: "",
-    band: '',
-    location: "",
-    commitment: "",
-    soundcloud: "",
-    youtube: ""
+  state = { 
+    user: {
+    // name: "",
+    // email: "",
+    // password: "",
+    // password_confirmation: "",
+    // avatar: "",
+    // band: '',
+    // location: "",
+    // commitment: "",
+    // soundcloud: "",
+    // youtube: ""
     // errors: false,
     // errorMessage: '',
     // redirect: false
+    }
   }
 
-  toggleChange = (e, { value }) => this.setState({ band: value }, () => console.log(this.state))
+  componentDidMount() {
+    console.log('test');
+    fetch('http://localhost:3000/api/v1/users/1')
+    .then(res => res.json())
+    .then(user => {
+      console.log(user)
+      this.setState({
+        user }, () => console.log(this.state))
+    })
+  }
+
+  toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value} }, () => console.log(this.state))
 
   onChange = (event) =>{
     this.setState({
@@ -65,7 +78,7 @@ class ProfileEdit extends Component{
               label='Band'
               name='radioGroup'
               value={true}
-              checked={this.state.band}
+              checked={this.state.user.band}
               onChange={this.toggleChange}
             />
           </Form.Field>
@@ -74,20 +87,20 @@ class ProfileEdit extends Component{
               label='Individual'
               name='radioGroup'
               value={false}
-              checked={!this.state.band}
+              checked={!this.state.user.band}
               onChange={this.toggleChange}
             />
           </Form.Field>
           </Form.Group>
-          <Form.Input label='Name' placeholder='Enter your name' name='name' required onChange={this.onChange}/>
-          <Form.Input label='Email' placeholder='Email' name='email' required onChange={this.onChange}/>
-          <Form.Input label='Password' placeholder='Password' type='password' name='password' required onChange={this.onChange}/>
-          <Form.Input label='Confirm Password' placeholder='Password' type='password' name='password_confirmation' required onChange={this.onChange}/>
-          <Form.Input label='Location' placeholder='Enter your address / city' name='location' onChange={this.onChange} />
-          <Form.Field control={Select} label='Commitment' options={options} placeholder='Commitment' />
+          <Form.Input label='Name' defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange}/>
+          <Form.Input label='Email'defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange}/>
+          <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' required onChange={this.onChange}/>
+          <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' required onChange={this.onChange}/>
+          <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
+          <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' options={options} placeholder='Commitment' onChange={this.onChange}/>
           <Form.Group widths='equal'>
-          <Form.Field control={Input} label='Soundcloud' placeholder='username' name='soundcloud' onChange={this.onChange}/>
-          <Form.Field control={Input} label='Youtube' placeholder='username' name='youtube' onChange={this.onChange}/>
+          <Form.Field control={Input} defaultValue={this.state.user.soundcloud} label='Soundcloud' placeholder='username' name='soundcloud' onChange={this.onChange}/>
+          <Form.Field control={Input} defaultValue={this.state.user.youtube} label='Youtube' placeholder='username' name='youtube' onChange={this.onChange}/>
           </Form.Group>
           <Button onClick={this.onClick}>Submit</Button>
         </Form>
