@@ -49,19 +49,15 @@ class App extends Component {
   }
 
   createURL = (object = this.state.parameters) => {
-    console.log(object)
     let i = 1;
     let fullURL = 'http://localhost:3000/api/v1/users/search?'
     for (let prop in object) {
-
       if (object[prop] && i === 1) {
         fullURL += `${prop}=${object[prop].value}`
         i += 1 
-   
       } else if (object[prop]) {
         fullURL += `&${prop}=${object[prop].value}`
         i += 1 
-
       }
     }
     fullURL = fullURL.replace(/ /g, '%20')
@@ -75,7 +71,7 @@ class App extends Component {
     .then(user => {
       console.log(user)
       this.setState({
-        users: user
+        users: user,
       })
     })
   }
@@ -148,7 +144,7 @@ class App extends Component {
           <Switch>
           <Route exact path="/"
             render={() => (this.state.auth)
-              ? <Home users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
+              ? <Home users={this.state.users} queryResults={this.queryResults} handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)

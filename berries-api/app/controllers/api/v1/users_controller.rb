@@ -1,17 +1,20 @@
 module Api::V1
   class UsersController < ApiController #ApplicationController
-    #before_action :require_login, except: [:create]
+    before_action :require_login, except: [:create, :index]
     
     def index
-      @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(User.first.location)
-      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
-      puts 'somewhere.ll' 
-      puts @somewhere.ll
+      puts 'current_user--->'
+      puts current_user
+      puts @current_user
+      #@somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(current_user.location)
+      @users = User.all
       render json: @users
     end
 
     def search
-      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      #@somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(current_user.location)
+      #@users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      @users = User.where(location: 'Toronto')
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
