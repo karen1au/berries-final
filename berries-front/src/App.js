@@ -14,14 +14,16 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      auth: Auth.isUserAuthenticated(),
+      auth: false,
       users: [],
       parameters: {
         currentCommitment: null,
         currentInstrument: null,
         currentGenre: null,
         currentExperience: null
-      }
+      },
+      notification: '',
+      current_user: ''
     } 
   }
 
@@ -34,6 +36,7 @@ class App extends Component {
         users: user
       })
     })
+
   }
 
   handleSelection = (key, value) => {
@@ -95,7 +98,7 @@ class App extends Component {
     .then(res => res.json())
     .then( res => {
       console.log(res)
-      Auth.authenticateToken(res.token);
+      // Auth.authenticateToken(res.token);
       this.setState({
         auth: Auth.isUserAuthenticated()
       })
@@ -117,11 +120,11 @@ class App extends Component {
     .then(res => res.json())
     .then( res => {
       console.log("LOGIN RESP", res)
-      Auth.authenticateToken(res.token);
+      // const socket = new WebSocket('ws://localhost:3000/api/v1/cable')
+      // Auth.authenticateToken(res.token);
       this.setState({
-        auth: Auth.isUserAuthenticated()
+        auth: true
       })
-      var ws = new WebSocket("ws://localhost:3000/cable?token="+res.token)
     }).catch(err => console.log(err))
   }
 
@@ -143,6 +146,20 @@ class App extends Component {
 
   }
 
+  // handleSelectedUser = (user) => {
+  //   const options = {
+  //     method: 'post',
+  //     headers: {
+  //       token: Auth.getToken(),
+  //       'Authorization': `Token ${Auth.getToken()}`
+  //     }
+  //   }
+  //   fetch(`http://localhost:3000/api/v1/postNoti`,options)
+  //   .then(res => res.json())
+  //   .catch(err => console.log(err))
+
+  // }
+
   render() {
     return (
       <BrowserRouter>
@@ -152,7 +169,7 @@ class App extends Component {
           <Switch>
           <Route exact path="/"
             render={() => (this.state.auth)
-              ? <Home users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
+              ? <Home data-cableApp={this.props.cableApp} current_user={this.state.current_user} users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)

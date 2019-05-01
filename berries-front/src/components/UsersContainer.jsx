@@ -1,5 +1,24 @@
 import React, { Component } from 'react'
+import { Button } from 'semantic-ui-react'
+
 class UsersContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      sender_id: "this.props.current_user",
+      receiver_id: "",
+      type: ""
+    }
+  }
+
+  componentDidUpdate() {
+    this.props['data-cableApp'].notification = this.props['data-cableApp'].cable.subscriptions.create(
+      {channel:'NotificationsChannel', notification: this.state}, {
+        received: (data) => {
+          console.log("received notification",data)
+        }
+      })
+  }
 
   render() {
     return (
@@ -22,7 +41,8 @@ class UsersContainer extends Component {
                     <td>{user.email}</td>
                     <td>{user.commitment}</td>
                     <td>{user.location}</td>
-                    <td>{}</td>
+                    <td><Button onMouseOver={()=>this.setState({receiver_id: user.id, type:"jam request"})}
+                    onClick={(e) => this.props.handleSelectedUser(e, this.state)} >Jam!</Button></td>
                   </tr>
                 </div>
               )

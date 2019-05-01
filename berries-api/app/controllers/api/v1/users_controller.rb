@@ -24,7 +24,7 @@ module Api::V1
       if @user.save
         # geocode_user(@user)
         puts "user created!"
-        render json: { token: @user.auth_token}
+        render json: @user
       else
         puts @user.errors.full_messages
       end
