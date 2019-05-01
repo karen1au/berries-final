@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
 
-const options = [
-  { value: null, label: 'No Option' },    
+const options = [   
   { value: 'casual jam', label: 'casual jam' },
   { value: 'ongoing jam', label: 'ongoing jam' },
 ]

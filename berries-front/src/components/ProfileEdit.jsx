@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import { Form, Button, Container, Input, Radio, Message, Redirect, Select } from 'semantic-ui-react'
 
-class ProfileEdit extends React.Component{
+class ProfileEdit extends Component{
   state = {
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
     avatar: "",
-    band: false,
+    band: '',
     location: "",
     commitment: "",
     soundcloud: "",
@@ -17,11 +18,8 @@ class ProfileEdit extends React.Component{
     // redirect: false
   }
 
-  onChange = (event) =>{
-    this.setState({
-      [event.target.name]:event.target.value
-    })
-  }
+  handleChange = (e, { value }) => this.setState({ band: value }, () => console.log(this.state))
+
   onClick = (event) =>{
     const options = {
       method: 'post',
@@ -55,25 +53,29 @@ class ProfileEdit extends React.Component{
         {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
         <Form >
         <Form.Group inline>
-          <Form.Field
-            control={Radio}
-            label='Individual'
-            value='false'
-            checked={value === false}
-            onChange={this.onChange}
-          />
-          <Form.Field
-            control={Radio}
-            label='Band'
-            value='true'
-            checked={value === true}
-            onChange={this.onChange}
-          />
+          <Form.Field>
+            <Radio
+              label='Band'
+              name='radioGroup'
+              value={true}
+              checked={this.state.band}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label='Individual'
+              name='radioGroup'
+              value={false}
+              checked={!this.state.band}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
           </Form.Group>
           <Form.Input label='Name' placeholder='Enter your name' name='name' required onChange={this.onChange}/>
-          <Form.Input label='Email' placeholder= 'Email' name='email' required onChange={this.onChange}/>
-          <Form.Input label='Password' placeholder= 'Password' type='password' name='password' required onChange={this.onChange}/>
-          <Form.Input label='Confirm Password' placeholder= 'Password' type='password' name='password_confirmation' required onChange={this.onChange}/>
+          <Form.Input label='Email' placeholder='Email' name='email' required onChange={this.onChange}/>
+          <Form.Input label='Password' placeholder='Password' type='password' name='password' required onChange={this.onChange}/>
+          <Form.Input label='Confirm Password' placeholder='Password' type='password' name='password_confirmation' required onChange={this.onChange}/>
           <Form.Input label='Location' placeholder='Enter your address / city' name='location' onChange={this.onChange} />
           <Form.Field control={Select} label='Commitment' options={options} placeholder='Commitment' />
           <Form.Group widths='equal'>
