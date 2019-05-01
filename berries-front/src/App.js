@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import './App.css';
 
-import UsersContainer from './components/UsersContainer'
-import SearchContainer from './components/search/SearchContainer'
-
 import LogIn from './components/LogIn';
 import Error from './components/Error'
 import Home from './components/Home'
@@ -155,26 +152,32 @@ class App extends Component {
           <Switch>
           <Route exact path="/"
             render={() => (this.state.auth)
-              ? <Home/>
+              ? <Home users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)
             ? <Redirect to='/'/>
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
           <Route component={Error}/>
+          {/* < Route path = "/jams/:id" render={(props)=>(
+            < LineShowPage
+              data-cableApp={this.props.cableApp}
+              data-updateApp={this.updateAppStateLine}
+              data-lineData={this.state.lineData}
+              data-getLineData={this.getLineData}
+              getLineData={this.getLineData}
+              lineData={this.state.line}
+              authData={this.state.auth}
+            />
+          )} /> */}
         </Switch>
-  
 
-        <SearchContainer handleSelection={this.handleSelection}/>
-        <button type="submit" onClick={this.queryResults}>Submit</button>
-        <UsersContainer users={this.state.users}/>
       </div>
-
       </BrowserRouter>
-
-    );
+    );  
   }
 
 }
+
 
 export default App;

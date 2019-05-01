@@ -10,12 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2019_04_30_204139) do
-=======
-
-ActiveRecord::Schema.define(version: 2019_04_30_163149) do
->>>>>>> ab18c9e85e01f5c0470c99c5a24aeb87afcbd612
+ActiveRecord::Schema.define(version: 2019_05_01_004419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +56,14 @@ ActiveRecord::Schema.define(version: 2019_04_30_163149) do
     t.string "content"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "type"
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_exps", force: :cascade do |t|
@@ -109,6 +112,8 @@ ActiveRecord::Schema.define(version: 2019_04_30_163149) do
   add_foreign_key "chat_users", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "users", column: "receiver_id"
+  add_foreign_key "notifications", "users", column: "sender_id"
   add_foreign_key "user_exps", "instruments"
   add_foreign_key "user_exps", "users"
   add_foreign_key "user_genres", "genres"
