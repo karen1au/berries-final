@@ -42,8 +42,8 @@ module Api::V1
     end
 
     def update
-      @user = User.first
       puts 'user params', user_params
+      @user = User.first
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
