@@ -121,7 +121,7 @@ class App extends Component {
       this.setState({
         auth: Auth.isUserAuthenticated()
       })
-      var ws = new WebSocket("ws://localhost:3000/cable?token="+res.token)
+      // var ws = new WebSocket("ws://localhost:3000/cable?token="+res.token)
     }).catch(err => console.log(err))
   }
 
