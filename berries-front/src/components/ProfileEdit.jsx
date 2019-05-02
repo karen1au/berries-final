@@ -67,6 +67,7 @@ class ProfileEdit extends Component{
       <Container>
         {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
         <Form >
+        <img class="ui medium circular image" src={this.state.user.avatar}/>
           <Form.Group inline>
             <Form.Field>
               <Radio
@@ -87,17 +88,27 @@ class ProfileEdit extends Component{
               />
             </Form.Field>
           </Form.Group>
-            <Form.Input label='Name' defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange}/>
-            <Form.Input label='Email'defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange}/>
+            <Form.Input label='Name'  defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange}/>
+            <Form.Input label='Email' defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange}/>
             <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange}/>
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange}/>
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={options} placeholder='Commitment' onChange={this.onCommitmentChange}/>
             <Form.Group widths='equal'>
+            <div class="ui labeled input">
+              <div class="ui label">
+                http://www.soundcloud.com/
+              </div>
             <Form.Field control={Input} defaultValue={this.state.user.soundcloud} label='Soundcloud' placeholder='username' name='soundcloud' onChange={this.onChange}/>
+            </div>
+            <div class="ui labeled input">
+              <div class="ui label">
+                http://www.youtube.com/
+              </div>
             <Form.Field control={Input} defaultValue={this.state.user.youtube} label='Youtube' placeholder='username' name='youtube' onChange={this.onChange}/>
+          </div>
           </Form.Group>
-          <Button onClick={this.onClick}>Submit</Button>
+          <Button onClick={this.onClick}>Update Profile</Button>
         </Form>
         {this.state.redirect && <Redirect to={"/"} />}
       </Container>

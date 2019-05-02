@@ -6,6 +6,7 @@ import LogIn from './components/LogIn';
 import Error from './components/Error'
 import Home from './components/Home'
 import SignUp from './components/SignUp'
+import ProfileEdit from './components/ProfileEdit'
 import Nav from './components/Nav'
 import Auth from './services/Auth'
 
@@ -142,6 +143,10 @@ class App extends Component {
         
           <Route path="/" render={() => <Nav handleLogOut={this.handleLogOut}/>} />
           <Switch>
+          <Route exact path="/users/1" 
+            render={() => (this.state.auth)
+              ? <ProfileEdit /> 
+              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
           <Route exact path="/"
             render={() => (this.state.auth)
               ? <Home users={this.state.users} queryResults={this.queryResults} handleSelection={this.handleSelection}/>
@@ -151,6 +156,7 @@ class App extends Component {
             ? <Redirect to='/'/>
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
           <Route component={Error}/>
+           
         </Switch>
 
       </div>
