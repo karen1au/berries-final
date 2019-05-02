@@ -27,12 +27,6 @@ class ProfileEdit extends Component{
 
   toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
 
-  // onChange = (event) => {
-  //   this.setState({
-  //     [event.target.name]:event.target.value
-  //   })
-  // } 
-
   onChange = (e, { name, value }) => {
     console.log(e.target, value)
     this.setState({ user: {...this.state.user, [name]: value }}, () => console.log('STATE', this.state))
@@ -43,10 +37,12 @@ class ProfileEdit extends Component{
     this.setState({[name]: value }, () => console.log('STATE', this.state))
   }
 
-  onInstrumentChange = (e, { value }) => {
-    console.log('refs', this.instrument)
-    console.log('this', this, 'target', e.target, 'value', value)
-    this.setState({ instrument: value }, () => console.log('STATE', this.state))
+  addInstrument = (name, years) => {
+    const newInstrument = {
+      name: name,
+      experience: years
+    }
+    this.state.instrument.push(newInstrument)
   }
 
   onClick = () =>{
@@ -62,10 +58,6 @@ class ProfileEdit extends Component{
     fetch(`http://localhost:3000/api/v1/users/1`, options)
     .then(res => res.json())
     .then(console.log(this.state))
-  }
-
-  addInstrument = (name, years) => {
-    this.setState({ instrument: {...this.state.instrument, name: name, experience: years}}, () => console.log(this.state))
   }
 
   // handleResponse = (resp) => {
