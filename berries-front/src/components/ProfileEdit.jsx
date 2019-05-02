@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup } from 'semantic-ui-react'
+import InstrumentExperience from './InstrumentExperience';
 
 class ProfileEdit extends Component{
   state = { 
@@ -9,7 +10,8 @@ class ProfileEdit extends Component{
     // redirect: false
     },
     genre: [],
-    instrument: [] 
+    instrument: []
+    
   }
 
   componentDidMount() {
@@ -42,7 +44,8 @@ class ProfileEdit extends Component{
   }
 
   onInstrumentChange = (e, { value }) => {
-    console.log('target', e.target, 'value', value)
+    console.log('refs', this.instrument)
+    console.log('this', this, 'target', e.target, 'value', value)
     this.setState({ instrument: value }, () => console.log('STATE', this.state))
   }
 
@@ -59,6 +62,10 @@ class ProfileEdit extends Component{
     fetch(`http://localhost:3000/api/v1/users/1`, options)
     .then(res => res.json())
     .then(console.log(this.state))
+  }
+
+  addInstrument = (name, years) => {
+    this.setState({ instrument: {...this.state.instrument, name: name, experience: years}}, () => console.log(this.state))
   }
 
   // handleResponse = (resp) => {
@@ -120,7 +127,7 @@ class ProfileEdit extends Component{
     ]
 
     return(
-      <Container>
+      <Container>          
         {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
         <Form >
         <img class="ui small circular image" src={this.state.user.avatar}/>
@@ -151,10 +158,7 @@ class ProfileEdit extends Component{
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
             <Form.Field control={Select} defaultValue={this.state.genre} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
-          <Form.Group>  
-            <Form.Field control={Select} defaultValue={this.state.user.instrument} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onOtherChange}/>
-            <Form.Field control={Select} defaultValue={this.state.user.years} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onOtherChange}/>
-          </Form.Group>  
+            <InstrumentExperience addInstrument={this.addInstrument} instrument={this.state.instrument}/> 
           <Form.Group widths='equal'>
             {/* <div class="ui labeled input">
               <div class="ui label">

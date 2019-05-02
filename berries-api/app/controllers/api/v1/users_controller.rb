@@ -49,6 +49,7 @@ module Api::V1
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
+        
         genre_params.each do |genre|  
           @genre_id = Genre.find_by_name(genre)
           @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
