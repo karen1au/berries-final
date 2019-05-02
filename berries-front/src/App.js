@@ -8,7 +8,7 @@ import Home from './components/Home'
 import SignUp from './components/SignUp'
 import Nav from './components/Nav'
 import Auth from './services/Auth'
-
+import ChatsList from  './components/ChatsList'
 
 class App extends Component {
   constructor() {
@@ -21,11 +21,13 @@ class App extends Component {
         currentInstrument: null,
         currentGenre: null,
         currentExperience: null
-      }
+      },
+      current_user: Auth.getCookie(),
     } 
   }
 
   componentDidMount() {
+
     fetch('http://localhost:3000/api/v1/users.json')
     .then(res => res.json())
     .then(user => {
@@ -94,11 +96,14 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/users`,options)
     .then(res => res.json())
     .then( res => {
-      console.log(res)
       Auth.authenticateToken(res.token);
+      Auth.setCookie(res.user_id);
+      console.log(res)
       this.setState({
-        auth: Auth.isUserAuthenticated()
+        auth: Auth.isUserAuthenticated(),
+        current_user: Auth.getCookie()
       })
+      console.log(this.state)
     }).catch(err => console.log(err))
   }
 
@@ -118,9 +123,12 @@ class App extends Component {
     .then( res => {
       console.log("LOGIN RESP", res)
       Auth.authenticateToken(res.token);
+      Auth.setCookie(res.user_id);
       this.setState({
-        auth: Auth.isUserAuthenticated()
+        auth: Auth.getToken(),
+        current_user: Auth.getCookie()
       })
+      console.log(Auth.isUserAuthenticated())
       // var ws = new WebSocket("ws://localhost:3000/cable?token="+res.token)
     }).catch(err => console.log(err))
   }
@@ -152,12 +160,14 @@ class App extends Component {
           <Switch>
           <Route exact path="/"
             render={() => (this.state.auth)
-              ? <Home users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
+              ? <Home cable={this.props.cable}
+              users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)
             ? <Redirect to='/'/>
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
+          <Route path="/chats" render={() => <ChatsList current_user={this.state.current_user}/>} />
           <Route component={Error}/>
           {/* < Route path = "/jams/:id" render={(props)=>(
             < LineShowPage

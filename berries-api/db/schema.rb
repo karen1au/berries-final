@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_004419) do
+ActiveRecord::Schema.define(version: 2019_05_02_194915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,13 +27,7 @@ ActiveRecord::Schema.define(version: 2019_05_01_004419) do
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "connections", force: :cascade do |t|
-    t.integer "user1_id"
-    t.integer "user2_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "creator_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -59,9 +53,16 @@ ActiveRecord::Schema.define(version: 2019_05_01_004419) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "type"
+    t.string "noti_type"
     t.integer "sender_id"
     t.integer "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "user1_id"
+    t.integer "user2_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -100,16 +101,11 @@ ActiveRecord::Schema.define(version: 2019_05_01_004419) do
     t.decimal "lat"
     t.decimal "lng"
     t.string "auth_token"
-    # t.string "encrypted_password", default: "", null: false
-    # t.string "reset_password_token"
-    # t.datetime "reset_password_sent_at"
-    # t.datetime "remember_created_at"
-    # t.index ["email"], name: "index_users_on_email", unique: true
-    # t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "chat_users", "chats"
   add_foreign_key "chat_users", "users"
+  add_foreign_key "chats", "users", column: "creator_id"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "users", column: "receiver_id"

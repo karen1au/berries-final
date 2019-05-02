@@ -5,11 +5,14 @@ Rails.application.routes.draw do
         get 'users/search' => 'users#search' 
       resources :instruments
       resources :genres
-
+      resources :chats
+      resources :messages
+      resources :notifications
+      resources :chat_users
       post '/login' => 'sessions#create'
       delete '/logout' => 'sessions#destroy'
-      post '/postNoti' => 'notifications#create'
-      get '/getNoti' => 'notifications#show'
+      # post '/postNoti' => 'notifications#create'
+      # get '/getNoti' => 'notifications#show'
       mount ActionCable.server => '/cable'
     end
   end

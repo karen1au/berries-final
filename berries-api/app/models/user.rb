@@ -9,7 +9,9 @@ class User < ApplicationRecord
   has_many :user_genres, dependent: :destroy
   has_many :chat_users, dependent: :destroy
   has_many :messages, dependent: :destroy
-  has_many :connections, dependent: :destroy
+  has_many :relationship, dependent: :destroy
+  has_many :chats, dependent: :destroy
+  has_many :notifications
 
   # validates :name, presence: true  
   # validates :password, length: { minimum: 7 }
@@ -30,6 +32,10 @@ class User < ApplicationRecord
   end
 
   def self.validate_login(email, password)
-    User.find_by(email: email).try(:authenticate, password)
+    user = find_by(email: email)
+    if user && user.authenticate(password)
+      user
+    end
+
   end
 end
