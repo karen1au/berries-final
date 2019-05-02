@@ -3,14 +3,23 @@ module Api::V1
     def create
       notification = Notification.new(sender_id: params[:sender], receiver_id: params[:receiver], noti_type: params[:noti_type])
       if notification.save
-        serialized_data = ActiveModelSerializers::Adapter::Json.new(
-          NotificationSerializer.new(notification)
-        ).serializable_hash
-        ActionCable.server.broadcast("current_user_#{params[:receiver]}", serialized_data)
+        user = User.find(params[:receiver])
+        allNoti = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type)
+        # serialized_data = ActiveModelSerializers::Adapter::Json.new(
+        #   NotificationSerializer.new(notification)
+        # ).serializable_hash
+        ActionCable.server.broadcast("current_user_#{params[:receiver]}", allNoti)
         
       end
       create_relationship
       create_chat
+    end
+
+    def index
+      user = User.find(params[:user])
+      #[0] is notification id, [1] is sender email, [2] is noti_type
+      @notifications = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type)
+      render json: @notifications
     end
     private
     

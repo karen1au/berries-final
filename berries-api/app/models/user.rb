@@ -11,7 +11,8 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :relationship, dependent: :destroy
   has_many :chats, dependent: :destroy
-  has_many :notifications
+  has_many :sent_notifications, class_name: "Notification", foreign_key: :sender_id
+  has_many :received_notifications, class_name: "Notification", foreign_key: :receiver_id
 
   # validates :name, presence: true  
   # validates :password, length: { minimum: 7 }
