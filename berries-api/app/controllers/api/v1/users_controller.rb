@@ -35,6 +35,7 @@ module Api::V1
       if @user.save
         # geocode_user(@user)
         puts "user created!"
+        UserGenre.new(genre_id: genre_params.id, user_id: @user.id)
         render json: { token: @user.auth_token}
       else
         puts @user.errors.full_messages
@@ -43,10 +44,16 @@ module Api::V1
 
     def update
       puts 'user params', user_params
+      puts 'genre params', genre_params
       @user = User.first
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
+        genre_params.each do |genre|  
+          @genre_id = Genre.find_by_name(genre)
+          @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
+          @user_genre.save!
+        end  
         render json: @user
       else
         render json: { error: error }
@@ -67,6 +74,10 @@ module Api::V1
         :soundcloud,
         :youtube
       )
+    end
+
+    def genre_params
+      params.require(:genre)
     end
     
     def geocode_user(user)

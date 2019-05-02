@@ -14,7 +14,7 @@ class GenreSearch extends Component {
     .then(genre => {
       console.log(genre)
       const options = genre.map(g => {
-      const map = { value: null, label: 'No Option' }
+      const map = {}
         map['value'] = g.name, map['label'] = g.name
         return map
       })
