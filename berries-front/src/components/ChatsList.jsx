@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActionCable } from 'react-actioncable-provider';
-import NewConversationForm from './NewConversationForm';
 import MessagesArea from './MessagesArea';
 import NewMessageForm from './NewMessageForm';
 import Auth from '../services/Auth';
@@ -25,11 +24,25 @@ class ChatsList extends React.Component {
     this.setState({ activeChat: id });
   };
 
-  handleReceivedChat = response => {
-    const { chat } = response;
-    this.setState({
-      chats: [...this.state.chats, chat]
-    });
+  handleReceivedChats = res => {
+    // const options = {
+    //   method: 'post',
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     'accept': 'application/json'
+    //   },
+    //   body: { sender: this.state.current_user, receiver: res.creator_id, noti_type: "new message"}
+    // }
+    // fetch(`http://localhost:3000/api/v1/notifications`,options)
+    // .then( () => {
+    // re-render chat list if user is in chat page
+      fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+      .then(res => res.json())
+      .then(chats => {
+        console.log('chat refetched',chats)
+        this.setState({ chats })
+        })
+      // })
   };
 
   handleReceivedMessage = response => {
@@ -50,10 +63,10 @@ class ChatsList extends React.Component {
           channel={{ channel: 'ChatsChannel', current_user: this.state.current_user }}
           onReceived={(res) => this.handleReceivedChats(res)}
         />
-
         <h2>Chats</h2>
-        <ul>{mapChats(chats, this.handleClick)}</ul>
-        <NewConversationForm creator={this.props.current_user}/>
+        {this.state.chats.map((chat) => {
+          return <h4>{chat.chat_id}</h4>
+        })}
         <NewMessageForm />
         {activeChat ? (
           <MessagesArea
@@ -76,14 +89,4 @@ const findActiveChat = (chats, activeChat) => {
   return chats.find(
     chat => chat.id === activeChat
   );
-};
-
-const mapChats = (chats, handleClick) => {
-  return chats.map(chat => {
-    return (
-      <li key={chat.id} onClick={() => handleClick(chat.id)}>
-        {chat.creator_id}
-      </li>
-    );
-  });
 };
