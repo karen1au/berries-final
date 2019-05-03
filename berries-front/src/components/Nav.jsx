@@ -5,15 +5,6 @@ import Auth from '../services/Auth';
 
 class Nav extends Component {
 
-render(){
-  return (
-    <div>
-      <Button positive as="a" href={"/login"}>Login</Button>
-      <Button onClick={this.props.handleLogOut}>Logout</Button>
-      <Button positive as="a" href={"/users/1"}>Profile</Button>
-    </div>
-  )
-
 
   state = {
     current_user: Auth.getCookie(),
@@ -105,8 +96,6 @@ render(){
       })} else {
         noti_list = <span>You don't have notifications yet...</span>
       }
-    
-  
 
     return (
       <div>
@@ -115,6 +104,7 @@ render(){
         <Button positive as="a" href={"/login"}>Login</Button>
         <Button onClick={this.props.handleLogOut}>Logout</Button>
         <Button positive as="a" href={"/chats"}>Chat</Button>
+        <Button positive as="a" href={`/users/${this.state.current_user}`}>Profile</Button>
         <div className="notification-group">
         <Popup trigger={<Button onClick={this.openNoti}>Show flowing popup</Button>} on='click' >
         {noti_list}

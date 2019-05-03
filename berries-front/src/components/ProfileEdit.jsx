@@ -16,12 +16,12 @@ class ProfileEdit extends Component{
 
   componentDidMount() {
     console.log('test');
-    fetch('http://localhost:3000/api/v1/users/1')
+    fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
       console.log(user)
       this.setState({
-        user }, () => console.log(this.state))
+        user: user }, () => console.log(this.state))
     })
   }
 
@@ -55,7 +55,7 @@ class ProfileEdit extends Component{
       body: JSON.stringify({ user: this.state.user, genre: this.state.genre, instrument: this.state.instrument })
     }
     console.log('options body', options.body)
-    fetch(`http://localhost:3000/api/v1/users/1`, options)
+    fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
     .then(res => res.json())
     .then(console.log(this.state))
   }
@@ -99,7 +99,7 @@ class ProfileEdit extends Component{
       <Container>          
         {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
         <Form >
-        <img class="ui small circular image" src={this.state.user.avatar}/>
+        <img className="ui small circular image" src={this.state.user.avatar}/>
           <Form.Group inline>
             <Form.Field>
               <Radio

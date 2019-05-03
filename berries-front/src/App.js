@@ -37,8 +37,7 @@ class App extends Component {
       this.setState({
         users: user
       })
-    })
-
+    }).then(() => {
     fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
     .then(res => res.json())
     .then(notis => {
@@ -46,6 +45,7 @@ class App extends Component {
         notifications: notis
       })
     })
+  })
   }
 
   handleSelection = (key, value) => {
@@ -163,9 +163,9 @@ class App extends Component {
         
           <Route path="/" render={() => <Nav notifications={this.state.notifications} handleLogOut={this.handleLogOut}/>} />
           <Switch>
-          <Route exact path="/users/1" 
+          <Route path="/users/:id" 
             render={() => (this.state.auth)
-              ? <ProfileEdit /> 
+              ? <ProfileEdit current_user={this.state.current_user}/> 
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
           <Route exact path="/"
             render={() => (this.state.auth)
