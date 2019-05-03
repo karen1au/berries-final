@@ -8,6 +8,7 @@ module Api::V1
       puts @current_user
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
       @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      @users = @users.where.not(id:params[:user])
       render json: @users
     end
 
@@ -24,6 +25,7 @@ module Api::V1
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
       @users = @users.joins(:user_exps).where('user_exps.years' => params[:currentExperience]) if params[:currentExperience].present?
+      @users = @users.where.not(id:params[:user])
 
       #@users = User.where(location: 'Toronto').where(commitment: params[:q1]).joins(user_exps: :instrument).where('instruments.name' => params[:q2]).joins(user_genres: :genre).where('genres.name' => params[:q3]).joins(:user_exps).where('user_exps.years' => params[:q4])
       puts params
