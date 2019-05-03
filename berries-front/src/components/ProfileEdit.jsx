@@ -52,7 +52,7 @@ class ProfileEdit extends Component{
         'content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: JSON.stringify({ user: this.state.user, genre: this.state.genre })
+      body: JSON.stringify({ user: this.state.user, genre: this.state.genre, instrument: this.state.instrument })
     }
     console.log('options body', options.body)
     fetch(`http://localhost:3000/api/v1/users/1`, options)
@@ -150,7 +150,7 @@ class ProfileEdit extends Component{
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
             <Form.Field control={Select} defaultValue={this.state.genre} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
-            <InstrumentExperience addInstrument={this.addInstrument} instrument={this.state.instrument}/> 
+            <InstrumentExperience addInstrument={this.addInstrument} instruments={this.state.instrument}/> 
           <Form.Group widths='equal'>
             {/* <div class="ui labeled input">
               <div class="ui label">

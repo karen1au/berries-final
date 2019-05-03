@@ -43,12 +43,17 @@ module Api::V1
     end
 
     def update
-      puts 'user params', user_params
-      puts 'genre params', genre_params
       @user = User.first
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
+
+        instrument_params.each do |instrument|
+          puts 'instrument params', instrument
+          @instrument_id = Instrument.find_by_name(instrument["name"])
+          @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
+          @user_exp.save!
+        end
         
         genre_params.each do |genre|  
           @genre_id = Genre.find_by_name(genre)
@@ -79,6 +84,10 @@ module Api::V1
 
     def genre_params
       params.require(:genre)
+    end
+
+    def instrument_params
+      params.require(:instrument)
     end
     
     def geocode_user(user)

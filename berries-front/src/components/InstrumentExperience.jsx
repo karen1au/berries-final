@@ -43,14 +43,14 @@ class InstrumentExperience extends Component {
     
     return (
     <div>
-      <Form>
+      <Form.Group widths='equal'>
         <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
         <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
         <Button onClick={this.onClick}>Add</Button>
-        <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
-        <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
-        <Button onClick={this.onClick}>Add</Button>
-      </Form>
+      </Form.Group>
+      {this.props.instruments.map(instrument => {   
+          <h1 key={instrument.name}>{instrument.experience}</h1>  
+        })}
    </div>
     )
   }      
