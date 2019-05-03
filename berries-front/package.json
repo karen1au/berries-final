@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "actioncable": "^5.2.3",
     "jquery": "^3.4.0",
     "react": "^16.8.6",
+    "react-actioncable-provider": "1.0.3",
+    "react-cookies": "^0.1.0",
     "react-dom": "^16.8.6",
-    "react-select": "^2.4.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "0.9.5",
+    "react-select": "^2.4.3",
+    "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.86.0"
   },
   "devDependencies": {},

@@ -20,6 +20,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'geokit'
 gem 'geokit-rails'
 #Authorization & authentication
+gem 'active_model_serializers', '~> 0.10.0'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

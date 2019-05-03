@@ -9,7 +9,7 @@ render(){
     <div>
       <SearchContainer handleSelection={this.props.handleSelection}/>
       <button type="submit" onClick={this.props.queryResults}>Submit</button>
-      <UsersContainer users={this.props.users}/>
+      <UsersContainer cable={this.props.cable} users={this.props.users}/>
     </div>
   )
   }
