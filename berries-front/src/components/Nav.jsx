@@ -9,7 +9,7 @@ class Nav extends Component {
     current_user: Auth.getCookie(),
     jam_request: false,
     new_message: false,
-    notifications: []
+    notifications: this.props.notifications
   }
 
   componentDidMount() {

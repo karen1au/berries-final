@@ -2,20 +2,21 @@ import React from 'react';
 import { ActionCable } from 'react-actioncable-provider';
 import NewConversationForm from './NewConversationForm';
 import MessagesArea from './MessagesArea';
-import Cable from './Cable';
 import NewMessageForm from './NewMessageForm';
+import Auth from '../services/Auth';
 
 class ChatsList extends React.Component {
   state = {
+    current_user: Auth.getCookie(),
     chats: [],
     activeChat: null
   };
 
   componentDidMount = () => {
-    fetch(`http://localhost:3000/api/v1/chats`)
+    fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
       .then(res => res.json())
       .then(chats => {
-        console.log(chats)
+        console.log('this is chats',chats)
         this.setState({ chats })
       });
   };
@@ -46,15 +47,10 @@ class ChatsList extends React.Component {
     return (
       <div className="chatsList">
         <ActionCable
-          channel={{ channel: 'ChatsChannel' }}
-          onReceived={this.handleReceivedChat}
+          channel={{ channel: 'ChatsChannel', current_user: this.state.current_user }}
+          onReceived={(res) => this.handleReceivedChats(res)}
         />
-        {this.state.chats.length ? (
-          <Cable
-            chats={chats}
-            handleReceivedMessage={this.handleReceivedMessage}
-          />
-        ) : null}
+
         <h2>Chats</h2>
         <ul>{mapChats(chats, this.handleClick)}</ul>
         <NewConversationForm creator={this.props.current_user}/>

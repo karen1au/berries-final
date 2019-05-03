@@ -12,8 +12,7 @@ Rails.application.routes.draw do
       resources :relationships
       post '/login' => 'sessions#create'
       delete '/logout' => 'sessions#destroy'
-      # post '/postNoti' => 'notifications#create'
-      # get '/getNoti' => 'notifications#show'
+      
       mount ActionCable.server => '/cable'
     end
   end
