@@ -6,9 +6,9 @@ module Api::V1
     end
 
     def search
-      puts "start genres! ---------"
+      puts 'start'
       puts params
-      puts "end genres! ----------"
+      puts 'end'
       @genres = Genre.joins(user_genres: :user).where('users.id' => params[:user])
       render json: @genres
     end  
