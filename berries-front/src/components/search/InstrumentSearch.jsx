@@ -36,6 +36,7 @@ class InstrumentSearch extends Component {
           value={selectedOption}
           onChange={this.handleChange}
           options={this.state.instruments}
+          isClearable
         />
       </div>
     )
