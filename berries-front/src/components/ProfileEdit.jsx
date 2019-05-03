@@ -10,9 +10,7 @@ class ProfileEdit extends Component{
     // redirect: false
     },
     genre: [],
-    instrument: [
-      { name: 'peter', experience: 'peter'}
-    ]
+    instrument: []
     
   }
 
@@ -141,7 +139,7 @@ class ProfileEdit extends Component{
               <div class="ui label">
                 http://www.youtube.com/
               </div> */}
-            <Form.Field control={Input} defaultValue={this.state.user.youtube} label='Youtube' placeholder='username' name='youtube' onChange={this.onChange}/>
+            <Form.Field control={Input} defaultValue={this.state.user.youtube} label='YouTube' placeholder='username' name='youtube' onChange={this.onChange}/>
             {/* </div> */}
           </Form.Group>
           <Button onClick={this.onClick}>Update Profile</Button>
