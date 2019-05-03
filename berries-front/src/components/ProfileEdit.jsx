@@ -16,10 +16,10 @@ class ProfileEdit extends Component{
 
   componentDidMount() {
     console.log('test');
-    fetch('http://localhost:3000/api/v1/users/1')
+    fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
-      console.log(user)
+      console.log('profile load success')
       this.setState({
         user }, () => console.log(this.state))
     })
