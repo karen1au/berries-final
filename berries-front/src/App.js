@@ -23,6 +23,7 @@ class App extends Component {
         currentExperience: null
       },
       current_user: Auth.getCookie(),
+      notifications: []
     } 
   }
 
@@ -34,6 +35,14 @@ class App extends Component {
       console.log(user)
       this.setState({
         users: user
+      })
+    })
+
+    fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
+    .then(res => res.json())
+    .then(notis => {
+      this.setState({
+        notifications: notis
       })
     })
   }
@@ -129,7 +138,6 @@ class App extends Component {
         current_user: Auth.getCookie()
       })
       console.log(Auth.isUserAuthenticated())
-      // var ws = new WebSocket("ws://localhost:3000/cable?token="+res.token)
     }).catch(err => console.log(err))
   }
 
@@ -156,7 +164,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
         
-          <Route path="/" render={() => <Nav handleLogOut={this.handleLogOut}/>} />
+          <Route path="/" render={() => <Nav notifications={this.state.notifications} handleLogOut={this.handleLogOut}/>} />
           <Switch>
           <Route exact path="/"
             render={() => (this.state.auth)

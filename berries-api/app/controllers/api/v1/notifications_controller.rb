@@ -11,8 +11,6 @@ module Api::V1
         ActionCable.server.broadcast("current_user_#{params[:receiver]}", allNoti)
         
       end
-      # create_relationship
-      # create_chat
     end
 
     def index
@@ -24,8 +22,8 @@ module Api::V1
 
     def destroy
       @notification = Notification.find(params[:id])
-      @relationship = Relationship.where(user1_id: @notification.sender_id, user2_id: @notification.receiver_id)
-        .or(Relationship.where(user2_id: @notification.sender_id, user1_id: @notification.receiver_id)).destroy_all
+      # @relationship = Relationship.where(user1_id: @notification.sender_id, user2_id: @notification.receiver_id)
+      #   .or(Relationship.where(user2_id: @notification.sender_id, user1_id: @notification.receiver_id)).destroy_all
       @notification.destroy
     end
     private
@@ -34,24 +32,5 @@ module Api::V1
       params.require(:notification).permit(:noti_type, :sender, :receiver)
     end
 
-    def create_relationship
-      user1 = params[:sender]
-      user2 = params[:receiver]
-      relationship = Relationship.new(user1_id: user1, user2_id: user2)
-      if relationship.save
-        puts 'relationship created!'
-      else
-        puts 'relationship not created :('
-      end
-    end
-
-    def create_chat
-      sender = params[:sender]
-      chat = Chat.new(creator_id: sender)
-      if chat.save
-      user_chat = ChatUser.new(chat_id: chat.id, user_id: sender)
-      user_chat.save
-      end
-    end
   end
 end
