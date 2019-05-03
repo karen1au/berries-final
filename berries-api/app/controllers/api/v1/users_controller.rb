@@ -35,8 +35,7 @@ module Api::V1
       if @user.save
         # geocode_user(@user)
         puts "user created!"
-        UserGenre.new(genre_id: genre_params.id, user_id: @user.id)
-        render json: { token: @user.auth_token}
+        render json: { token: @user.auth_token }
       else
         puts @user.errors.full_messages
       end

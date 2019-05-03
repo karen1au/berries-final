@@ -48,8 +48,15 @@ class InstrumentExperience extends Component {
         <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
         <Button onClick={this.onClick}>Add</Button>
       </Form.Group>
-      {this.props.instruments.map(instrument => {   
-          <h1 key={instrument.name}>{instrument.experience}</h1>  
+      {/* <ul>
+        {this.props.instruments.forEach(element => {
+          <li key={element.name}>asdasdsad</li>;
+        })}
+      </ul>   */}
+      {this.props.instruments.map((instrument, index) => { 
+        return (
+          <p key={index}> {instrument.name} - {instrument.experience}</p>
+        )
         })}
    </div>
     )
