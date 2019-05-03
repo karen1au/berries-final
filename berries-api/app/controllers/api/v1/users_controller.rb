@@ -44,7 +44,8 @@ module Api::V1
     end
 
     def update
-      @user = User.first
+      puts 'params =>', user_params[:id]
+      @user = User.find_by_id(user_params[:id])
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
@@ -70,6 +71,7 @@ module Api::V1
     private
     def user_params
       params.require(:user).permit(
+        :id,
         :name,
         :email,
         :password,
