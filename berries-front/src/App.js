@@ -169,17 +169,7 @@ class App extends Component {
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
           <Route path="/chats" render={() => <ChatsList current_user={this.state.current_user}/>} />
           <Route component={Error}/>
-          {/* < Route path = "/jams/:id" render={(props)=>(
-            < LineShowPage
-              data-cableApp={this.props.cableApp}
-              data-updateApp={this.updateAppStateLine}
-              data-lineData={this.state.lineData}
-              data-getLineData={this.getLineData}
-              getLineData={this.getLineData}
-              lineData={this.state.line}
-              authData={this.state.auth}
-            />
-          )} /> */}
+
         </Switch>
 
       </div>
