@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :messages
       resources :notifications
       resources :chat_users
+      resources :relationships
       post '/login' => 'sessions#create'
       delete '/logout' => 'sessions#destroy'
       # post '/postNoti' => 'notifications#create'

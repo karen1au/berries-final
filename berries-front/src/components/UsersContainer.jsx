@@ -30,7 +30,6 @@ class UsersContainer extends Component {
     }
     fetch(`http://localhost:3000/api/v1/notifications`,options)
     .then( res => {
-      console.log("created relationship")
       this.setState({
         receiver: ""
       })})

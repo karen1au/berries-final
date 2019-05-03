@@ -11,15 +11,22 @@ module Api::V1
         ActionCable.server.broadcast("current_user_#{params[:receiver]}", allNoti)
         
       end
-      create_relationship
-      create_chat
+      # create_relationship
+      # create_chat
     end
 
     def index
       user = User.find(params[:user])
-      #[0] is notification id, [1] is sender email, [2] is noti_type
-      @notifications = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type)
+      #[0] is notification id, [1] is sender email, [2] is noti_type [3] is senderID
+      @notifications = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type, :sender_id)
       render json: @notifications
+    end
+
+    def destroy
+      @notification = Notification.find(params[:id])
+      @relationship = Relationship.where(user1_id: @notification.sender_id, user2_id: @notification.receiver_id)
+        .or(Relationship.where(user2_id: @notification.sender_id, user1_id: @notification.receiver_id)).destroy_all
+      @notification.destroy
     end
     private
     
