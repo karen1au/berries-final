@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 class UserGenres extends Component {
   state = {
+    genres: []
   }
 
   render() {

@@ -3,15 +3,15 @@ module Api::V1
     #before_action :require_login, except: [:create, :index]
     
     def index
-      puts 'current_user--->'
-      puts current_user
-      puts @current_user
       #@somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(current_user.location)
       @users = User.all
       render json: @users
     end
 
     def show
+      puts "start users! ---------"
+      puts params
+      puts "end users! ----------"
       @user = User.find_by_id(params[:id])
       render json: @user
     end
@@ -26,7 +26,6 @@ module Api::V1
       @users = @users.joins(:user_exps).where('user_exps.years' => params[:currentExperience]) if params[:currentExperience].present?
 
       #@users = User.where(location: 'Toronto').where(commitment: params[:q1]).joins(user_exps: :instrument).where('instruments.name' => params[:q2]).joins(user_genres: :genre).where('genres.name' => params[:q3]).joins(:user_exps).where('user_exps.years' => params[:q4])
-      puts params
       render json: @users
     end
   

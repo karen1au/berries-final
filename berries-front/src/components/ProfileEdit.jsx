@@ -10,7 +10,7 @@ class ProfileEdit extends Component{
     // errorMessage: '',
     // redirect: false
     },
-    genre: ['rock', 'sock', 'tick-tock'],
+    genre: [],
     instrument: [
       {name: 'bass', experience: 2-4},
       {name: 'acoustic guitar', experience: 0-2},
@@ -20,14 +20,26 @@ class ProfileEdit extends Component{
   }
 
   componentDidMount() {
-    console.log('test');
+
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
-      console.log('profile load success')
-      this.setState({
-        user }, () => console.log(this.state))
+      this.setState({ user })
     })
+    
+    .then(
+      
+      fetch(`http://localhost:3000/api/v1/genres/search/?user=${this.props.current_user}`)
+      .then(res => res.json())
+      .then(genre => {
+        console.log(genre)
+        let map = genre.map( g => {
+          return g.name;
+        })
+        this.setState(
+          {genre: map}, () => console.log(this.state))
+      })
+    )
   }
 
   toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
@@ -49,6 +61,8 @@ class ProfileEdit extends Component{
     }
     this.state.instrument.push(newInstrument)
   }
+
+
 
   onClick = () =>{
     const options = {
