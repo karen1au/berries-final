@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   namespace :api do
     namespace :v1 do
 
@@ -8,11 +7,15 @@ Rails.application.routes.draw do
       resources :users
       resources :instruments
       resources :genres
-
+      resources :chats
+      resources :messages
+      resources :notifications
+      resources :chat_users
+      resources :relationships
       post '/login' => 'sessions#create'
       delete '/logout' => 'sessions#destroy'
       
-
+      mount ActionCable.server => '/cable'
     end
   end
 end

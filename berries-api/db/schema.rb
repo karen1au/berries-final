@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_163149) do
+ActiveRecord::Schema.define(version: 2019_05_02_194915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,13 +27,7 @@ ActiveRecord::Schema.define(version: 2019_04_30_163149) do
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "connections", force: :cascade do |t|
-    t.integer "user1_id"
-    t.integer "user2_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "creator_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -53,8 +47,24 @@ ActiveRecord::Schema.define(version: 2019_04_30_163149) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "content"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "noti_type"
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "user1_id"
+    t.integer "user2_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_exps", force: :cascade do |t|
@@ -95,8 +105,11 @@ ActiveRecord::Schema.define(version: 2019_04_30_163149) do
 
   add_foreign_key "chat_users", "chats"
   add_foreign_key "chat_users", "users"
+  add_foreign_key "chats", "users", column: "creator_id"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "users", column: "receiver_id"
+  add_foreign_key "notifications", "users", column: "sender_id"
   add_foreign_key "user_exps", "instruments"
   add_foreign_key "user_exps", "users"
   add_foreign_key "user_genres", "genres"
