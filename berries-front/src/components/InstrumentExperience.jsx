@@ -39,15 +39,17 @@ class InstrumentExperience extends Component {
   }
 
   deletePair = (i) => {
+    console.log(i)
     let instruments = [...this.state.instruments]
     instruments.splice(i, 1)
     this.setState({ instruments }, () => console.log(this.state.instruments))
   }
 
   createUI = () => {
+    // console.log(i)
     return this.state.instruments.map((i) => (
       <div key={i}>
-        <Form.Group widths='equal'>
+        <Form.Group widths='equal' key={i}>
           <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
           <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
           <Button onClick={this.deletePair}>Delete</Button>
@@ -57,7 +59,14 @@ class InstrumentExperience extends Component {
   }
 
   onChange = (e, { name, value }) => {
-    console.log(e.target, value)
+    console.log(e.target, value, e)
+    // state = { instruments: [] }
+    // let state = {
+    //   ...state,
+    //   instruments: { ...state.instruments, [name]: value },
+    // }
+
+
     this.setState({ [name]: value }, () => console.log('STATE', this.state))
   }
 
