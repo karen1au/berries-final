@@ -25,7 +25,10 @@ class UserGenres extends Component {
       <ul>
         {this.state.genres.map((genre, index) => { 
           return (
+          <div>
             <li key={index}>{genre}</li>
+            <button class="ui button">Delete</button>    
+          </div>  
           )
         })}
       </ul>

@@ -32,12 +32,10 @@ class ProfileEdit extends Component{
   toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
 
   onChange = (e, { name, value }) => {
-    console.log(e.target, value)
     this.setState({ user: {...this.state.user, [name]: value }}, () => console.log('STATE', this.state))
   }
 
   onGenreChange = (e, { name, value }) => {
-    console.log('name', name, 'value', value)
     this.setState({[name]: value }, () => console.log('STATE', this.state))
   }
 
@@ -47,7 +45,6 @@ class ProfileEdit extends Component{
       experience: years
     }
     this.state.instrument.push(newInstrument);
-    console.log(this.state)
   }
 
 
@@ -133,7 +130,7 @@ class ProfileEdit extends Component{
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange}/>
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
             <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
-            <UserGenres current_user={this.props.current_user}/>            
+              <UserGenres current_user={this.props.current_user}/>            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
             <InstrumentExperience addInstrument={this.addInstrument} instruments={this.state.instrument}/> 
           <Form.Group widths='equal'>
