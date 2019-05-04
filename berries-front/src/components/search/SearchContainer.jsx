@@ -10,8 +10,8 @@ class SearchContainer extends Component {
     return (
       <div>
         <GenreSearch handleSelection={this.props.handleSelection} /> 
-        <InstrumentSearch handleSelection={this.props.handleSelection} />
         <CommitmentSearch handleSelection={this.props.handleSelection} />
+        <InstrumentSearch handleSelection={this.props.handleSelection} />
         <ExperienceSearch handleSelection={this.props.handleSelection} />
       </div>
     )

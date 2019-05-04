@@ -26,8 +26,35 @@ const experienceOptions = [
 
 class InstrumentExperience extends Component {
   state = {
-    instrument: '',
-    experience: ''
+    instruments: [{
+      instrument: '',
+      experience: ''
+    }]
+  }
+
+  addPair = () => {
+    this.setState(prevState => ({
+      instruments: [...prevState.instruments, { instrument: '', experience: '' }]
+    }))
+  }
+
+  deletePair = (i) => {
+    let instruments = [...this.state.instruments]
+    instruments.splice(i, 1)
+    this.setState({ instruments }, () => console.log(this.state.instruments))
+  }
+
+  createUI = () => {
+    return this.state.instruments.map((i) => (
+      <div key={i}>
+        <Form.Group widths='equal'>
+          <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
+          <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
+          <Button onClick={this.onClick}>Add</Button>
+          <Button onClick={this.deletePair}>Delete</Button>
+        </Form.Group>
+      </div>
+    ))
   }
 
   onChange = (e, { name, value }) => {
@@ -38,17 +65,19 @@ class InstrumentExperience extends Component {
   onClick = () => {
     this.props.addInstrument(this.state.instrument, this.state.experience)
     this.setState({instrument: '', experience: ''})
+    this.addPair()
   }
 
   render() { 
     
     return (
     <div>
-      <Form.Group widths='equal'>
+      {/* <Form.Group widths='equal'>
         <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
         <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
         <Button onClick={this.onClick}>Add</Button>
-      </Form.Group>
+      </Form.Group> */}
+      {this.createUI()}
       {/* <ul>
         {this.props.instruments.forEach(element => {
           <li key={element.name}>asdasdsad</li>;
