@@ -13,26 +13,37 @@ class UserGenres extends Component {
       let map = genre.map( g => {
         return g.name;
       })
-      this.setState(
-        {genres: map}, () => console.log(this.state))
+      this.setState({ genres: map })
     })
+  }
+
+  onDelete = (event) => {
+    let genres = [...this.state.genres];
+    let filtered = genres.filter( genre => genre !== event.target.name );
+    
+    this.setState({ genres: filtered }, () => console.log(this.state));
   }
 
   render() {
     
     return (
-    <div>
-      <ul>
-        {this.state.genres.map((genre, index) => { 
-          return (
-          <div>
-            <li key={index}>{genre}</li>
-            <button class="ui button">Delete</button>    
-          </div>  
-          )
-        })}
-      </ul>
-   </div>
+      <div>
+        <ul>
+          {this.state.genres.map((genre) => { 
+            return (
+              <div key={genre}>
+                <li>{genre}</li>
+                <button 
+                  class="ui button"
+                  name={genre}
+                  onClick={this.onDelete}>
+                    Delete
+                </button>    
+              </div>  
+            )
+          })}
+        </ul>
+      </div>
     )
   }      
 }
