@@ -92,7 +92,9 @@ class ChatsList extends React.Component {
         <ActionCable
           channel={{ channel: 'ChatsChannel', current_user: this.state.current_user }}
           onReceived={(res) => this.handleReceivedChats(res)} />
-
+        <ActionCable
+          channel={{ channel: 'MessagesChannel', current: this.state.current_user }}
+          onReceived={(res) => this.handleReceivedMessage(res)} />
         <Grid columns='equal' divided rows='equal'>
           <Grid.Row stretched>
         <Grid.Column>
@@ -110,9 +112,7 @@ class ChatsList extends React.Component {
         </Grid.Column>
         <Grid.Column width={12}>
         {show_msg}
-        <ActionCable
-          channel={{ channel: 'MessagesChannel', current: this.state.current_user }}
-          onReceived={(res) => this.handleReceivedMessage(res)} />
+
           <Segment><NewMessageForm chat={this.state.activeChat}/></Segment>
         </Grid.Column>
           </Grid.Row>

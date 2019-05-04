@@ -16,7 +16,7 @@ module Api::V1
     def index
       user = User.find(params[:user])
       #[0] is notification id, [1] is sender email, [2] is noti_type [3] is senderID
-      @notifications = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type, :sender_id)
+      @notifications = user.received_notifications.joins(:sender).order(:created_at).pluck(:id, :email, :noti_type, :sender_id)
       render json: @notifications
     end
 
