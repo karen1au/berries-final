@@ -41,11 +41,12 @@ class ProfileEdit extends Component{
     this.setState({[name]: value }, () => console.log('STATE', this.state))
   }
 
-  addInstrument = (entries) => {
-    console.log('entries: ', entries)
-    const newInstruments = entries.map(entry => (
-      { name: entry.name, experience: entry.experience }
-    ), this.setState({ instruments: [...this.state.instruments, newInstruments]}), () => console.log(this.state));
+  addInstrument = (name, years) => {
+    const newInstrument = {
+      name: name,
+      experience: years
+    }
+    this.state.instrument.push(newInstrument);
   }
 
   onClick = () =>{

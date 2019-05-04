@@ -66,8 +66,10 @@ class InstrumentExperience extends Component {
   }
 
   onClick = () => {
-    console.log(this.state.instruments)
-    this.props.addInstrument(this.state.instruments, this.addPair())
+    const lastEntry = this.state.instruments[this.state.instruments.length - 1]
+    console.log(lastEntry)
+    this.props.addInstrument(lastEntry.name, lastEntry.experience)
+    this.addPair()
   }
 
   render() { 
