@@ -27,7 +27,9 @@ class App extends Component {
       chats: [],
       chat_users: [],
       activeChat: null,
-      messages: []
+      messages: [],
+      jam_request: false,
+      new_message: false,
     } 
   }
 
@@ -68,23 +70,9 @@ class App extends Component {
       }))
     })
   }
-
-  // displayChat = (chatsid) => {
-  //   fetch(`http://localhost:3000/api/v1/chats/${chatsid}`)
-  //   .then(res => res.json())  
-  //   .then(users => {
-  //     // console.log('chat users are:',users)
-  //     this.setState({chat_users: users})
-  //     })
-  // }
-
+  //action cable
   handleReceivedChats = res => {
     console.log('chat response: ', res);
-    // re-render chat list if user is in chat page
-      // fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
-      // .then(res => res.json())
-      // .then(chats => {
-        // console.log('chat refetched',chats)
     this.setState({ chats: [...this.state.chats, res] })
     
   };
@@ -230,7 +218,7 @@ class App extends Component {
 
 
   //Handling jam request
-  onRefuse = (name) => {
+  onRefuse = (notiID) => {
     const options = {
       method: 'delete',
       headers: {
@@ -238,10 +226,63 @@ class App extends Component {
         'accept': 'application/json'
       },
     }
-    fetch(`http://localhost:3000/api/v1/notifications/${name}`, options)
+    fetch(`http://localhost:3000/api/v1/notifications/${notiID}`, options)
       .then(()=>{
         this.loadNotifications();
       })
+  }
+
+  onAccept = (senderID) => {
+    // event.preventDefault();
+    const options = {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({user1_id: this.props.current_user, user2_id: senderID})
+    }
+    fetch(`http://localhost:3000/api/v1/relationships`, options)
+    .then(()=>{
+      this.loadNotifications();
+      })
+    .then( () => {
+      const options = {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json'
+        },
+        body: JSON.stringify({sender: this.state.current_user, receiver: senderID, noti_type: "new message" })
+      }
+      fetch(`http://localhost:3000/api/v1/notifications`,options)
+        .then( res => console.log('chat notification posted'))
+    })
+  }
+
+  categorizeNoti = (noti) => {
+    noti.map((noti) => {
+      if (noti[2] == "jam request"){
+        this.setState(prevState => ({ jam_request: true, notifications: [...prevState.notifications, noti]}))
+      }
+      if (noti[2] == "new message"){
+        this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
+      }
+    })
+  }
+    handleNotifications = (res) => {
+    console.log("this is notification",res)
+    this.categorizeNoti(res)
+  }
+
+  openNoti = () => {
+    event.preventDefault();
+    this.setState({jam_request: false})
+  }
+
+  openChat = () => {
+    this.setState({new_message: false})
+    console.log("clicked chat button")
   }
 
   render() {
@@ -249,10 +290,15 @@ class App extends Component {
       <BrowserRouter>
         <div>
         
-          <Route path="/" render={() => <Nav notifications={this.state.notifications} 
-          getChats={this.getChats}
-          handleLogOut={this.handleLogOut} 
-          onRefuse={this.onRefuse}/>} />
+          <Route path="/" render={() => <Nav  
+              handleLogOut={this.handleLogOut} 
+              onAccept={this.onAccept}
+              onRefuse={this.onRefuse}
+              handleNotifications={this.handleNotifications}
+              jam_request={this.state.jam_request}
+              new_message={this.state.new_message}
+              notifications={this.state.notifications}/>
+          }/>
           <Switch>
           <Route path="/users/:id" 
             render={() => (this.state.auth)
@@ -274,6 +320,7 @@ class App extends Component {
                 messages={this.state.messages}
                 activeChat={this.state.activeChat}
                 displayMessage={this.displayMessage}
+                getChats={this.getChats}
                 handleReceivedChats={this.handleReceivedChats}
                 handleReceivedMessage={this.handleReceivedMessage}/>
             : <Redirect to='/'/>}/>

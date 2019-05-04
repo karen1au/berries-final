@@ -13,9 +13,9 @@ class ChatsList extends React.Component {
   //   messages: []
   // };
 
-  // componentDidMount = () => {
-
-  // };
+  componentDidMount() {
+    this.props.getChats()
+  }
 
 
   renderChats = (chatlist) => {
@@ -69,11 +69,10 @@ class ChatsList extends React.Component {
         </Grid.Column>
         {this.props.activeChat
         ? <Grid.Column width={12}>
+            <Button onClick={this.props.leaveChat}>BYE</Button>
           <Segment>
-            <Button></Button>
             {show_msg}
           </Segment>
-          
           <NewMessageForm chat={this.props.activeChat}/> 
           </Grid.Column>
         : <Grid.Column width={12}>
