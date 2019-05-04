@@ -53,7 +53,7 @@ module Api::V1
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
-        render json: @user
+        # render json: @user
       else
         # render json: { error: error }
       end
