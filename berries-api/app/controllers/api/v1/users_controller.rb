@@ -13,6 +13,9 @@ module Api::V1
     end
 
     def show
+      puts "start users! ---------"
+      puts params
+      puts "end users! ----------"
       @user = User.find_by_id(params[:id])
       render json: @user
     end
@@ -28,7 +31,6 @@ module Api::V1
       @users = @users.where.not(id:params[:user])
 
       #@users = User.where(location: 'Toronto').where(commitment: params[:q1]).joins(user_exps: :instrument).where('instruments.name' => params[:q2]).joins(user_genres: :genre).where('genres.name' => params[:q3]).joins(:user_exps).where('user_exps.years' => params[:q4])
-      puts params
       render json: @users
     end
   

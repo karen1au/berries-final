@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
       resources :users
       resources :instruments
+      
+      get 'genres/search' => 'genres#search'
+      
       resources :genres
       resources :chats
       resources :messages

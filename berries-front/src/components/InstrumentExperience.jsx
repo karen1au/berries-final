@@ -83,6 +83,16 @@ class InstrumentExperience extends Component {
         <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
         <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
         <Button onClick={this.onClick}>Add</Button>
+
+      </Form.Group>
+      <ul>
+        {this.props.instruments.map((instrument, index) => { 
+          return (
+            <li key={index}> {instrument.name} - {instrument.experience}</li>
+            )
+          })}
+        </ul>
+
       </Form.Group> */}
       {this.createUI()}
       <Button onClick={this.onClick}>Add Instrument</Button>
@@ -96,6 +106,7 @@ class InstrumentExperience extends Component {
           <p key={index}> {instrument.name} - {instrument.experience}</p>
         )
         })}
+
    </div>
     )
   }      
