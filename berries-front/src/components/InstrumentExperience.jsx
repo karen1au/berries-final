@@ -34,7 +34,7 @@ class InstrumentExperience extends Component {
 
   addPair = () => {
     this.setState(prevState => ({
-      instruments: [...prevState.instruments, { instrument: '', experience: '' }]
+      instruments: [...prevState.instruments, { name: '', experience: '' }]
     }))
   }
 
@@ -43,6 +43,7 @@ class InstrumentExperience extends Component {
     let instruments = [...this.state.instruments]
     instruments.splice(instrument.index, 1)
     this.setState({ instruments }, () => console.log(this.state.instruments))
+    this.props.deleteInstrument(instrument.index,)
   }
 
   createUI = () => {

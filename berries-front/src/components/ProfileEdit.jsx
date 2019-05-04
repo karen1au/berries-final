@@ -11,11 +11,7 @@ class ProfileEdit extends Component{
     // redirect: false
     },
     genre: [],
-    instrument: [
-      {name: 'bass', experience: 2-4},
-      {name: 'acoustic guitar', experience: 0-2},
-      {name: 'synthesizer', experience: 4-6}
-    ]
+    instrument: []
     
   }
 
@@ -47,6 +43,10 @@ class ProfileEdit extends Component{
       experience: years
     }
     this.state.instrument.push(newInstrument);
+  }
+
+  deleteInstrument = (index) => {
+    this.state.instrument.splice(index, 1)
   }
 
   onClick = () =>{
@@ -132,7 +132,7 @@ class ProfileEdit extends Component{
             <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
               <UserGenres current_user={this.props.current_user}/>            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
-            <InstrumentExperience addInstrument={this.addInstrument} instruments={this.state.instrument}/> 
+            <InstrumentExperience addInstrument={this.addInstrument} deleteInstrument={this.deleteInstrument} instruments={this.state.instrument}/> 
           <Form.Group widths='equal'>
             {/* <div class="ui labeled input">
               <div class="ui label">
