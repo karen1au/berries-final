@@ -29,7 +29,9 @@ class ProfileEdit extends Component{
     
   }
 
-  toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+  toggleChange = (e, { value }) => {
+    this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+  }
 
   onChange = (e, { name, value }) => {
     this.setState({ user: {...this.state.user, [name]: value }}, () => console.log('STATE', this.state))
@@ -39,15 +41,12 @@ class ProfileEdit extends Component{
     this.setState({[name]: value }, () => console.log('STATE', this.state))
   }
 
-  addInstrument = (name, years) => {
-    const newInstrument = {
-      name: name,
-      experience: years
-    }
-    this.state.instrument.push(newInstrument);
+  addInstrument = (entries) => {
+    console.log('entries: ', entries)
+    const newInstruments = entries.map(entry => (
+      { name: entry.name, experience: entry.experience }
+    ), this.setState({ instruments: [...this.state.instruments, newInstruments]}), () => console.log(this.state));
   }
-
-
 
   onClick = () =>{
     const options = {
@@ -103,13 +102,13 @@ class ProfileEdit extends Component{
       <Container>          
         {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
         <Form >
-        <img class="ui small circular image" src={this.state.user.avatar}/>
+        <img className="ui small circular image" src={this.state.user.avatar}/>
           <Form.Group inline>
             <Form.Field>
               <Radio
                 label='Band'
                 name='radioGroup'
-                value={true}
+                value={'t'}
                 checked={this.state.user.band}
                 onChange={this.toggleChange}
               />
@@ -118,7 +117,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Individual'
                 name='radioGroup'
-                value={false}
+                value={'f'}
                 checked={!this.state.user.band}
                 onChange={this.toggleChange}
               />
