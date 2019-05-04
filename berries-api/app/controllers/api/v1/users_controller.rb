@@ -3,8 +3,11 @@ module Api::V1
     #before_action :require_login, except: [:create, :index]
     
     def index
-      #@somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(current_user.location)
-      @users = User.all
+      puts 'params', params
+      @current_user = User.find_by_id(JSON.parse(params[:user]))
+      puts @current_user
+      @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
       render json: @users
     end
 
@@ -17,9 +20,9 @@ module Api::V1
     end
 
     def search
-      #@somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(current_user.location)
-      #@users = User.within(50, :units => :kms, :origin => @somewhere.ll)
-      @users = User.where(location: 'Toronto')
+      @current_user = User.find_by_id(JSON.parse(params[:user]))
+      @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
