@@ -50,7 +50,6 @@ class InstrumentExperience extends Component {
         <Form.Group widths='equal'>
           <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
           <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
-          <Button onClick={this.onClick}>Add</Button>
           <Button onClick={this.deletePair}>Delete</Button>
         </Form.Group>
       </div>
@@ -64,7 +63,6 @@ class InstrumentExperience extends Component {
 
   onClick = () => {
     this.props.addInstrument(this.state.instrument, this.state.experience)
-    this.setState({instrument: '', experience: ''})
     this.addPair()
   }
 
@@ -78,6 +76,7 @@ class InstrumentExperience extends Component {
         <Button onClick={this.onClick}>Add</Button>
       </Form.Group> */}
       {this.createUI()}
+      <Button onClick={this.onClick}>Add Instrument</Button>
       {/* <ul>
         {this.props.instruments.forEach(element => {
           <li key={element.name}>asdasdsad</li>;
