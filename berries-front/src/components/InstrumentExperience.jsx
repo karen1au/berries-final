@@ -26,28 +26,64 @@ const experienceOptions = [
 
 class InstrumentExperience extends Component {
   state = {
-    instrument: '',
-    experience: ''
+    instruments: [{
+      instrument: '',
+      experience: ''
+    }]
+  }
+
+  addPair = () => {
+    this.setState(prevState => ({
+      instruments: [...prevState.instruments, { instrument: '', experience: '' }]
+    }))
+  }
+
+  deletePair = (i) => {
+    console.log(i)
+    let instruments = [...this.state.instruments]
+    instruments.splice(i, 1)
+    this.setState({ instruments }, () => console.log(this.state.instruments))
+  }
+
+  createUI = () => {
+    // console.log(i)
+    return this.state.instruments.map((i) => (
+      <div key={i}>
+        <Form.Group widths='equal' key={i}>
+          <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
+          <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
+          <Button onClick={this.deletePair}>Delete</Button>
+        </Form.Group>
+      </div>
+    ))
   }
 
   onChange = (e, { name, value }) => {
-    console.log(e.target, value)
+    console.log(e.target, value, e)
+    // state = { instruments: [] }
+    // let state = {
+    //   ...state,
+    //   instruments: { ...state.instruments, [name]: value },
+    // }
+
+
     this.setState({ [name]: value }, () => console.log('STATE', this.state))
   }
 
   onClick = () => {
     this.props.addInstrument(this.state.instrument, this.state.experience)
-    this.setState({instrument: '', experience: ''})
+    this.addPair()
   }
 
   render() { 
     
     return (
     <div>
-      <Form.Group widths='equal'>
+      {/* <Form.Group widths='equal'>
         <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
         <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
         <Button onClick={this.onClick}>Add</Button>
+
       </Form.Group>
       <ul>
         {this.props.instruments.map((instrument, index) => { 
@@ -56,6 +92,21 @@ class InstrumentExperience extends Component {
             )
           })}
         </ul>
+
+      </Form.Group> */}
+      {this.createUI()}
+      <Button onClick={this.onClick}>Add Instrument</Button>
+      {/* <ul>
+        {this.props.instruments.forEach(element => {
+          <li key={element.name}>asdasdsad</li>;
+        })}
+      </ul>   */}
+      {this.props.instruments.map((instrument, index) => { 
+        return (
+          <p key={index}> {instrument.name} - {instrument.experience}</p>
+        )
+        })}
+
    </div>
     )
   }      

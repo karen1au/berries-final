@@ -4,6 +4,11 @@ import SearchContainer from './search/SearchContainer'
 
 
 class Home extends Component {
+
+// onClick = () => {
+//   this.props.queryResults()
+// }
+
 render(){
   return (
     <div>
