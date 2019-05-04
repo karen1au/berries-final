@@ -23,30 +23,101 @@ class App extends Component {
         currentExperience: null
       },
       current_user: Auth.getCookie(),
-      notifications: []
+      notifications: [],
+      chats: [],
+      chat_users: [],
+      activeChat: null,
+      messages: []
     } 
   }
 
   componentDidMount() {
-
     fetch('http://localhost:3000/api/v1/users.json')
     .then(res => res.json())
-    .then(user => {
+    .then(users => {
       this.setState({
-        users: user,
-      },( () => {
-      fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
+        users: users,
+      }, (() => {
+        if (this.state.current_user) {
+          this.loadNotifications();
+        }
+      }))
+    })
+  }
+
+  loadNotifications = () => {
+    fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
       .then(res => res.json())
       .then(notis => {
         this.setState({
           notifications: notis
         })
-      console.log("just logged in:", Auth.getCookie())
+        // console.log("Component did mount user_id:", Auth.getCookie())
       })
+  }
+
+ //For Chatlist 
+  getChats = () => {
+    fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+    .then(res => res.json())
+    .then(chats => {
+      this.setState({ chats }
+        ,(() => {
+        console.log("all chats", this.state.chats)
+        // this.displayChat(this.state.chats)
+      }))
     })
-  )
-  })
-}
+  }
+
+  // displayChat = (chatsid) => {
+  //   fetch(`http://localhost:3000/api/v1/chats/${chatsid}`)
+  //   .then(res => res.json())  
+  //   .then(users => {
+  //     // console.log('chat users are:',users)
+  //     this.setState({chat_users: users})
+  //     })
+  // }
+
+  handleReceivedChats = res => {
+    console.log('chat response: ', res);
+    // re-render chat list if user is in chat page
+      // fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+      // .then(res => res.json())
+      // .then(chats => {
+        // console.log('chat refetched',chats)
+    this.setState({ chats: [...this.state.chats, res] })
+    
+  };
+
+  handleReceivedMessage = res => {
+    console.log('message response: ', res);
+    // add res.message to end of state
+    // pass down handleReceivedMessage from App.js and call this.props.handleReceivedMessage(res.message);
+    // setState({ messages: [...this.state.messages, message]})
+    // fetch(`http://localhost:3000/api/v1/messages?chat=${this.state.activeChat}`)
+    // .then(res => res.json())  
+    // .then(msg => {
+    this.setState({messages: [...this.state.messages, res]})
+      // console.log("MESSAGE REFETCHED",this.state.messages)
+      
+  };
+
+  // handleClick = id => {
+  //   this.setState({ activeChat: id });
+  // };
+
+  displayMessage = (chatID) => {
+    event.preventDefault();
+    this.setState({activeChat: chatID},(()=>{
+    fetch(`http://localhost:3000/api/v1/messages?chat=${chatID}`)
+    .then(res => res.json())  
+    .then(msg => {
+      this.setState({messages: msg})
+      // console.log("this is messages",this.state.messages)
+      })
+    }))
+  }
+
 
   handleSelection = (key, value) => {
     if (key === 'commitment') {
@@ -73,7 +144,7 @@ class App extends Component {
       }
     }
     fullURL = fullURL.replace(/ /g, '%20')
-    console.log(fullURL)
+    // console.log(fullURL)
     return fullURL;
   }
 
@@ -81,14 +152,14 @@ class App extends Component {
     fetch(this.createURL())
     .then(res => res.json())
     .then(user => {
-      console.log(user)
+      // console.log(user)
       this.setState({
         users: user,
       })
     })
   }
 
-
+//User Authentication
   handleSignUpSubmit = (e, data) => {
     e.preventDefault();
     const options = {
@@ -104,18 +175,18 @@ class App extends Component {
     .then( res => {
       Auth.authenticateToken(res.token);
       Auth.setCookie(res.user_id);
-      console.log(res)
+      // console.log(res)
       this.setState({
         auth: Auth.isUserAuthenticated(),
         current_user: Auth.getCookie()
       })
-      console.log(this.state)
+      // console.log(this.state)
     }).catch(err => console.log(err))
   }
 
   handleLogInSubmit = (e, data) => {
     e.preventDefault();
-    console.log("LOGIN", data)
+    // console.log("LOGIN", data)
     const options = {
       method: 'post',
       headers: {
@@ -125,16 +196,18 @@ class App extends Component {
       body: JSON.stringify(data)
     }
     fetch(`http://localhost:3000/api/v1/login`,options)
-    .then(res => res.json())
-    .then( res => {
-      (res.token)? Auth.authenticateToken(res.token) : null;
-      (res.user_id)? Auth.setCookie(res.user_id) : null;
-      this.setState({
-        auth: Auth.getToken(),
-        current_user: Auth.getCookie()
-      });
-      // console.log(Auth.isUserAuthenticated())
-    }).catch(err => console.log(err))
+      .then(res => res.json())
+      .then( res => {
+        res.token ? Auth.authenticateToken(res.token) : null;
+        res.user_id ? Auth.setCookie(res.user_id) : null;
+        this.setState({
+          auth: Auth.getToken(),
+          current_user: Auth.getCookie()
+        }, () => {
+          this.loadNotifications();
+        });
+    })
+    .catch(err => console.log(err))
   }
 
   handleLogOut = () => {
@@ -155,12 +228,31 @@ class App extends Component {
 
   }
 
+
+  //Handling jam request
+  onRefuse = (name) => {
+    const options = {
+      method: 'delete',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+    }
+    fetch(`http://localhost:3000/api/v1/notifications/${name}`, options)
+      .then(()=>{
+        this.loadNotifications();
+      })
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div>
         
-          <Route path="/" render={() => <Nav notifications={this.state.notifications} handleLogOut={this.handleLogOut}/>} />
+          <Route path="/" render={() => <Nav notifications={this.state.notifications} 
+          getChats={this.getChats}
+          handleLogOut={this.handleLogOut} 
+          onRefuse={this.onRefuse}/>} />
           <Switch>
           <Route path="/users/:id" 
             render={() => (this.state.auth)
@@ -173,11 +265,17 @@ class App extends Component {
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)
-            ? <Redirect to exact path='/'/>
+            ? <Redirect to='/'/>
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
           <Route path="/chats" 
             render={() => (this.state.auth)
-            ? <ChatsList current_user={this.state.current_user}/>
+            ? <ChatsList current_user={this.state.current_user}
+                chats={this.state.chats}
+                messages={this.state.messages}
+                activeChat={this.state.activeChat}
+                displayMessage={this.displayMessage}
+                handleReceivedChats={this.handleReceivedChats}
+                handleReceivedMessage={this.handleReceivedMessage}/>
             : <Redirect to='/'/>}/>
           <Route component={Error}/>
 

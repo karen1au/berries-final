@@ -28,7 +28,18 @@ class NewMessageForm extends React.Component {
       
     });
     console.log("current_state",this.state)
-    this.setState({ content: '' });
+    this.setState({ content: '' }, () => {
+      // const options = {
+      //   method: 'post',
+      //   headers: {
+      //     'content-type': 'application/json',
+      //     'accept': 'application/json'
+      //   },
+      //   body: JSON.stringify({sender: this.state.current_user, receiver: receiver, noti_type: "new message" })
+      // }
+      // fetch(`http://localhost:3000/api/v1/notifications`,options)
+      //   .then( res => console.log('chat notification posted'))
+    });
   };
 
   render = () => {

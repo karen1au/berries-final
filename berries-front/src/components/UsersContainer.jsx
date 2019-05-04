@@ -45,30 +45,31 @@ class UsersContainer extends Component {
       <div>
 
         <table>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Commitment</th>
-            <th>Location</th>  
-            <th>Genre</th> 
-          </tr>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Commitment</th>
+              <th>Location</th>  
+              <th>Genre</th> 
+            </tr>
+          </thead>
           <tbody>
             
             {this.props.users.map((user) => {
               return(
-                
-                <div key={user.id}>
-                  <tr>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.commitment}</td>
-                    <td>{user.location}</td>
+                <tr key={user.id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.commitment}</td>
+                  <td>{user.location}</td>
+                  <td>
                     <Button inverted color='red' 
                       name={user.id}
                       onMouseOver={this.onChange}
                       onClick={(e) => this.handleConnectClick(e, this.state)}>jam</Button>
-                  </tr>
-                </div>
+                  </td>
+                </tr>
               )
             })}
           </tbody>

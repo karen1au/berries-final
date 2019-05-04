@@ -10,62 +10,41 @@ class Nav extends Component {
     current_user: Auth.getCookie(),
     jam_request: false,
     new_message: false,
-    notifications: this.props.notifications
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
-    .then(res => res.json())
-    .then(notis => {
-      this.setState({
-        notifications: notis
-      })
-    })
-
+    this.props.getChats()
   }
+
   categorizeNoti = (noti) => {
     noti.map((noti) => {
-      if (noti[2] == "jam request"){
-        this.setState(prevState => ({ jam_request: true, notifications: [...prevState.notifications, noti]}))
-    } if (noti[2] == "new message"){
+    if (noti[2] == "jam request"){
+      this.setState(prevState => ({ jam_request: true, notifications: [...prevState.notifications, noti]}))
+    }
+    if (noti[2] == "new message"){
       this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
     }
   })
 }
 
   handleNotifications = (res) => {
-    console.log("this is notification for karen",res)
+    // console.log("this is notification for karen",res)
     this.categorizeNoti(res)
     // this.setState({request: true, notifications: res})
   }
 
   openNoti = () => {
+    event.preventDefault();
     this.setState({jam_request: false})
   }
 
   openChat = () => {
     this.setState({new_message: false})
+    console.log("clicked chat button")
   }
 
-  refuse = (event) => {
-    event.preventDefault();
-    const options = {
-      method: 'delete',
-      headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-      },
-    }
-    fetch(`http://localhost:3000/api/v1/notifications/${event.target.name}`,options)
-    .then(()=>{
-      fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
-      .then(res => res.json())
-      .then(notis => {
-        this.setState({
-          notifications: notis
-        })
-      })
-    })
+  refuse = (id) => {
+    this.props.onRefuse(id);
   }
 
   accept = (event) => {
@@ -79,7 +58,7 @@ class Nav extends Component {
       },
       body: JSON.stringify({user1_id: this.state.current_user, user2_id: event.target.name})
     }
-    fetch(`http://localhost:3000/api/v1/relationships`,options)
+    fetch(`http://localhost:3000/api/v1/relationships`, options)
     .then(()=>{
       fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
       .then(res => res.json())
@@ -95,11 +74,10 @@ class Nav extends Component {
             'content-type': 'application/json',
             'accept': 'application/json'
           },
-          body: JSON.stringify({sender: this.state.current_user, receiver: receiver, noti_type: "new message" })
+          body: JSON.stringify({sender: this.state.current_user, receiver: event.target.name, noti_type: "new message" })
         }
         fetch(`http://localhost:3000/api/v1/notifications`,options)
-        .then( res => console.log('chat notification posted'))
-        
+          .then( res => console.log('chat notification posted'))
       })
     })
   }
@@ -121,14 +99,16 @@ class Nav extends Component {
     }
 
     let noti_list;
-    if(this.state.notifications.length > 0){
-      noti_list = this.state.notifications.map((noti) => {
-        if(noti[2] == "jam request"){
+    if (this.props.notifications.length > 0){
+      noti_list = this.props.notifications.map((notification) => {
+        if(notification[2] == "jam request"){
         return (
-        <Grid.Row textAlign='left' key={noti[0]}>
-          <span><b>{noti[1]}</b>would like to Jam with you!</span>
-          <Button icon name={noti[3]} onClick={this.accept}><Icon name='check'/></Button>
-          <Button icon name={noti[0]} onClick={this.refuse}><Icon name='close'/></Button>
+        <Grid.Row textAlign='left' key={notification[0]}>
+          <span><b>{notification[1]}</b>would like to Jam with you!</span>
+          <Button icon name={notification[3]} onClick={this.accept}><Icon name='check'/></Button>
+          <Button icon name={notification[0]} onClick={() => this.props.onRefuse(notification[0])}>
+            <Icon name='close'/>
+          </Button>
       </Grid.Row>
       )}
       })} else {
