@@ -1,22 +1,23 @@
 import React from 'react';
+import Auth from '../services/Auth';
 
 class NewMessageForm extends React.Component {
   state = {
+    user_id: Auth.getCookie(),
     content: '',
-    chat_id: this.props.chat_id
+    chat_id: this.props.chat
   };
 
-  componentWillReceiveProps = nextProps => {
-    this.setState({ chat_id: nextProps.chat_id });
-  };
+  // componentWillReceiveProps = nextProps => {
+  //   this.setState({ chat_id: nextProps.chat_id });
+  // };
 
   handleChange = e => {
-    this.setState({ content: e.target.value });
+    this.setState({ content: e.target.value, chat_id: this.props.chat });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-
     fetch(`http://localhost:3000/api/v1/messages`, {
       method: 'POST',
       headers: {
@@ -24,7 +25,9 @@ class NewMessageForm extends React.Component {
         'accept': 'application/json'
       },
       body: JSON.stringify(this.state)
+      
     });
+    console.log("current_state",this.state)
     this.setState({ content: '' });
   };
 
