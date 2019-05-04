@@ -25,7 +25,7 @@ class ProfileEdit extends Component{
 
   }
 
-  toggleChange = (e, { value }) => {
+  toggleStatus = (e, { value }) => {
     this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
   }
 
@@ -111,7 +111,7 @@ class ProfileEdit extends Component{
                 name='radioGroup'
                 value={'t'}
                 checked={this.state.user.band}
-                onChange={this.toggleChange}
+                onChange={this.toggleStatus}
               />
             </Form.Field>
             <Form.Field>
@@ -120,7 +120,7 @@ class ProfileEdit extends Component{
                 name='radioGroup'
                 value={'f'}
                 checked={!this.state.user.band}
-                onChange={this.toggleChange}
+                onChange={this.toggleStatus}
               />
             </Form.Field>
           </Form.Group>
@@ -129,17 +129,11 @@ class ProfileEdit extends Component{
             <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange} />
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
-<<<<<<< HEAD
-            <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange} />
-              <UserGenres current_user={this.props.current_user} onGenreLoad={this.onGenreLoad} onGenreDelete={this.onGenreDelete} />            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange} />
-            <InstrumentExperience addInstrument={this.addInstrument} instruments={this.state.instrument} /> 
-=======
             <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
               <UserGenres current_user={this.props.current_user}/>            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
-            <InstrumentExperience addInstrument={this.addInstrument} deleteInstrument={this.deleteInstrument} instruments={this.state.instrument}/> 
->>>>>>> b2e5cb561c8c28269756fc07bae3af92aa3b80dc
+              <InstrumentExperience addInstrument={this.addInstrument} deleteInstrument={this.deleteInstrument} instruments={this.state.instrument}/> 
           <Form.Group widths='equal'>
             {/* <div class="ui labeled input">
               <div class="ui label">
