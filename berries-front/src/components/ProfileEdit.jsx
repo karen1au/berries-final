@@ -46,7 +46,8 @@ class ProfileEdit extends Component{
       name: name,
       experience: years
     }
-    this.state.instrument.push(newInstrument)
+    this.state.instrument.push(newInstrument);
+    console.log(this.state)
   }
 
 
