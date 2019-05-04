@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import './App.css';
-
 import LogIn from './components/LogIn';
 import Error from './components/Error'
 import Home from './components/Home'
@@ -33,20 +32,21 @@ class App extends Component {
     fetch('http://localhost:3000/api/v1/users.json')
     .then(res => res.json())
     .then(user => {
-      console.log(user)
       this.setState({
-        users: user
-      })
-    }).then(() => {
-    fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
-    .then(res => res.json())
-    .then(notis => {
-      this.setState({
-        notifications: notis
+        users: user,
+      },( () => {
+      fetch(`http://localhost:3000/api/v1/notifications?user=${this.state.current_user}`)
+      .then(res => res.json())
+      .then(notis => {
+        this.setState({
+          notifications: notis
+        })
+      console.log("just logged in:", Auth.getCookie())
       })
     })
+  )
   })
-  }
+}
 
   handleSelection = (key, value) => {
     if (key === 'commitment') {
@@ -127,7 +127,6 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/login`,options)
     .then(res => res.json())
     .then( res => {
-      // console.log("LOGIN RESP", res)
       (res.token)? Auth.authenticateToken(res.token) : null;
       (res.user_id)? Auth.setCookie(res.user_id) : null;
       this.setState({
@@ -169,16 +168,17 @@ class App extends Component {
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
           <Route exact path="/"
             render={() => (this.state.auth)
-
               ? <Home cable={this.props.cable}
               users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
-
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)
-            ? <Redirect to='/'/>
+            ? <Redirect to exact path='/'/>
             : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
-          <Route path="/chats" render={() => <ChatsList current_user={this.state.current_user}/>} />
+          <Route path="/chats" 
+            render={() => (this.state.auth)
+            ? <ChatsList current_user={this.state.current_user}/>
+            : <Redirect to='/'/>}/>
           <Route component={Error}/>
 
         </Switch>

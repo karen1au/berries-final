@@ -137,7 +137,10 @@ class Nav extends Component {
 
       let navElement;
       (Auth.getToken())?
-      navElement = <div><Button onClick={this.props.handleLogOut}>Logout</Button>
+      navElement = 
+      <div className="nav-btn">
+      <Button positive as="a" href={"/"}>Home</Button>
+      <Button onClick={this.props.handleLogOut}>Logout</Button>
       <Button basic color={message} onClick={this.openChat} as="a" href={"/chats"}>Chat</Button>
       <Button positive as="a" href={`/users/${this.state.current_user}`}>Profile</Button>
       <div className="notification-group">

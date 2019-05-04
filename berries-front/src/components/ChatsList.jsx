@@ -18,9 +18,8 @@ class ChatsList extends React.Component {
     fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
       .then(res => res.json())
       .then(chats => {
-        console.log('this is chats',chats)
         this.setState({ chats },(() => {
-          console.log('*****',this.state.chats)
+          console.log("all chats", this.state.chats)
           // this.displayChat(this.state.chats)
         }))
       })
@@ -71,17 +70,43 @@ class ChatsList extends React.Component {
     }))
   }
 
+  renderChats = (chatlist) => {
+    const container = [];
+    const allchats = chatlist
+    const entries = Object.entries(allchats)
+    for (const [allchat, count] of entries){
+      container.push(
+        <Button onClick={() => this.displayMessage(allchat)} name={allchat}>
+        <h4>{allchat}</h4>
+        {count.map((user)=> <p>{user}</p>)}
+        </Button>
+      )
+      } return container;
+    }
+
+    findRelationship = () => {
+      
+    }
+            
+          
+        
+
   render = () => {
     const { chats, activeChat } = this.state;
+
+
     let show_msg;
-    if (this.state.messages.length < 0) {
-      show_msg = <div><h3></h3>There is no message yet...<h3></h3></div>
+    if (!activeChat) {
+      show_msg = <h3>Pick a Jar</h3>
     } else {
-    show_msg = this.state.messages.map((msg) => { 
+      (!this.state.messages.length) ?
+      show_msg = <div><h3>There is no message yet...</h3></div> :
+      show_msg = this.state.messages.map((msg) => { 
       return (
          <div id={msg[0]}>
          <span>{msg[1]}:{msg[2]}</span>
          <span><Moment fromNow>{msg[3]}</Moment></span>
+         <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div>
          </div>
       )}
        )
@@ -99,22 +124,21 @@ class ChatsList extends React.Component {
           <Grid.Row stretched>
         <Grid.Column>
         <h2>Chats</h2>
-          {this.state.chats.map((chat) => {
-            let chatID = chat.chat_id
-            return (
-            <Button onClick={() => this.displayMessage(chatID)} name={chatID}>
-            <h4>{chatID}</h4>
-              {this.state.chat_users.map((user => 
-                  <p>{user.email}</p>
-                ))}
-              </Button>
-          )})}
-        </Grid.Column>
-        <Grid.Column width={12}>
-        {show_msg}
+        {this.renderChats(chats)}
 
-          <Segment><NewMessageForm chat={this.state.activeChat}/></Segment>
         </Grid.Column>
+        {this.state.activeChat
+        ? <Grid.Column width={12}>
+          <Segment>
+            <Button></Button>
+            {show_msg}
+          </Segment>
+          
+          <NewMessageForm chat={this.state.activeChat}/> 
+          </Grid.Column>
+        : <Grid.Column width={12}>
+          <h3>Pick a Jar</h3>
+          </Grid.Column>}
           </Grid.Row>
         </Grid>
       </div>
@@ -124,10 +148,3 @@ class ChatsList extends React.Component {
 
 export default ChatsList;
 
-// helpers
-
-const findActiveChat = (chats, activeChat) => {
-  return chats.find(
-    chat => chat.id === activeChat
-  );
-};
