@@ -1,9 +1,9 @@
 import React from 'react';
 import { Segment, Grid, Button } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
-// import MessagesArea from './MessagesArea';
 import NewMessageForm from './NewMessageForm';
 import Auth from '../services/Auth';
+import Moment from 'react-moment';
 
 class ChatsList extends React.Component {
   state = {
@@ -81,7 +81,7 @@ class ChatsList extends React.Component {
       return (
          <div id={msg[0]}>
          <span>{msg[1]}:{msg[2]}</span>
-         <span>{msg[3]}</span>
+         <span><Moment fromNow>{msg[3]}</Moment></span>
          </div>
       )}
        )

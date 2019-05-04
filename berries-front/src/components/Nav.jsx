@@ -135,19 +135,23 @@ class Nav extends Component {
         noti_list = <span>You don't have notifications yet...</span>
       }
 
+      let navElement;
+      (Auth.getToken())?
+      navElement = <div><Button onClick={this.props.handleLogOut}>Logout</Button>
+      <Button basic color={message} onClick={this.openChat} as="a" href={"/chats"}>Chat</Button>
+      <Button positive as="a" href={`/users/${this.state.current_user}`}>Profile</Button>
+      <div className="notification-group">
+      <Popup trigger={<Button basic color={jam} onClick={this.openNoti}>Jam Request</Button>} on='click' >
+      {noti_list}
+      </Popup></div>
+      </div>
+      : navElement = <Button positive as="a" href={"/login"}>Login</Button>
+
     return (
       <div>
         <ActionCable  channel={{ channel: 'NotificationsChannel', current_user: this.state.current_user}}
             onReceived={(res) => this.handleNotifications(res)}/>
-        <Button positive as="a" href={"/login"}>Login</Button>
-        <Button onClick={this.props.handleLogOut}>Logout</Button>
-        <Button basic color={message} onClick={this.openChat} as="a" href={"/chats"}>Chat</Button>
-        <Button positive as="a" href={`/users/${this.state.current_user}`}>Profile</Button>
-        <div className="notification-group">
-        <Popup trigger={<Button basic color={jam} onClick={this.openNoti}>Jam Request</Button>} on='click' >
-        {noti_list}
-        </Popup>
-        </div>
+      {navElement}
       </div>
     )
     }

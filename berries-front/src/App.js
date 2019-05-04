@@ -127,14 +127,14 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/login`,options)
     .then(res => res.json())
     .then( res => {
-      console.log("LOGIN RESP", res)
-      Auth.authenticateToken(res.token);
-      Auth.setCookie(res.user_id);
+      // console.log("LOGIN RESP", res)
+      (res.token)? Auth.authenticateToken(res.token) : null;
+      (res.user_id)? Auth.setCookie(res.user_id) : null;
       this.setState({
         auth: Auth.getToken(),
         current_user: Auth.getCookie()
-      })
-      console.log(Auth.isUserAuthenticated())
+      });
+      // console.log(Auth.isUserAuthenticated())
     }).catch(err => console.log(err))
   }
 
