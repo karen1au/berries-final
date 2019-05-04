@@ -53,22 +53,32 @@ module Api::V1
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
-
-        instrument_params.each do |instrument|
-          puts 'instrument params', instrument
-          @instrument_id = Instrument.find_by_name(instrument["name"])
-          @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
-          @user_exp.save!
-        end
-        
-        genre_params.each do |genre|  
-          @genre_id = Genre.find_by_name(genre)
-          @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
-          @user_genre.save!
-        end  
         render json: @user
       else
-        render json: { error: error }
+        # render json: { error: error }
+      end
+
+      if params[:instrument].present?
+        instrument_params.each do |instrument|
+        puts 'instrument params', instrument
+        @instrument_id = Instrument.find_by_name(instrument["name"])
+        @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
+        @user_exp.save!
+        end
+        # render json: @user
+      else
+        # render json: { error: error }
+      end
+        
+      if params[:genre].present?
+        genre_params.each do |genre|  
+        @genre_id = Genre.find_by_name(genre)
+        @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
+        @user_genre.save!
+        end  
+        # render json: @user
+      else
+        # render json: { error: error }
       end
     end
 
