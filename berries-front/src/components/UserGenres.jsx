@@ -18,10 +18,25 @@ class UserGenres extends Component {
   }
 
   onDelete = (event) => {
+    let genre = event.target.name
     let genres = [...this.state.genres];
     let filtered = genres.filter( genre => genre !== event.target.name );
     
-    this.setState({ genres: filtered }, () => console.log(this.state));
+    this.setState({ genres: filtered }, () => {
+      
+      const options = {
+        method: 'delete',
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json'
+        }
+      }
+
+      fetch(`http://localhost:3000/api/v1/user_genres/${this.props.current_user}?genre=${genre}`, options)
+        // .then(res => res.json())
+        .then(console.log(this.state))
+    });
+
   }
 
   render() {

@@ -26,6 +26,7 @@ class ProfileEdit extends Component{
     .then(user => {
       this.setState({ user })
     })
+
   }
 
   toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
@@ -46,7 +47,7 @@ class ProfileEdit extends Component{
     this.state.instrument.push(newInstrument);
   }
 
-  onClick = () =>{
+  onClick = () => {
     const options = {
       method: 'put',
       headers: {
