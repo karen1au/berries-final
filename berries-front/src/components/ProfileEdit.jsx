@@ -11,11 +11,7 @@ class ProfileEdit extends Component{
     // redirect: false
     },
     genre: [],
-    instrument: [
-      {name: 'bass', experience: 2-4},
-      {name: 'acoustic guitar', experience: 0-2},
-      {name: 'synthesizer', experience: 4-6}
-    ]
+    instrument: []
     
   }
 
@@ -29,7 +25,9 @@ class ProfileEdit extends Component{
 
   }
 
-  toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+  toggleChange = (e, { value }) => {
+    this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+  }
 
   onChange = (e, { name, value }) => {
     this.setState({ user: {...this.state.user, [name]: value }}, () => console.log('STATE', this.state))
@@ -47,7 +45,11 @@ class ProfileEdit extends Component{
     this.state.instrument.push(newInstrument);
   }
 
-  onClick = () => {
+  deleteInstrument = (index) => {
+    this.state.instrument.splice(index, 1)
+  }
+
+  onClick = () =>{
     const options = {
       method: 'put',
       headers: {
@@ -101,13 +103,13 @@ class ProfileEdit extends Component{
       <Container>          
         {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
         <Form >
-        <img class="ui small circular image" src={this.state.user.avatar}/>
+        <img className="ui small circular image" src={this.state.user.avatar}/>
           <Form.Group inline>
             <Form.Field>
               <Radio
                 label='Band'
                 name='radioGroup'
-                value={true}
+                value={'t'}
                 checked={this.state.user.band}
                 onChange={this.toggleChange}
               />
@@ -116,7 +118,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Individual'
                 name='radioGroup'
-                value={false}
+                value={'f'}
                 checked={!this.state.user.band}
                 onChange={this.toggleChange}
               />
@@ -127,10 +129,17 @@ class ProfileEdit extends Component{
             <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange} />
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
+<<<<<<< HEAD
             <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange} />
               <UserGenres current_user={this.props.current_user} onGenreLoad={this.onGenreLoad} onGenreDelete={this.onGenreDelete} />            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange} />
             <InstrumentExperience addInstrument={this.addInstrument} instruments={this.state.instrument} /> 
+=======
+            <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
+              <UserGenres current_user={this.props.current_user}/>            
+            <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
+            <InstrumentExperience addInstrument={this.addInstrument} deleteInstrument={this.deleteInstrument} instruments={this.state.instrument}/> 
+>>>>>>> b2e5cb561c8c28269756fc07bae3af92aa3b80dc
           <Form.Group widths='equal'>
             {/* <div class="ui labeled input">
               <div class="ui label">

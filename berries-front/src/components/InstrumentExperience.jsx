@@ -27,51 +27,49 @@ const experienceOptions = [
 class InstrumentExperience extends Component {
   state = {
     instruments: [{
-      instrument: '',
+      name: '',
       experience: ''
     }]
   }
 
   addPair = () => {
     this.setState(prevState => ({
-      instruments: [...prevState.instruments, { instrument: '', experience: '' }]
+      instruments: [...prevState.instruments, { name: '', experience: '' }]
     }))
   }
 
-  deletePair = (i) => {
-    console.log(i)
+  deletePair = (event, instrument) => {
+    console.log('index: ', instrument, instrument.index)
     let instruments = [...this.state.instruments]
-    instruments.splice(i, 1)
+    instruments.splice(instrument.index, 1)
     this.setState({ instruments }, () => console.log(this.state.instruments))
+    this.props.deleteInstrument(instrument.index,)
   }
 
   createUI = () => {
-    // console.log(i)
-    return this.state.instruments.map((i) => (
-      <div key={i}>
-        <Form.Group widths='equal' key={i}>
-          <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
-          <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
-          <Button onClick={this.deletePair}>Delete</Button>
+    return this.state.instruments.map((instrument, index) => (
+      <div key={index}>
+        <Form.Group widths='equal'>
+          <Form.Field control={Select} index={index} label='Instrument' name='name' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
+          <Form.Field control={Select} index={index} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
+          <Button index={index} onClick={this.deletePair}>Delete</Button>
         </Form.Group>
       </div>
     ))
   }
 
-  onChange = (e, { name, value }) => {
-    console.log(e.target, value, e)
-    // state = { instruments: [] }
-    // let state = {
-    //   ...state,
-    //   instruments: { ...state.instruments, [name]: value },
-    // }
+  onChange = (event, instrument) => {
+    const { name, value } = instrument
+    let instruments = [...this.state.instruments]
+    instruments[instrument.index] = {...instruments[instrument.index], [name]: value}
 
-
-    this.setState({ [name]: value }, () => console.log('STATE', this.state))
+    this.setState({ instruments }, () => console.log('STATE', this.state))
   }
 
   onClick = () => {
-    this.props.addInstrument(this.state.instrument, this.state.experience)
+    const lastEntry = this.state.instruments[this.state.instruments.length - 1]
+    console.log(lastEntry)
+    this.props.addInstrument(lastEntry.name, lastEntry.experience)
     this.addPair()
   }
 
