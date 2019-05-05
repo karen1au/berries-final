@@ -9,6 +9,7 @@ import ProfileEdit from './components/ProfileEdit'
 import Nav from './components/Nav'
 import Auth from './services/Auth'
 import ChatsList from  './components/ChatsList'
+import UserContainer from  './components/UserContainer'
 
 class App extends Component {
   constructor() {
@@ -302,41 +303,44 @@ class App extends Component {
               new_message={this.state.new_message}
               notifications={this.state.notifications}/>
           }/>
+          
           <Switch>
 
-          <Route path="/users/:id" 
-            render={() => (this.state.auth)
-              ? <ProfileEdit current_user={this.state.current_user}/> 
+            <Route path="/users/:id/show" render={() => <UserContainer users={this.state.users}/> } />
 
-              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
-          <Route exact path="/"
-            render={() => (this.state.auth)
-              ? <Home 
-                  cable={this.props.cable} 
-                  users={this.state.users} 
-                  queryResults={this.queryResults} 
-                  handleSelection={this.handleSelection}/>
-              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
-          <Route path="/login" 
-            render={() => (this.state.auth)
-            ? <Redirect to='/'/>
-            : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
-          <Route path="/chats" 
-            render={() => (this.state.auth)
-            ? <ChatsList current_user={this.state.current_user}
-                chats={this.state.chats}
-                messages={this.state.messages}
-                activeChat={this.state.activeChat}
-                displayMessage={this.displayMessage}
-                getChats={this.getChats}
-                handleReceivedChats={this.handleReceivedChats}
-                handleReceivedMessage={this.handleReceivedMessage}/>
-            : <Redirect to='/'/>}/>
-          <Route component={Error}/>
+            <Route path="/users/:id" 
+              render={() => (this.state.auth)
+                ? <ProfileEdit current_user={this.state.current_user}/> 
 
-        </Switch>
+                : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
+            <Route exact path="/"
+              render={() => (this.state.auth)
+                ? <Home 
+                    cable={this.props.cable} 
+                    users={this.state.users} 
+                    queryResults={this.queryResults} 
+                    handleSelection={this.handleSelection}/>
+                : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
+            <Route path="/login" 
+              render={() => (this.state.auth)
+              ? <Redirect to='/'/>
+              : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
+            <Route path="/chats" 
+              render={() => (this.state.auth)
+              ? <ChatsList current_user={this.state.current_user}
+                  chats={this.state.chats}
+                  messages={this.state.messages}
+                  activeChat={this.state.activeChat}
+                  displayMessage={this.displayMessage}
+                  getChats={this.getChats}
+                  handleReceivedChats={this.handleReceivedChats}
+                  handleReceivedMessage={this.handleReceivedMessage}/>
+              : <Redirect to='/'/>}/>
+            <Route component={Error}/>
 
-      </div>
+          </Switch>
+
+        </div>
       </BrowserRouter>
     );  
   }

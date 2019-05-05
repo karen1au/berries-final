@@ -43,7 +43,6 @@ class UsersContainer extends Component {
   render() {
     return (
       <div>
-        <UserContainer users={this.props.users}/>
 
         <table>
           <thead>
@@ -73,7 +72,7 @@ class UsersContainer extends Component {
                   <td>
                     <Button 
                       positive as="a" 
-                      href={`/users/${user.id}`}
+                      href={`/users/${user.id}/show`}
                       name={user.id}
                     >Inspect</Button>
                   </td>
@@ -82,6 +81,7 @@ class UsersContainer extends Component {
             })}
           </tbody>
         </table>
+
       </div>
     )
   }
