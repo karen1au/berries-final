@@ -107,7 +107,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Band'
                 name='radioGroup'
-                value={'t'}
+                value={true}
                 checked={this.state.user.band}
                 onChange={this.toggleStatus}
               />
@@ -116,7 +116,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Individual'
                 name='radioGroup'
-                value={'f'}
+                value={false}
                 checked={!this.state.user.band}
                 onChange={this.toggleStatus}
               />
