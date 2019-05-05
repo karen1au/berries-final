@@ -55,9 +55,10 @@ module Api::V1
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
-        # render json: @user
+        puts 'user success', @user
+        # redirect_to :controller => 'users', :action => 'show', status: 301 and return
       else
-        # render json: { error: error }
+        puts 'user error'
       end
 
       if params[:instrument].present?
@@ -67,9 +68,10 @@ module Api::V1
         @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
         @user_exp.save!
         end
-        # render json: @user
+        puts 'instrument success', @user_exp
+        # redirect_to :controller => 'users', :action => 'show', status: 301 and return
       else
-        # render json: { error: error }
+        puts 'instrument error'
       end
         
       if params[:genre].present?
@@ -78,9 +80,10 @@ module Api::V1
         @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
         @user_genre.save!
         end  
-        # render json: @user
+        puts 'genre success', @user_genre
+        # redirect_to :controller => 'users', :action => 'show', status: 301 and return
       else
-        # render json: { error: error }
+        puts 'genre error'
       end
     end
 

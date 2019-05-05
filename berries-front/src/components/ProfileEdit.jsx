@@ -58,7 +58,7 @@ class ProfileEdit extends Component{
     }
     console.log('options body', options.body)
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
-    .then(res => res.json())
+    // .then(res => res.json())
     .then(console.log(this.state))
   }
 
