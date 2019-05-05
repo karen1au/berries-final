@@ -2,7 +2,7 @@ module Api::V1
   class NotificationsController < ApplicationController
     def create
       if params[:chat].present?
-        chat_users = ChatUser.where(chat_id: params[:chat])
+        chat_users = ChatUser.where("chat_id = ? AND user_id != ?", params[:chat], params[:sender])
         chat_users.each do |user|
           @user = user
           notification = Notification.new(sender_id: params[:sender], receiver_id: @user.user_id, noti_type: params[:noti_type])
