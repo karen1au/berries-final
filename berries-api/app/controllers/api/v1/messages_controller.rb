@@ -4,11 +4,12 @@ module Api::V1
       message = Message.new(message_params)
       users = ChatUser.where(chat_id: message_params[:chat_id])
       if message.save
-        serialized_message = ActiveModelSerializers::Adapter::Json.new(
-          MessageSerializer.new(message)
-          ).serializable_hash
+        @message = Message.joins(:user).where(id: message.id).pluck(:id, :name, :content, :created_at, :chat_id)
+        # serialized_message = ActiveModelSerializers::Adapter::Json.new(
+        #   MessageSerializer.new(message)
+        #   ).serializable_hash
           users.each do |user|
-            ActionCable.server.broadcast("message_user#{user.user_id}", serialized_message)
+            ActionCable.server.broadcast("message_user#{user.user_id}", @message)
           end
             puts "MESSAGE BROAD!"
       end

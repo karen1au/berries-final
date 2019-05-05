@@ -85,7 +85,9 @@ class App extends Component {
     // fetch(`http://localhost:3000/api/v1/messages?chat=${this.state.activeChat}`)
     // .then(res => res.json())  
     // .then(msg => {
-    this.setState({messages: [...this.state.messages, res]})
+      let newMsg = this.state.messages
+      newMsg.push(res[0])
+    this.setState({messages: newMsg}, (()=> console.log("MSGS", this.state.messages)))
       // console.log("MESSAGE REFETCHED",this.state.messages)
       
   };
@@ -97,6 +99,7 @@ class App extends Component {
     .then(res => res.json())  
     .then(msg => {
       this.setState({messages: msg})
+      console.log(this.state.messages)
       this.getFriendList(this.state.activeChat, this.state.current_user)
       // console.log("this is messages",this.state.messages)
       })
