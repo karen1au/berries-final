@@ -306,12 +306,11 @@ class App extends Component {
           
           <Switch>
 
-            <Route path="/users/:id/show" render={() => <UserContainer users={this.state.users}/> } />
+            <Route path="/users/:id/show" render={() =><UserContainer users={this.state.users}/> } />
 
             <Route path="/users/:id" 
               render={() => (this.state.auth)
                 ? <ProfileEdit current_user={this.state.current_user}/> 
-
                 : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
             <Route exact path="/"
               render={() => (this.state.auth)

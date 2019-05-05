@@ -15,7 +15,8 @@ Rails.application.routes.draw do
       resources :chats
       resources :messages
       resources :notifications
-      resources :chat_users
+      resources :chat_users, only: [:create]
+      delete '/bye' => 'chat_users#destroy'
       resources :relationships
       post '/login' => 'sessions#create'
       delete '/logout' => 'sessions#destroy'

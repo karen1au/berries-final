@@ -42,11 +42,11 @@ class Nav extends Component {
         <div className="nav-btn">
         <Button positive as="a" href={"/"}>Home</Button>
         <Button onClick={this.props.handleLogOut}>Logout</Button>
-        <Button basic color={message} onClick={this.openChat} as="a" href={"/chats"}>Chat</Button>
+        <Button basic color={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
         <Button positive as="a" href={`/users/${this.props.current_user}`}>Profile</Button>
 
         <div className="notification-group">
-        <Popup trigger={<Button basic color={jam} onClick={this.openNoti}>Jam Request</Button>} on='click' >
+        <Popup trigger={<Button basic color={jam} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
         {noti_list}
         </Popup></div>
         </div>

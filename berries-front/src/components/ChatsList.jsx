@@ -1,17 +1,11 @@
 import React from 'react';
-import { Segment, Grid, Button } from 'semantic-ui-react'
+import { Segment, Grid, Button, Dropdown } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import NewMessageForm from './NewMessageForm';
 import Moment from 'react-moment';
 
 class ChatsList extends React.Component {
-  // state = {
-  //   current_user: Auth.getCookie(),
-  //   chats: [],
-  //   chat_users: [],
-  //   activeChat: null,
-  //   messages: []
-  // };
+
 
   componentDidMount() {
     this.props.getChats()
@@ -19,6 +13,7 @@ class ChatsList extends React.Component {
 
 
   renderChats = (chatlist) => {
+    if (chatlist){
     const container = [];
     const allchats = chatlist
     const entries = Object.entries(allchats)
@@ -30,7 +25,23 @@ class ChatsList extends React.Component {
         </Button>
       )
       } return container;
+    } else {
+      return <h3>No chat yet...</h3>
     }
+  }
+
+  getOption = (list) => {
+    let options = [];
+    for (let i = 0; i < list.length; i++){
+        let eachUser = {
+        key: list[i].id,
+        text: list[i].name,
+        value: list[i].id,
+        image: { avatar: true, src: list[i].avatar}
+      }
+     options.push(eachUser)
+    } return options;
+  }
 
 
   render = () => {
@@ -51,7 +62,7 @@ class ChatsList extends React.Component {
       )}
        )
       }
-    
+
     return (
       <div className="chatsList">
         <ActionCable
@@ -64,16 +75,32 @@ class ChatsList extends React.Component {
           <Grid.Row stretched>
         <Grid.Column>
         <h2>Chats</h2>
+        
         {this.renderChats(this.props.chats)}
 
         </Grid.Column>
         {this.props.activeChat
         ? <Grid.Column width={12}>
-            <Button onClick={this.props.leaveChat}>BYE</Button>
+          <Dropdown
+            text='Add user'
+            icon='add user'
+            floating
+            labeled
+            button
+            className='icon'
+          >
+          <Dropdown.Menu>
+              <Dropdown.Header content='Berries You Connected To' />
+              {this.getOption(this.props.friendOptions).map(option => (
+                <Dropdown.Item onClick={()=> this.props.addUser(option.value)} key={option.value} {...option} />
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+            <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
           <Segment>
             {show_msg}
           </Segment>
-          <NewMessageForm chat={this.props.activeChat}/> 
+          <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
         : <Grid.Column width={12}>
           <h3>Pick a Jar</h3>
