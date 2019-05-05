@@ -16,6 +16,7 @@ class App extends Component {
     super();
     this.state = {
       auth: Auth.isUserAuthenticated(),
+      user: '',
       users: [],
       parameters: {
         currentCommitment: null,
@@ -220,6 +221,15 @@ class App extends Component {
 
   }
 
+  grabUserID = (e) => {
+    let name = e.target.name
+    console.log('user id:', name);
+    this.setState({
+      user: name
+    }, () => {
+      console.log(this.state.user)
+    })
+  }
 
   //Handling jam request
   onRefuse = (notiID) => {
@@ -315,7 +325,8 @@ class App extends Component {
             <Route exact path="/"
               render={() => (this.state.auth)
                 ? <Home 
-                    cable={this.props.cable} 
+                    cable={this.props.cable}
+                    grabUserID={this.grabUserID} 
                     users={this.state.users} 
                     queryResults={this.queryResults} 
                     handleSelection={this.handleSelection}/>

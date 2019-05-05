@@ -4,11 +4,23 @@ import React, { Component } from 'react'
 // import { ActionCable } from 'react-actioncable-provider';
 
 class UserContainer extends Component {
+  state = {
+    user: ''
+  }
   
-  render() { 
-    
-    console.log(this.props.users[0]);
+  componentDidMount() {
+    // fetch(`http://localhost:3000/api/v1/users/:id`)
+    // .then(res => res.json())
+    // .then(user => {
+    //   this.setState({ user })
+    // })
+  }
 
+  render() {
+
+    console.log(this.props)
+    console.log(this.props.users[0].name)
+    
     return(
       <div className="ui-card">
         <div className="image"></div>

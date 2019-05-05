@@ -1,7 +1,6 @@
-import { Button } from 'semantic-ui-react'
+import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import React, { Component } from 'react'
 import Auth from '../services/Auth'
-import UserContainer from './UserContainer';
 // import { ActionCable } from 'react-actioncable-provider';
 
 class UsersContainer extends Component {
@@ -32,11 +31,12 @@ class UsersContainer extends Component {
       body: JSON.stringify(data)
     }
     
-    fetch(`http://localhost:3000/api/v1/notifications`,options)
-    .then( res => {
+    fetch(`http://localhost:3000/api/v1/notifications`, options)
+    .then(res => {
       this.setState({
         receiver: ""
-      })})
+      })
+    })
     .catch(err => console.log(err))
   }
 
@@ -70,11 +70,17 @@ class UsersContainer extends Component {
                       onClick={(e) => this.handleConnectClick(e, this.state)}>jam</Button>
                   </td>
                   <td>
-                    <Button 
-                      positive as="a" 
-                      href={`/users/${user.id}/show`}
-                      name={user.id}
-                    >Inspect</Button>
+                    <Modal trigger={<Button>Show</Button>}>
+                      <Modal.Header>Select a Photo</Modal.Header>
+                      <Modal.Content image>
+                        <Image wrapped size='medium' src={user.avatar} />
+                        <Modal.Description>
+                          <Header>{user.name}</Header>
+                          <p>{user.description}</p>
+                          <p>Is it okay to use this photo?</p>
+                        </Modal.Description>
+                      </Modal.Content>
+                    </Modal>
                   </td>
                 </tr>
               )
