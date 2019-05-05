@@ -15,13 +15,11 @@ class ProfileEdit extends Component{
   }
 
   componentDidMount() {
-
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
       this.setState({ user })
     })
-
   }
 
   toggleStatus = (e, { value }) => {
@@ -60,7 +58,7 @@ class ProfileEdit extends Component{
     console.log('options body', options.body)
     console.log(this.props.current_user)
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
-    .then(res => res.json())
+    // .then(res => res.json())
     .then(console.log(this.state))
   }
 
@@ -109,7 +107,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Band'
                 name='radioGroup'
-                value={'t'}
+                value={true}
                 checked={this.state.user.band}
                 onChange={this.toggleStatus}
               />
@@ -118,7 +116,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Individual'
                 name='radioGroup'
-                value={'f'}
+                value={false}
                 checked={!this.state.user.band}
                 onChange={this.toggleStatus}
               />

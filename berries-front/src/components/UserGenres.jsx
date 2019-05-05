@@ -49,7 +49,7 @@ class UserGenres extends Component {
               <div key={genre}>
                 <li>{genre}</li>
                 <button 
-                  class="ui button"
+                  className="ui button"
                   name={genre}
                   onClick={this.onDelete}>
                     Delete
