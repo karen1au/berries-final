@@ -39,11 +39,10 @@ class InstrumentExperience extends Component {
   }
 
   deletePair = (event, instrument) => {
-    console.log('index: ', instrument, instrument.index)
-    let instruments = [...this.state.instruments]
-    instruments.splice(instrument.index, 1)
-    this.setState({ instruments }, () => console.log(this.state.instruments))
-    this.props.deleteInstrument(instrument.index,)
+    let instruments = [...this.state.instruments];
+    instruments.splice(instrument.index, 1);
+    this.setState({ instruments }, () => console.log(this.state.instruments));
+    this.props.deleteInstrument(instrument.index);
   }
 
   createUI = () => {
@@ -59,16 +58,15 @@ class InstrumentExperience extends Component {
   }
 
   onChange = (event, instrument) => {
-    const { name, value } = instrument
-    let instruments = [...this.state.instruments]
-    instruments[instrument.index] = {...instruments[instrument.index], [name]: value}
+    const { name, value } = instrument;
+    let instruments = [...this.state.instruments];
+    instruments[instrument.index] = {...instruments[instrument.index], [name]: value};
 
-    this.setState({ instruments }, () => console.log('STATE', this.state))
+    this.setState({ instruments }, () => console.log('STATE', this.state));
   }
 
   onClick = () => {
     const lastEntry = this.state.instruments[this.state.instruments.length - 1]
-    console.log(lastEntry)
     this.props.addInstrument(lastEntry.name, lastEntry.experience)
     this.addPair()
   }
@@ -76,36 +74,15 @@ class InstrumentExperience extends Component {
   render() { 
     
     return (
-    <div>
-      {/* <Form.Group widths='equal'>
-        <Form.Field control={Select} label='Instrument' name='instrument' options={instrumentOptions} placeholder='Instrument' onChange={this.onChange}/>
-        <Form.Field control={Select} label='Years of Experience' name='experience' options={experienceOptions} placeholder='Years of Experience' onChange={this.onChange}/>
-        <Button onClick={this.onClick}>Add</Button>
-
-      </Form.Group>
-      <ul>
+      <div>
+        {this.createUI()}
+        <Button onClick={this.onClick}>Add Instrument</Button>
         {this.props.instruments.map((instrument, index) => { 
           return (
-            <li key={index}> {instrument.name} - {instrument.experience}</li>
-            )
-          })}
-        </ul>
-
-      </Form.Group> */}
-      {this.createUI()}
-      <Button onClick={this.onClick}>Add Instrument</Button>
-      {/* <ul>
-        {this.props.instruments.forEach(element => {
-          <li key={element.name}>asdasdsad</li>;
+            <p key={index}> {instrument.name} - {instrument.experience}</p>
+          )
         })}
-      </ul>   */}
-      {this.props.instruments.map((instrument, index) => { 
-        return (
-          <p key={index}> {instrument.name} - {instrument.experience}</p>
-        )
-        })}
-
-   </div>
+      </div>
     )
   }      
 }
