@@ -12,7 +12,6 @@ class ProfileEdit extends Component{
     },
     genre: [],
     instrument: []
-    
   }
 
   componentDidMount() {
@@ -59,6 +58,7 @@ class ProfileEdit extends Component{
       body: JSON.stringify({ user: this.state.user, genre: this.state.genre, instrument: this.state.instrument })
     }
     console.log('options body', options.body)
+    console.log(this.props.current_user)
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
     .then(res => res.json())
     .then(console.log(this.state))
