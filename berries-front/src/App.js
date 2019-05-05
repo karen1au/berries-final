@@ -34,7 +34,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/users.json')
+    fetch(`http://localhost:3000/api/v1/users?user=${this.state.current_user}`)
     .then(res => res.json())
     .then(users => {
       this.setState({
@@ -121,7 +121,7 @@ class App extends Component {
 
   createURL = (object = this.state.parameters) => {
     let i = 1;
-    let fullURL = 'http://localhost:3000/api/v1/users/search?'
+    let fullURL = `http://localhost:3000/api/v1/users/search?user=${this.state.current_user}&`
     for (let prop in object) {
       if (object[prop] && i === 1) {
         fullURL += `${prop}=${object[prop].value}`
@@ -137,6 +137,7 @@ class App extends Component {
   }
 
   queryResults = () => {
+    console.log('hello')
     fetch(this.createURL())
     .then(res => res.json())
     .then(user => {
@@ -309,7 +310,7 @@ class App extends Component {
           <Route exact path="/"
             render={() => (this.state.auth)
               ? <Home cable={this.props.cable}
-              users={this.state.users} onClick={this.queryResults} handleSelection={this.handleSelection}/>
+              users={this.state.users} queryResults={this.queryResults} handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)

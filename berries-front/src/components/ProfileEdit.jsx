@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup } from 'semantic-ui-react'
 import InstrumentExperience from './InstrumentExperience';
+import UserGenres from './UserGenres';
 
 class ProfileEdit extends Component{
   state = { 
@@ -15,25 +16,24 @@ class ProfileEdit extends Component{
   }
 
   componentDidMount() {
-    console.log('test');
+
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
-      console.log('profile load success')
-      this.setState({
-        user: user }, () => console.log(this.state))
+      this.setState({ user })
     })
+    
   }
 
-  toggleChange = (e, { value }) => this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+  toggleChange = (e, { value }) => {
+    this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+  }
 
   onChange = (e, { name, value }) => {
-    console.log(e.target, value)
     this.setState({ user: {...this.state.user, [name]: value }}, () => console.log('STATE', this.state))
   }
 
   onGenreChange = (e, { name, value }) => {
-    console.log('name', name, 'value', value)
     this.setState({[name]: value }, () => console.log('STATE', this.state))
   }
 
@@ -42,7 +42,11 @@ class ProfileEdit extends Component{
       name: name,
       experience: years
     }
-    this.state.instrument.push(newInstrument)
+    this.state.instrument.push(newInstrument);
+  }
+
+  deleteInstrument = (index) => {
+    this.state.instrument.splice(index, 1)
   }
 
   onClick = () =>{
@@ -105,7 +109,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Band'
                 name='radioGroup'
-                value={true}
+                value={'t'}
                 checked={this.state.user.band}
                 onChange={this.toggleChange}
               />
@@ -114,7 +118,7 @@ class ProfileEdit extends Component{
               <Radio
                 label='Individual'
                 name='radioGroup'
-                value={false}
+                value={'f'}
                 checked={!this.state.user.band}
                 onChange={this.toggleChange}
               />
@@ -125,9 +129,10 @@ class ProfileEdit extends Component{
             <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange}/>
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange}/>
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
-            <Form.Field control={Select} defaultValue={this.state.genre} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>            
+            <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
+              <UserGenres current_user={this.props.current_user}/>            
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
-            <InstrumentExperience addInstrument={this.addInstrument} instruments={this.state.instrument}/> 
+            <InstrumentExperience addInstrument={this.addInstrument} deleteInstrument={this.deleteInstrument} instruments={this.state.instrument}/> 
           <Form.Group widths='equal'>
             {/* <div class="ui labeled input">
               <div class="ui label">
