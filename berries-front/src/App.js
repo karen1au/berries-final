@@ -55,7 +55,6 @@ class App extends Component {
         this.setState({
           notifications: notis
         })
-        // console.log("Component did mount user_id:", Auth.getCookie())
       })
   }
 
@@ -91,10 +90,6 @@ class App extends Component {
       
   };
 
-  // handleClick = id => {
-  //   this.setState({ activeChat: id });
-  // };
-
   displayMessage = (chatID) => {
     event.preventDefault();
     this.setState({activeChat: chatID},(()=>{
@@ -107,7 +102,6 @@ class App extends Component {
       })
     }))
   }
-
 
   handleSelection = (key, value) => {
     if (key === 'commitment') {
@@ -250,18 +244,20 @@ class App extends Component {
       console.log(`clicked accept, user1:, ${this.state.current_user},user2: ${senderID}` )
       this.loadNotifications();
       })
-    .then( () => {
-      const options = {
-        method: 'post',
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json'
-        },
-        body: JSON.stringify({sender: this.state.current_user, receiver: senderID, noti_type: "new message" })
-      }
-      fetch(`http://localhost:3000/api/v1/notifications`,options)
-        .then( res => console.log('initial notification posted'))
-    })
+    .then(() => { this.postNotification(this.state.current_user, senderID)})
+        // .then( res => console.log('initial notification posted'))
+  }
+
+  postNotification = (sender, receiver) => {
+    const options = {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({sender: sender, receiver: receiver, noti_type: "new message" })
+    }
+    fetch(`http://localhost:3000/api/v1/notifications`,options)
   }
 
 
@@ -291,6 +287,7 @@ class App extends Component {
     console.log("clicked chat button")
   }
 
+  //Chat options
   leaveChat = (chatID) => {
     const options = {
       method: 'delete',
@@ -313,8 +310,25 @@ class App extends Component {
     .then(users => {
       console.log("received options:", users)
       this.setState({friendOptions: users})
-  })
-}
+    })
+  }
+
+  addUser = (selectedUser) => {
+    const options = {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({user: selectedUser, chat: this.state.activeChat})
+    }
+    fetch(`http://localhost:3000/api/v1/chat_users`,options)
+    .then(()=> {
+      this.postNotification(this.state.current_user, selectedUser);
+      this.getChats()
+    })
+  }
+
 
   render() {
     return (
@@ -360,6 +374,7 @@ class App extends Component {
                 handleReceivedChats={this.handleReceivedChats}
                 handleReceivedMessage={this.handleReceivedMessage}
                 leaveChat={this.leaveChat}
+                addUser={this.addUser}
                 friendOptions={this.state.friendOptions}/>
             : <Redirect to='/'/>}/>
           <Route component={Error}/>

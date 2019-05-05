@@ -63,9 +63,6 @@ class ChatsList extends React.Component {
        )
       }
 
-
-
-    
     return (
       <div className="chatsList">
         <ActionCable
@@ -95,7 +92,7 @@ class ChatsList extends React.Component {
           <Dropdown.Menu>
               <Dropdown.Header content='Berries You Connected To' />
               {this.getOption(this.props.friendOptions).map(option => (
-                <Dropdown.Item key={option.value} {...option} />
+                <Dropdown.Item onClick={()=> this.props.addUser(option.value)} key={option.value} {...option} />
               ))}
             </Dropdown.Menu>
           </Dropdown>

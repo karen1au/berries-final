@@ -12,6 +12,13 @@ module Api::V1
       render json: @filtered
     end
 
+    def create
+      @user_chat = ChatUser.new(user_id: params[:user], chat_id: params[:chat])
+      if @user_chat.save
+        puts "added user!"
+      end
+    end
+
     def destroy
       chat = ChatUser.find_by(chat_id: params[:chat_id], user_id: params[:user_id])
       chat.destroy
