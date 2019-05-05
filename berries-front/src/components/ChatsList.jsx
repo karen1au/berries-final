@@ -68,7 +68,7 @@ class ChatsList extends React.Component {
         </Grid.Column>
         {this.props.activeChat
         ? <Grid.Column width={12}>
-            <Button onClick={this.props.leaveChat}>BYE</Button>
+            <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
           <Segment>
             {show_msg}
           </Segment>

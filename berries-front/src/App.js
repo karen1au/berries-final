@@ -262,6 +262,8 @@ class App extends Component {
     })
   }
 
+
+  //handling notifications
   categorizeNoti = (noti) => {
     noti.map((noti) => {
       if (noti[2] == "jam request"){
@@ -272,7 +274,7 @@ class App extends Component {
       }
     })
   }
-    handleNotifications = (res) => {
+  handleNotifications = (res) => {
     console.log("this is notification",res)
     this.categorizeNoti(res)
   }
@@ -286,6 +288,23 @@ class App extends Component {
     this.setState({new_message: false})
     console.log("clicked chat button")
   }
+
+  leaveChat = (chatID) => {
+    const options = {
+      method: 'delete',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({chat_id: chatID, user_id: this.state.current_user})
+    }
+    fetch(`http://localhost:3000/api/v1/bye`, options)
+    .then(() => {
+      this.setState({activeChat: null})
+      this.getChats()
+    })
+  
+}
 
   render() {
     return (
@@ -329,7 +348,8 @@ class App extends Component {
                 displayMessage={this.displayMessage}
                 getChats={this.getChats}
                 handleReceivedChats={this.handleReceivedChats}
-                handleReceivedMessage={this.handleReceivedMessage}/>
+                handleReceivedMessage={this.handleReceivedMessage}
+                leaveChat={this.leaveChat}/>
             : <Redirect to='/'/>}/>
           <Route component={Error}/>
 
