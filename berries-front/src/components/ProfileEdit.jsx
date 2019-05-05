@@ -16,13 +16,11 @@ class ProfileEdit extends Component{
   }
 
   componentDidMount() {
-
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
       this.setState({ user })
     })
-
   }
 
   toggleStatus = (e, { value }) => {
