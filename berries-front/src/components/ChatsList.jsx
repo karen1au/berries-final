@@ -5,13 +5,7 @@ import NewMessageForm from './NewMessageForm';
 import Moment from 'react-moment';
 
 class ChatsList extends React.Component {
-  // state = {
-  //   current_user: Auth.getCookie(),
-  //   chats: [],
-  //   chat_users: [],
-  //   activeChat: null,
-  //   messages: []
-  // };
+
 
   componentDidMount() {
     this.props.getChats()
@@ -19,6 +13,7 @@ class ChatsList extends React.Component {
 
 
   renderChats = (chatlist) => {
+    if (chatlist){
     const container = [];
     const allchats = chatlist
     const entries = Object.entries(allchats)
@@ -30,7 +25,10 @@ class ChatsList extends React.Component {
         </Button>
       )
       } return container;
+    } else {
+      return <h3>No chat yet...</h3>
     }
+  }
 
 
   render = () => {
@@ -64,6 +62,7 @@ class ChatsList extends React.Component {
           <Grid.Row stretched>
         <Grid.Column>
         <h2>Chats</h2>
+        
         {this.renderChats(this.props.chats)}
 
         </Grid.Column>
@@ -73,7 +72,7 @@ class ChatsList extends React.Component {
           <Segment>
             {show_msg}
           </Segment>
-          <NewMessageForm chat={this.props.activeChat}/> 
+          <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
         : <Grid.Column width={12}>
           <h3>Pick a Jar</h3>

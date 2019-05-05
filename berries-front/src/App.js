@@ -234,17 +234,18 @@ class App extends Component {
   }
 
   onAccept = (senderID) => {
-    // event.preventDefault();
+    event.preventDefault();
     const options = {
       method: 'post',
       headers: {
         'content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: JSON.stringify({user1_id: this.props.current_user, user2_id: senderID})
+      body: JSON.stringify({user1_id: this.state.current_user, user2_id: senderID})
     }
     fetch(`http://localhost:3000/api/v1/relationships`, options)
     .then(()=>{
+      console.log(`clicked accept, user1:, ${this.state.current_user},user2: ${senderID}` )
       this.loadNotifications();
       })
     .then( () => {
@@ -257,7 +258,7 @@ class App extends Component {
         body: JSON.stringify({sender: this.state.current_user, receiver: senderID, noti_type: "new message" })
       }
       fetch(`http://localhost:3000/api/v1/notifications`,options)
-        .then( res => console.log('chat notification posted'))
+        .then( res => console.log('initial notification posted'))
     })
   }
 
@@ -277,7 +278,7 @@ class App extends Component {
   }
 
   openNoti = () => {
-    event.preventDefault();
+    // event.preventDefault();
     this.setState({jam_request: false})
   }
 
@@ -295,10 +296,13 @@ class App extends Component {
               handleLogOut={this.handleLogOut} 
               onAccept={this.onAccept}
               onRefuse={this.onRefuse}
+              openNoti={this.openNoti}
+              openChat={this.openChat}
               handleNotifications={this.handleNotifications}
               jam_request={this.state.jam_request}
               new_message={this.state.new_message}
-              notifications={this.state.notifications}/>
+              notifications={this.state.notifications}
+              current_user={this.state.current_user}/>
           }/>
           <Switch>
 

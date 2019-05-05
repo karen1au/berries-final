@@ -10,6 +10,7 @@ module Api::V1
           @user2 = ChatUser.new(chat_id: @chat.id, user_id: params[:user2_id])
           if @user1.save && @user2.save
           Notification.where(sender_id: params[:user2_id], receiver_id: params[:user1_id]).destroy_all
+          puts "notification deleted after accept request"
           serialized_data = ActiveModelSerializers::Adapter::Json.new(
           ChatSerializer.new(@chat)
           ).serializable_hash
