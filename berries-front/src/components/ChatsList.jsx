@@ -1,68 +1,85 @@
 import React from 'react';
+import { Segment, Grid, Button } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
-import NewConversationForm from './NewConversationForm';
-import MessagesArea from './MessagesArea';
 import NewMessageForm from './NewMessageForm';
-import Auth from '../services/Auth';
+import Moment from 'react-moment';
 
 class ChatsList extends React.Component {
-  state = {
-    current_user: Auth.getCookie(),
-    chats: [],
-    activeChat: null
-  };
+  // state = {
+  //   current_user: Auth.getCookie(),
+  //   chats: [],
+  //   chat_users: [],
+  //   activeChat: null,
+  //   messages: []
+  // };
 
-  componentDidMount = () => {
-    fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
-      .then(res => res.json())
-      .then(chats => {
-        console.log('this is chats',chats)
-        this.setState({ chats })
-      });
-  };
+  componentDidMount() {
+    this.props.getChats()
+  }
 
-  handleClick = id => {
-    this.setState({ activeChat: id });
-  };
 
-  handleReceivedChat = response => {
-    const { chat } = response;
-    this.setState({
-      chats: [...this.state.chats, chat]
-    });
-  };
+  renderChats = (chatlist) => {
+    const container = [];
+    const allchats = chatlist
+    const entries = Object.entries(allchats)
+    for (const [allchat, count] of entries){
+      container.push(
+        <Button onClick={() => this.props.displayMessage(allchat)} name={allchat}>
+        <h4>{allchat}</h4>
+        {count.map((user)=> <p>{user}</p>)}
+        </Button>
+      )
+      } return container;
+    }
 
-  handleReceivedMessage = response => {
-    const { message } = response;
-    const chats = [...this.state.chats];
-    const chat = chats.find(
-      chat => chat.id === message.chat_id
-    );
-    chat.messages = [...chat.messages, message];
-    this.setState({ chats });
-  };
 
   render = () => {
-    const { chats, activeChat } = this.state;
+
+    let show_msg;
+    if (!this.props.activeChat) {
+      show_msg = <h3>Pick a Jar</h3>
+    } else {
+      (!this.props.messages.length) ?
+      show_msg = <div><h3>There is no message yet...</h3></div> :
+      show_msg = this.props.messages.map((msg) => { 
+      return (
+         <div id={msg[0]}>
+         <span>{msg[1]}:{msg[2]}</span>
+         <span><Moment fromNow>{msg[3]}</Moment></span>
+         <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div>
+         </div>
+      )}
+       )
+      }
+    
     return (
       <div className="chatsList">
         <ActionCable
-          channel={{ channel: 'ChatsChannel', current_user: this.state.current_user }}
-          onReceived={(res) => this.handleReceivedChats(res)}
-        />
-
+          channel={{ channel: 'ChatsChannel', current_user: this.props.current_user }}
+          onReceived={(res) => this.props.handleReceivedChats(res)} />
+        <ActionCable
+          channel={{ channel: 'MessagesChannel', current: this.props.current_user }}
+          onReceived={(res) => this.props.handleReceivedMessage(res)} />
+        <Grid columns='equal' divided rows='equal'>
+          <Grid.Row stretched>
+        <Grid.Column>
         <h2>Chats</h2>
-        <ul>{mapChats(chats, this.handleClick)}</ul>
-        <NewConversationForm creator={this.props.current_user}/>
-        <NewMessageForm />
-        {activeChat ? (
-          <MessagesArea
-            chat={findActiveChat(
-              chats,
-              activeChat
-            )}
-          />
-        ) : null}
+        {this.renderChats(this.props.chats)}
+
+        </Grid.Column>
+        {this.props.activeChat
+        ? <Grid.Column width={12}>
+            <Button onClick={this.props.leaveChat}>BYE</Button>
+          <Segment>
+            {show_msg}
+          </Segment>
+          <NewMessageForm chat={this.props.activeChat}/> 
+          </Grid.Column>
+        : <Grid.Column width={12}>
+          <h3>Pick a Jar</h3>
+          </Grid.Column>}
+          </Grid.Row>
+        </Grid>
       </div>
     );
   };
@@ -70,20 +87,3 @@ class ChatsList extends React.Component {
 
 export default ChatsList;
 
-// helpers
-
-const findActiveChat = (chats, activeChat) => {
-  return chats.find(
-    chat => chat.id === activeChat
-  );
-};
-
-const mapChats = (chats, handleClick) => {
-  return chats.map(chat => {
-    return (
-      <li key={chat.id} onClick={() => handleClick(chat.id)}>
-        {chat.creator_id}
-      </li>
-    );
-  });
-};

@@ -16,13 +16,13 @@ class ExperienceSearch extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.handleSelection);
-    console.log(this.state)
+    // console.log(this.props.handleSelection);
+    // console.log(this.state)
   }
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption }, () => { this.props.handleSelection('experience', selectedOption) });
-    console.log('Option selected:', selectedOption);
+    // console.log('Option selected:', selectedOption);
   }
 
   render() {

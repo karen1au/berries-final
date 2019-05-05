@@ -11,7 +11,7 @@ require 'faker'
   User.create!(
     name: Faker::Music::RockBand.name,
     email: Faker::Internet.free_email,
-    password: Faker::Number.number(10),
+    password: "12345678",
     avatar: Faker::Avatar.image,
     band: true,
     location: 'Toronto',
@@ -26,7 +26,7 @@ end
   User.create!(
     name: Faker::FunnyName.unique.name,
     email: Faker::Internet.free_email,
-    password: Faker::Number.number(10),
+    password: "12345678",
     avatar: Faker::Avatar.image,
     band: false,
     location: 'Toronto',

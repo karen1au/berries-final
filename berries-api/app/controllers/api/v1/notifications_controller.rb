@@ -4,7 +4,7 @@ module Api::V1
       notification = Notification.new(sender_id: params[:sender], receiver_id: params[:receiver], noti_type: params[:noti_type])
       if notification.save
         user = User.find(params[:receiver])
-        allNoti = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type)
+        allNoti = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type, :sender_id)
         # serialized_data = ActiveModelSerializers::Adapter::Json.new(
         #   NotificationSerializer.new(notification)
         # ).serializable_hash
@@ -16,7 +16,15 @@ module Api::V1
     def index
       user = User.find(params[:user])
       #[0] is notification id, [1] is sender email, [2] is noti_type [3] is senderID
-      @notifications = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type, :sender_id)
+      @notifications = user.received_notifications.joins(:sender).order(:created_at).pluck(:id, :email, :noti_type, :sender_id)
+      # render json: @notifications.map do |n|
+      #   {
+      #     id: n[0],
+      #     senderEmail: n[1],
+      #     type: n[2],
+      #     senderId: n[3]
+      #   }
+      # end
       render json: @notifications
     end
 

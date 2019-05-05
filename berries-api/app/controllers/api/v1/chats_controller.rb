@@ -1,25 +1,18 @@
 module Api::V1
   class ChatsController < ApiController
     def index
-      chats = Chat.all
-      render json: chats
+        @chat = ChatUser.where(user_id: params[:user]).order(:created_at).select("chat_id")
+        @user_of_chat = {}
+        @chat.each do |chat|
+          @user_of_chat[chat.chat_id] = ChatUser.where(chat_id: chat.chat_id).joins(:user).pluck(:email)
+        end
+        render json: @user_of_chat
     end
 
-    def create
-      chat = Chat.new(chat_params)
-      if chat.save
-        serialized_data = ActiveModelSerializers::Adapter::Json.new(
-        ChatSerializer.new(chat)
-      ).serializable_hash
-      ActionCable.server.broadcast 'chats_channel', serialized_data
-      head :ok
-      end
+    def show
+      @users = User.joins(:chat_users).where(chat_users: {chat_id: params[:id]})
+      render json: @users
     end
 
-    private
-  
-    def chat_params
-      params.require(:chat).permit(:creator_id)
-    end
   end
 end
