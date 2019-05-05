@@ -127,6 +127,7 @@ class ProfileEdit extends Component{
             <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange} />
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
+            <Form.Input label='Description (Optional)' defaultValue={this.state.user.description} placeholder='Write a Description of Yourself' name='description' onChange={this.onChange} />
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange} />
             <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
               <UserGenres current_user={this.props.current_user}/>            
