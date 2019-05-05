@@ -1,10 +1,8 @@
 import { Button } from 'semantic-ui-react'
 import React, { Component } from 'react'
-
-
 import Auth from '../services/Auth'
+import UserContainer from './UserContainer';
 // import { ActionCable } from 'react-actioncable-provider';
-
 
 class UsersContainer extends Component {
   constructor() {
@@ -15,12 +13,14 @@ class UsersContainer extends Component {
       noti_type:""
     }
   }
+  
   onChange = (event) =>{
     this.setState({
       receiver: event.target.name,
       noti_type: "jam request"
     })
   }
+  
   handleConnectClick = (e, data) => {
     e.preventDefault();
     const options = {
@@ -31,18 +31,19 @@ class UsersContainer extends Component {
       },
       body: JSON.stringify(data)
     }
+    
     fetch(`http://localhost:3000/api/v1/notifications`,options)
     .then( res => {
       this.setState({
         receiver: ""
       })})
     .catch(err => console.log(err))
-    
   }
 
   render() {
     return (
       <div>
+        <UserContainer users={this.props.users}/>
 
         <table>
           <thead>
@@ -54,8 +55,8 @@ class UsersContainer extends Component {
               <th>Genre</th> 
             </tr>
           </thead>
+          
           <tbody>
-            
             {this.props.users.map((user) => {
               return(
                 <tr key={user.id}>
@@ -69,14 +70,18 @@ class UsersContainer extends Component {
                       onMouseOver={this.onChange}
                       onClick={(e) => this.handleConnectClick(e, this.state)}>jam</Button>
                   </td>
+                  <td>
+                    <Button 
+                      positive as="a" 
+                      href={`/users/${user.id}`}
+                      name={user.id}
+                    >Inspect</Button>
+                  </td>
                 </tr>
               )
             })}
           </tbody>
         </table>
-
-
-
       </div>
     )
   }

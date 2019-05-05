@@ -40,6 +40,7 @@ class App extends Component {
       this.setState({
         users: users,
       }, (() => {
+        console.log(this.state.users)
         if (this.state.current_user) {
           this.loadNotifications();
         }
@@ -86,7 +87,8 @@ class App extends Component {
     // .then(res => res.json())  
     // .then(msg => {
     this.setState({messages: [...this.state.messages, res]})
-      // console.log("MESSAGE REFETCHED",this.state.messages)
+      
+    // console.log("MESSAGE REFETCHED",this.state.messages)
       
   };
 
@@ -309,8 +311,11 @@ class App extends Component {
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
           <Route exact path="/"
             render={() => (this.state.auth)
-              ? <Home cable={this.props.cable}
-              users={this.state.users} queryResults={this.queryResults} handleSelection={this.handleSelection}/>
+              ? <Home 
+                  cable={this.props.cable} 
+                  users={this.state.users} 
+                  queryResults={this.queryResults} 
+                  handleSelection={this.handleSelection}/>
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
           <Route path="/login" 
             render={() => (this.state.auth)
