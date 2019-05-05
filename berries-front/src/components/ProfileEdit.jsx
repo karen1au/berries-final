@@ -19,7 +19,7 @@ class ProfileEdit extends Component{
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
-      console.log(user)
+      console.log('profile load success')
       this.setState({
         user: user }, () => console.log(this.state))
     })

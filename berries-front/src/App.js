@@ -300,9 +300,11 @@ class App extends Component {
               notifications={this.state.notifications}/>
           }/>
           <Switch>
+
           <Route path="/users/:id" 
             render={() => (this.state.auth)
               ? <ProfileEdit current_user={this.state.current_user}/> 
+
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
           <Route exact path="/"
             render={() => (this.state.auth)
