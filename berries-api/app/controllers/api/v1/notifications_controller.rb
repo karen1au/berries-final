@@ -1,15 +1,29 @@
 module Api::V1
   class NotificationsController < ApplicationController
     def create
-      notification = Notification.new(sender_id: params[:sender], receiver_id: params[:receiver], noti_type: params[:noti_type])
-      if notification.save
-        user = User.find(params[:receiver])
-        allNoti = user.received_notifications.joins(:sender).pluck(:id, :email, :noti_type, :sender_id)
+      if params[:chat].present?
+        chat_users = ChatUser.where("chat_id = ? AND user_id != ?", params[:chat], params[:sender])
+        chat_users.each do |user|
+          @user = user
+          notification = Notification.new(sender_id: params[:sender], receiver_id: @user.user_id, noti_type: params[:noti_type])
+          if notification.save
+            target_user = User.find(@user.user_id)
+            allNoti = target_user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :email, :noti_type, :sender_id)
+            ActionCable.server.broadcast("current_user_#{target_user.id}", allNoti)
+          end
+        end
+      end
+
+      if params[:receiver].present?
+        notification = Notification.new(sender_id: params[:sender], receiver_id: params[:receiver], noti_type: params[:noti_type])
+        if notification.save
+          user = User.find(params[:receiver])
+          allNoti = user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :email, :noti_type, :sender_id)
         # serialized_data = ActiveModelSerializers::Adapter::Json.new(
         #   NotificationSerializer.new(notification)
         # ).serializable_hash
-        ActionCable.server.broadcast("current_user_#{params[:receiver]}", allNoti)
-        
+          ActionCable.server.broadcast("current_user_#{params[:receiver]}", allNoti)
+        end
       end
     end
 

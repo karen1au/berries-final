@@ -3,7 +3,6 @@ import Auth from '../services/Auth';
 
 class NewMessageForm extends React.Component {
   state = {
-    user_id: Auth.getCookie(),
     content: '',
     chat_id: this.props.chat
   };
@@ -24,21 +23,21 @@ class NewMessageForm extends React.Component {
         'content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify( {content: this.state.content, chat_id: this.props.chat, user_id: this.props.current_user})
       
     });
     console.log("current_state",this.state)
     this.setState({ content: '' }, () => {
-      // const options = {
-      //   method: 'post',
-      //   headers: {
-      //     'content-type': 'application/json',
-      //     'accept': 'application/json'
-      //   },
-      //   body: JSON.stringify({sender: this.state.current_user, receiver: receiver, noti_type: "new message" })
-      // }
-      // fetch(`http://localhost:3000/api/v1/notifications`,options)
-      //   .then( res => console.log('chat notification posted'))
+      const options = {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json'
+        },
+        body: JSON.stringify({sender: this.props.current_user, chat: this.props.chat, noti_type: "new message" })
+      }
+      fetch(`http://localhost:3000/api/v1/notifications`,options)
+        .then( res => console.log('chat notification posted'))
     });
   };
 
