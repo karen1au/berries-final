@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
 
-      get 'users/search' => 'users#search'
+      get 'users/search' => 'users#search' 
+      get 'users/:id/show' => 'users#show' 
 
       resources :users
       resources :instruments
