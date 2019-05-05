@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Grid, Button } from 'semantic-ui-react'
+import { Segment, Grid, Button, Dropdown } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import NewMessageForm from './NewMessageForm';
 import Moment from 'react-moment';
@@ -30,6 +30,19 @@ class ChatsList extends React.Component {
     }
   }
 
+  getOption = (list) => {
+    let options = [];
+    for (let i = 0; i < list.length; i++){
+        let eachUser = {
+        key: list[i].id,
+        text: list[i].name,
+        value: list[i].id,
+        image: { avatar: true, src: list[i].avatar}
+      }
+     options.push(eachUser)
+    } return options;
+  }
+
 
   render = () => {
 
@@ -49,6 +62,9 @@ class ChatsList extends React.Component {
       )}
        )
       }
+
+
+
     
     return (
       <div className="chatsList">
@@ -68,6 +84,21 @@ class ChatsList extends React.Component {
         </Grid.Column>
         {this.props.activeChat
         ? <Grid.Column width={12}>
+          <Dropdown
+            text='Add user'
+            icon='add user'
+            floating
+            labeled
+            button
+            className='icon'
+          >
+          <Dropdown.Menu>
+              <Dropdown.Header content='Berries You Connected To' />
+              {this.getOption(this.props.friendOptions).map(option => (
+                <Dropdown.Item key={option.value} {...option} />
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
             <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
           <Segment>
             {show_msg}

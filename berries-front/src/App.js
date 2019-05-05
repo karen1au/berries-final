@@ -30,6 +30,7 @@ class App extends Component {
       messages: [],
       jam_request: false,
       new_message: false,
+      friendOptions: []
     } 
   }
 
@@ -101,6 +102,7 @@ class App extends Component {
     .then(res => res.json())  
     .then(msg => {
       this.setState({messages: msg})
+      this.getFriendList(this.state.activeChat, this.state.current_user)
       // console.log("this is messages",this.state.messages)
       })
     }))
@@ -303,7 +305,15 @@ class App extends Component {
       this.setState({activeChat: null})
       this.getChats()
     })
-  
+  }
+
+  getFriendList = (chatID, userID) => {
+    fetch(`http://localhost:3000/api/v1/users?chat=${chatID}&user=${userID}`)
+    .then(res => res.json())
+    .then(users => {
+      console.log("received options:", users)
+      this.setState({friendOptions: users})
+  })
 }
 
   render() {
@@ -349,7 +359,8 @@ class App extends Component {
                 getChats={this.getChats}
                 handleReceivedChats={this.handleReceivedChats}
                 handleReceivedMessage={this.handleReceivedMessage}
-                leaveChat={this.leaveChat}/>
+                leaveChat={this.leaveChat}
+                friendOptions={this.state.friendOptions}/>
             : <Redirect to='/'/>}/>
           <Route component={Error}/>
 
