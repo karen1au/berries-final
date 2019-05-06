@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :received_notifications, class_name: "Notification", foreign_key: :receiver_id
 
   # validates :name, presence: true  
+  # validates :band, presence: true
   # validates :password, length: { minimum: 7 }
   validates :email, uniqueness: { case_sensitive: false }, presence: true
   # validates :location, presence: true
