@@ -16,9 +16,6 @@ module Api::V1
     end
 
     def show
-      puts "start users! ---------"
-      puts params
-      puts "end users! ----------"
       @user = User.find_by_id(params[:id])
       render json: @user
     end
@@ -50,38 +47,37 @@ module Api::V1
     end
 
     def update
-      puts 'params =>', user_params[:id]
       @user = User.find_by_id(user_params[:id])
+
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
         puts 'user success', @user
-        # return
       else
         puts 'no user info'
       end
 
       if params[:instrument].present?
+        
         instrument_params.each do |instrument|
-        puts 'instrument params', instrument
-        @instrument_id = Instrument.find_by_name(instrument["name"])
-        @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
-        @user_exp.save!
+          @instrument_id = Instrument.find_by_name(instrument["name"])
+          @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
+          @user_exp.save!
         end
+        
         puts 'instrument success', @user_exp
-        # return
       else
         puts 'no instruments'
       end
         
       if params[:genre].present?
         genre_params.each do |genre|  
-        @genre_id = Genre.find_by_name(genre)
-        @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
-        @user_genre.save!
+          @genre_id = Genre.find_by_name(genre)
+          @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
+          @user_genre.save!
         end  
+        
         puts 'genre success', @user_genre
-        # return
       else
         puts 'no genres'
       end
@@ -100,7 +96,8 @@ module Api::V1
         :location,
         :commitment,
         :soundcloud,
-        :youtube
+        :youtube,
+        :description
       )
     end
 
