@@ -9,6 +9,7 @@ import ProfileEdit from './components/ProfileEdit'
 import Nav from './components/Nav'
 import Auth from './services/Auth'
 import ChatsList from  './components/ChatsList'
+import { timingSafeEqual } from 'crypto';
 
 class App extends Component {
   constructor() {
@@ -41,7 +42,6 @@ class App extends Component {
       this.setState({
         users: users,
       }, (() => {
-        console.log(this.state.users)
         if (this.state.current_user) {
           this.loadNotifications();
         }
@@ -64,33 +64,39 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
     .then(res => res.json())
     .then(chats => {
-      this.setState({ chats }
+      let chatKey = {};
+      Object.keys(chats).map( chatID => {
+        chatKey[chatID] = false
+      })
+      this.setState({ ...this.state, chats: chats, chatKey }
         ,(() => {
-        console.log("all chats", this.state.chats)
-        // this.displayChat(this.state.chats)
+        console.log("all chats", this.state)
       }))
     })
   }
+  
   //action cable
   handleReceivedChats = res => {
     console.log('chat response: ', res);
+
     this.setState({ chats: [...this.state.chats, res] })
     
   };
 
   handleReceivedMessage = res => {
     console.log('message response: ', res);
-    // add res.message to end of state
-    // pass down handleReceivedMessage from App.js and call this.props.handleReceivedMessage(res.message);
-    // setState({ messages: [...this.state.messages, message]})
-    // fetch(`http://localhost:3000/api/v1/messages?chat=${this.state.activeChat}`)
-    // .then(res => res.json())  
-    // .then(msg => {
+    console.log('message chatid: ', res[0][4]);
+    console.log('actual chatid: ', this.state.activeChat);
+    if (res[0][4] == this.state.activeChat){
       let newMsg = this.state.messages
       newMsg.push(res[0])
-    this.setState({messages: newMsg}, (()=> console.log("MSGS", this.state.messages)))
-      // console.log("MESSAGE REFETCHED",this.state.messages)
-      
+      this.setState({messages: newMsg}, (()=> {
+        let key = res[0][4];
+        if (this.state.chatKey.hasOwnProperty(key)){
+          this.setState({ ...this.state, chatKey: { [key]: true}}, () => console.log("after msg",this.state))
+        }
+      }))
+    } 
   };
 
   displayMessage = (chatID) => {
@@ -382,7 +388,8 @@ class App extends Component {
                 handleReceivedMessage={this.handleReceivedMessage}
                 leaveChat={this.leaveChat}
                 addUser={this.addUser}
-                friendOptions={this.state.friendOptions}/>
+                friendOptions={this.state.friendOptions}
+                chatKey={this.state.chatKey}/>
             : <Redirect to='/'/>}/>
           <Route component={Error}/>
 

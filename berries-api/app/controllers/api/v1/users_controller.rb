@@ -27,7 +27,7 @@ module Api::V1
       # @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
       # @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
       @users = User.all
-      @users = @users..where.not(band: @current_user.band)
+      @users = @users.where.not(band: @current_user.band)
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
