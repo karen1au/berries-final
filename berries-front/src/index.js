@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
+import './search-container.css';
 import './signup.css';
 import './profile-edit.css';
 import './instrument-exp.css'
