@@ -3,9 +3,10 @@ import { Header, Divider, Form, Button, Message, Segment, Grid} from 'semantic-u
 
 class SignUp extends Component{
   state = {
+    band: false,
     email: "",
     password: "",
-    password_confirmation: "",
+    password_confirmation: ""
     // errors: false,
     // errorMessage: '',
     // redirect: false

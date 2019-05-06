@@ -16,9 +16,6 @@ module Api::V1
     end
 
     def show
-      puts "start users! ---------"
-      puts params
-      puts "end users! ----------"
       @user = User.find_by_id(params[:id])
       render json: @user
     end
@@ -50,27 +47,28 @@ module Api::V1
     end
 
     def update
-      puts 'params =>', user_params[:id]
       @user = User.find_by_id(user_params[:id])
+
       if @user.update_attributes(user_params)
         geocode_user(@user)
         @user.save!
         puts 'user success', @user
         # return
-        redirect_to api_vi_root_path and return
+        redirect_to api_vi_users and return
       else
         puts 'user error'
       end
 
       if params[:instrument].present?
+        
         instrument_params.each do |instrument|
-        puts 'instrument params', instrument
-        @instrument_id = Instrument.find_by_name(instrument["name"])
-        @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
-        @user_exp.save!
+          @instrument_id = Instrument.find_by_name(instrument["name"])
+          @user_exp = UserExp.new(instrument_id: @instrument_id.id, user_id: @user.id, years: instrument["experience"])
+          @user_exp.save!
         end
+        
         puts 'instrument success', @user_exp
-        redirect_to api_vi_root_path and return
+        redirect_to api_v1_root_path and return
 
       else
         puts 'instrument error'
@@ -78,12 +76,14 @@ module Api::V1
         
       if params[:genre].present?
         genre_params.each do |genre|  
-        @genre_id = Genre.find_by_name(genre)
-        @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
-        @user_genre.save!
+          @genre_id = Genre.find_by_name(genre)
+          @user_genre = UserGenre.new(genre_id: @genre_id.id, user_id: @user.id)
+          @user_genre.save!
         end  
+        
         puts 'genre success', @user_genre
         redirect_to api_vi_root_path and return
+
       else
         puts 'genre error'
       end
@@ -102,7 +102,8 @@ module Api::V1
         :location,
         :commitment,
         :soundcloud,
-        :youtube
+        :youtube,
+        :description
       )
     end
 
