@@ -53,10 +53,8 @@ module Api::V1
         geocode_user(@user)
         @user.save!
         puts 'user success', @user
-        # return
-        redirect_to api_vi_users and return
       else
-        puts 'user error'
+        puts 'no user info'
       end
 
       if params[:instrument].present?
@@ -68,10 +66,8 @@ module Api::V1
         end
         
         puts 'instrument success', @user_exp
-        redirect_to api_v1_root_path and return
-
       else
-        puts 'instrument error'
+        puts 'no instruments'
       end
         
       if params[:genre].present?
@@ -82,10 +78,8 @@ module Api::V1
         end  
         
         puts 'genre success', @user_genre
-        redirect_to api_vi_root_path and return
-
       else
-        puts 'genre error'
+        puts 'no genres'
       end
     end
 

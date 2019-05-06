@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup } from 'semantic-ui-react'
+import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup, Modal } from 'semantic-ui-react'
 import InstrumentExperience from './InstrumentExperience';
 import UserGenres from './UserGenres';
 
@@ -8,7 +8,6 @@ class ProfileEdit extends Component{
     user: {},
     genre: [],
     instrument: [],
-    // redirect: true
   }
 
   componentDidMount() {
@@ -58,15 +57,6 @@ class ProfileEdit extends Component{
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
     // .then(res => res.json())
   }
-
-  // handleResponse = (resp) => {
-  //   if (resp.status === 400){
-  //     this.setState({errors: true, errorMessage: resp.messages[0]})
-  //   } else if (resp.status === 200){
-  //     this.props.logIn({auth: {email: this.state.email, password:this.state.password}})
-  //     this.setState({redirect:true})
-  //   }
-  // }
 
   render(){
     
@@ -147,7 +137,12 @@ class ProfileEdit extends Component{
             <Form.Field control={Input} defaultValue={this.state.user.youtube} label='YouTube' placeholder='username' name='youtube' onChange={this.onChange} />
             {/* </div> */}
           </Form.Group>
-          <Button onClick={this.onClick}>Update Profile</Button>
+          <Modal trigger={<Button onClick={this.onClick}>Update Profile</Button>}>
+            <Modal.Header>Profile Updated!</Modal.Header>
+            <Modal.Content>
+              <Button href='/'>Start Searching For Jams!</Button>
+            </Modal.Content>
+          </Modal> 
         </Form>
         {/* {this.state.redirect && <Redirect to={"/"} />} */}
       </Container>
