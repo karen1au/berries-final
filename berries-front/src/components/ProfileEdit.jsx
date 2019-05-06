@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup, Modal } from 'semantic-ui-react'
+import { Form, Button, Container, Input, Radio, Message, Select, Segment, Modal } from 'semantic-ui-react'
 import InstrumentExperience from './InstrumentExperience';
 import UserGenres from './UserGenres';
 
@@ -8,6 +8,7 @@ class ProfileEdit extends Component{
     user: {},
     genre: [],
     instrument: [],
+    modal: false
   }
 
   componentDidMount() {
@@ -55,7 +56,7 @@ class ProfileEdit extends Component{
     console.log('options body', options.body)
     console.log(this.props.current_user)
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
-    // .then(res => res.json())
+    .then(this.setState({modal: true}), () => console.log(this.state))
   }
 
   render(){
@@ -88,12 +89,34 @@ class ProfileEdit extends Component{
     ]
 
     return(
-      <Container>          
-        {this.state.errors && <Message negative>{this.state.errorMessage}</Message>}
+      <Container >  
+        <h2 style={{ color: "#4F072C"}}>Update Your Berries Profile</h2>        
+        {/* {this.state.errors && <Message negative>{this.state.errorMessage}</Message>} */}
         <Form >
-        <img className="ui small circular image" src={this.state.user.avatar}/>
-          <Form.Group inline>
-            <Form.Field>
+          <Segment className="profile">
+            <h3 style={{ color: "#4F072C"}}>Personal Information</h3>
+            <img className="ui small circular image" src={this.state.user.avatar}/>
+            <Form.Input label='Name' defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange} />
+            <Form.Input label='Email' defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange }/>
+            <Form.Input label='Password' defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
+            <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Re-enter Password' type='password' name='password_confirmation' onChange={this.onChange} />
+            <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
+            <Form.Input label='Description' defaultValue={this.state.user.description} placeholder='Tell us about yourself!' name='description' onChange={this.onChange} />
+          </Segment>
+          <Segment className="profile">
+          <h3 style={{ color: "#4F072C"}}>Musical Background</h3>
+            <h5>Are you an individual musician or a band?</h5>
+            <Form.Group inline>
+            <Form.Field >
+              <Radio
+                label='Individual Musician'
+                name='radioGroup'
+                value={false}
+                checked={!this.state.user.band}
+                onChange={this.toggleStatus}
+              />
+            </Form.Field>
+            <Form.Field >
               <Radio
                 label='Band'
                 name='radioGroup'
@@ -102,45 +125,23 @@ class ProfileEdit extends Component{
                 onChange={this.toggleStatus}
               />
             </Form.Field>
-            <Form.Field>
-              <Radio
-                label='Individual'
-                name='radioGroup'
-                value={false}
-                checked={!this.state.user.band}
-                onChange={this.toggleStatus}
-              />
-            </Form.Field>
-          </Form.Group>
-            <Form.Input label='Name'  defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange} />
-            <Form.Input label='Email' defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange }/>
-            <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
-            <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange} />
-            <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
-            <Form.Input label='Description (Optional)' defaultValue={this.state.user.description} placeholder='Tell the world about yourself!' name='description' onChange={this.onChange} />
-            <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange} />
-            <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
-              <UserGenres current_user={this.props.current_user}/>            
-            <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange}/>
+            </Form.Group>
+              <Form.Field control={Select} defaultValue={this.state.user.commitment} label='What are you looking for?' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange} />
+              <Form.Field control={Select} label='Add your genres' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
+              <UserGenres current_user={this.props.current_user}/>
+              <h4>Add your instruments</h4>
+              <h5>Individuals please add the instruments you play.  Bands please add the instruments you need.</h5>           
               <InstrumentExperience addInstrument={this.addInstrument} deleteInstrument={this.deleteInstrument} instruments={this.state.instrument}/> 
-          <Form.Group widths='equal'>
-            {/* <div class="ui labeled input">
-              <div class="ui label">
-                http://www.soundcloud.com/
-              </div> */}
-            <Form.Field control={Input} defaultValue={this.state.user.soundcloud} label='Soundcloud' placeholder='username' name='soundcloud' onChange={this.onChange} />
-            {/* </div>
-            <div class="ui labeled input">
-              <div class="ui label">
-                http://www.youtube.com/
-              </div> */}
-            <Form.Field control={Input} defaultValue={this.state.user.youtube} label='YouTube' placeholder='username' name='youtube' onChange={this.onChange} />
-            {/* </div> */}
-          </Form.Group>
-          <Modal trigger={<Button onClick={this.onClick}>Update Profile</Button>}>
+            <h4>Add your music</h4>
+            <Form.Group widths='equal'>
+              <Form.Field control={Input} defaultValue={this.state.user.soundcloud} label='Soundcloud Username' placeholder='soundcloud.com/' name='soundcloud' onChange={this.onChange} />
+              <Form.Field control={Input} defaultValue={this.state.user.youtube} label='YouTube Username' placeholder='youtube.com/' name='youtube' onChange={this.onChange} />
+            </Form.Group>
+          </Segment>
+          <Modal trigger={<Button className="profile" onClick={this.onClick}>Update Profile</Button>}>
             <Modal.Header>Profile Updated!</Modal.Header>
             <Modal.Content>
-              <Button href='/'>Start Searching For Jams!</Button>
+              <Button className="profile" href='/'>Start Searching For Jams!</Button>
             </Modal.Content>
           </Modal> 
         </Form>
