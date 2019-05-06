@@ -87,15 +87,14 @@ class App extends Component {
     console.log('message response: ', res);
     console.log('message chatid: ', res[0][4]);
     console.log('actual chatid: ', this.state.activeChat);
+    let key = res[0][4];
+    if (this.state.chatKey.hasOwnProperty(key)){
+      this.setState({ ...this.state, chatKey: { [key]: true}}, () => console.log("after msg",this.state))
+    }
     if (res[0][4] == this.state.activeChat){
       let newMsg = this.state.messages
       newMsg.push(res[0])
-      this.setState({messages: newMsg}, (()=> {
-        let key = res[0][4];
-        if (this.state.chatKey.hasOwnProperty(key)){
-          this.setState({ ...this.state, chatKey: { [key]: true}}, () => console.log("after msg",this.state))
-        }
-      }))
+      this.setState({messages: newMsg})
     } 
   };
 
