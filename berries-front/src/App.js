@@ -10,6 +10,7 @@ import Nav from './components/Nav'
 import Auth from './services/Auth'
 import ChatsList from  './components/ChatsList'
 import UserContainer from  './components/UserContainer'
+import { createHashHistory } from 'history'
 
 class App extends Component {
   constructor() {
@@ -32,6 +33,7 @@ class App extends Component {
       messages: [],
       jam_request: false,
       new_message: false,
+      signup: false
     } 
   }
 
@@ -155,6 +157,7 @@ class App extends Component {
 //User Authentication
   handleSignUpSubmit = (e, data) => {
     e.preventDefault();
+    const history = createHashHistory()
     const options = {
       method: 'post',
       headers: {
@@ -171,10 +174,12 @@ class App extends Component {
       // console.log(res)
       this.setState({
         auth: Auth.isUserAuthenticated(),
-        current_user: Auth.getCookie()
+        current_user: Auth.getCookie(),
+        signup: true
       })
       // console.log(this.state)
-    }).catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
   }
 
   handleLogInSubmit = (e, data) => {
@@ -323,14 +328,19 @@ class App extends Component {
                 ? <ProfileEdit current_user={this.state.current_user}/> 
                 : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
             <Route exact path="/"
-              render={() => (this.state.auth)
-                ? <Home 
-                    cable={this.props.cable}
-                    grabUserID={this.grabUserID} 
-                    users={this.state.users} 
-                    queryResults={this.queryResults} 
-                    handleSelection={this.handleSelection}/>
-                : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
+              render={() => {
+                if (this.state.signup === true) {
+                  console.log(this.state)
+                  return <ProfileEdit current_user={this.state.current_user}/>}
+                else if (this.state.auth) {
+                  return <Home 
+                      cable={this.props.cable}
+                      grabUserID={this.grabUserID} 
+                      users={this.state.users} 
+                      queryResults={this.queryResults} 
+                  handleSelection={this.handleSelection}/> }
+                else {
+                  return <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }}}/>
             <Route path="/login" 
               render={() => (this.state.auth)
               ? <Redirect to='/'/>
