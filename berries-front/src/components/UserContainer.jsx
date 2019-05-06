@@ -1,61 +1,67 @@
+import { Button, Container, Header, Image, Modal } from 'semantic-ui-react'
 import React, { Component } from 'react'
-
 // import Auth from '../services/Auth'
 // import { ActionCable } from 'react-actioncable-provider';
 
 class UserContainer extends Component {
   state = {
-    user: ''
+    genres: [],
+    instruments: []
   }
-  
+
   componentDidMount() {
-    // fetch(`http://localhost:3000/api/v1/users/:id`)
-    // .then(res => res.json())
-    // .then(user => {
-    //   this.setState({ user })
-    // })
+    fetch(`http://localhost:3000/api/v1/genres/search/?user=${this.props.user.id}`)
+    .then(res => res.json())
+    .then(genres => {
+      let map = genres.map(g => {
+        return g.name;
+      })
+      this.setState({ genres: map }, () => {
+        console.log(this.state)
+      })
+    })
+
+    fetch(`http://localhost:3000/api/v1/instruments/search/?user=${this.props.user.id}`)
+    .then(res => res.json())
+    .then(instruments => {
+      console.log(instruments)
+      let map = instruments.map(i => {
+        return i.name;
+      })
+      this.setState({ instruments: map }, () => {
+        console.log(this.state)
+      })
+    })
   }
 
   render() {
+    return( 
 
-    console.log(this.props)
-    console.log(this.props.users[0].name)
-    
-    return(
-      <div className="ui-card">
-        <div className="image"></div>
-          <img src="https://robohash.org/deseruntquossuscipit.png?size=300x300&set=set1" />
-        <div/>
-        <div className="content">
-          <a className="header">Albert</a>
-          <div className="meta">
-            <span className="date">Joined in 2013</span>
-          </div>
-          <div className="description">
-            <p>
-            Volutpat ac tincidunt vitae semper quis lectus nulla at volutpat. Sem viverra aliquet eget sit amet tellus cras. 
-            Interdum consectetur libero id faucibus nisl tincidunt. Tellus at urna condimentum mattis pellentesque id. 
-            Fames ac turpis egestas integer eget aliquet nibh. Faucibus nisl tincidunt eget nullam non.
-            </p>
-          </div>
-          <div className="description">
-            Bassist
-          </div>
-          <div className="description">
-            Genres - Punk, Rock, Metal
-          </div>
-        </div>
-        <div className="extra content">
-          <a>
-            <i className="user icon"></i>
-            Total Jams: 22
-          </a>
-        </div>
-        <div>
-          <a href="https://soundcloud.com/hoodasaurus">Soundcloud</a> 
-          <a href="https://www.youtube.com/">Youtube</a> 
-        </div>  
-      </div>
+      <Modal trigger={<Button>Show</Button>}>
+        <Modal.Header>Select a Photo</Modal.Header>
+        <Modal.Content image>
+          <Image wrapped size='medium' src={this.props.user.avatar}/>
+          <Modal.Description>
+            <Header>{this.props.user.name}</Header>
+            <p>{this.props.user.description}</p>
+          </Modal.Description>
+          <Container>
+            <Modal.Description>
+              {this.state.genres.map(g => {
+                return <Header>{g}</Header>
+              })}
+            </Modal.Description>
+            <Modal.Description>
+              {this.state.instruments.map(i => {
+                return <Header>{i}</Header>
+              })}
+            </Modal.Description>
+          </Container>
+            <iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=http://soundcloud.com/hoodasaurus&amp;color=AF0E49" width="100%" height="350" scrolling="no" frameborder="no"></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed?listType=user_uploads&list=croutoncrackerjacks" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </Modal.Content>
+      </Modal>  
+      
     )
   }
 }

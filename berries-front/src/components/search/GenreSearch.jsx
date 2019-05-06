@@ -12,7 +12,6 @@ class GenreSearch extends Component {
     fetch('http://localhost:3000/api/v1/genres.json')
     .then(res => res.json())
     .then(genre => {
-      // console.log(genre)
       const options = genre.map(g => {
       const map = {}
         map['value'] = g.name, map['label'] = g.name
