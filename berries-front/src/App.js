@@ -324,7 +324,8 @@ class App extends Component {
           }/>
           
           <Switch>
-          <Route path="/users/:id" 
+
+          {/* <Route path="/users/:id" 
             render={() => (this.state.auth)
               ? <ProfileEdit current_user={this.state.current_user}/> 
               : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
@@ -355,7 +356,7 @@ class App extends Component {
                 friendOptions={this.state.friendOptions}
                 chatKey={this.state.chatKey}/>
             : <Redirect to='/'/>}/>
-          <Route component={Error}/>
+          <Route component={Error}/> */}
 
             <Route path="/users/:id" 
               render={() => (this.state.auth)
