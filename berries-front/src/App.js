@@ -9,6 +9,7 @@ import ProfileEdit from './components/ProfileEdit'
 import Nav from './components/Nav'
 import Auth from './services/Auth'
 import ChatsList from  './components/ChatsList'
+import { timingSafeEqual } from 'crypto';
 import UserContainer from  './components/UserContainer'
 
 class App extends Component {
@@ -42,7 +43,6 @@ class App extends Component {
       this.setState({
         users: users,
       }, (() => {
-        console.log(this.state.users)
         if (this.state.current_user) {
           this.loadNotifications();
         }
@@ -66,32 +66,37 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
     .then(res => res.json())
     .then(chats => {
-      this.setState({ chats }
+      let chatKey = {};
+      Object.keys(chats).map( chatID => {
+        chatKey[chatID] = false
+      })
+      this.setState({ ...this.state, chats: chats, chatKey }
         ,(() => {
-        console.log("all chats", this.state.chats)
-        // this.displayChat(this.state.chats)
+        console.log("all chats", this.state)
       }))
     })
   }
+  
   //action cable
   handleReceivedChats = res => {
     console.log('chat response: ', res);
+
     this.setState({ chats: [...this.state.chats, res] })
     
   };
 
   handleReceivedMessage = res => {
-    console.log('message response: ', res);
-    // add res.message to end of state
-    // pass down handleReceivedMessage from App.js and call this.props.handleReceivedMessage(res.message);
-    // setState({ messages: [...this.state.messages, message]})
-    // fetch(`http://localhost:3000/api/v1/messages?chat=${this.state.activeChat}`)
-    // .then(res => res.json())  
-    // .then(msg => {
-    this.setState({messages: [...this.state.messages, res]})
-      
-    // console.log("MESSAGE REFETCHED",this.state.messages)
-      
+    console.log('message chatid: ', res[0][4]);
+    console.log('actual chatid: ', this.state.activeChat);
+    let key = res[0][4];
+    if (this.state.chatKey.hasOwnProperty(key)){
+      this.setState({ ...this.state, chatKey: { [key]: true}}, () => console.log("after msg",this.state))
+    }
+    if (res[0][4] == this.state.activeChat){
+      let newMsg = this.state.messages
+      newMsg.push(res[0])
+      this.setState({messages: newMsg})
+    } 
   };
 
   // handleClick = id => {
@@ -315,42 +320,44 @@ class App extends Component {
           }/>
           
           <Switch>
+          <Route path="/users/:id" 
+            render={() => (this.state.auth)
+              ? <ProfileEdit current_user={this.state.current_user}/> 
 
-            <Route path="/users/:id/show" render={() =><UserContainer users={this.state.users}/> } />
+              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
+          <Route exact path="/"
+            render={() => (this.state.auth)
+              ? <Home 
+                  cable={this.props.cable} 
+                  users={this.state.users} 
+                  queryResults={this.queryResults} 
+                  handleSelection={this.handleSelection}/>
+              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
+          <Route path="/login" 
+            render={() => (this.state.auth)
+            ? <Redirect to='/'/>
+            : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
+          <Route path="/chats" 
+            render={() => (this.state.auth)
+            ? <ChatsList current_user={this.state.current_user}
+                chats={this.state.chats}
+                messages={this.state.messages}
+                activeChat={this.state.activeChat}
+                displayMessage={this.displayMessage}
+                getChats={this.getChats}
+                handleReceivedChats={this.handleReceivedChats}
+                handleReceivedMessage={this.handleReceivedMessage}
+                leaveChat={this.leaveChat}
+                addUser={this.addUser}
+                friendOptions={this.state.friendOptions}
+                chatKey={this.state.chatKey}/>
+            : <Redirect to='/'/>}/>
+          <Route component={Error}/>
 
-            <Route path="/users/:id" 
-              render={() => (this.state.auth)
-                ? <ProfileEdit current_user={this.state.current_user}/> 
-                : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
-            <Route exact path="/"
-              render={() => (this.state.auth)
-                ? <Home 
-                    cable={this.props.cable}
-                    grabUserID={this.grabUserID} 
-                    users={this.state.users} 
-                    queryResults={this.queryResults} 
-                    handleSelection={this.handleSelection}/>
-                : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
-            <Route path="/login" 
-              render={() => (this.state.auth)
-              ? <Redirect to='/'/>
-              : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
-            <Route path="/chats" 
-              render={() => (this.state.auth)
-              ? <ChatsList current_user={this.state.current_user}
-                  chats={this.state.chats}
-                  messages={this.state.messages}
-                  activeChat={this.state.activeChat}
-                  displayMessage={this.displayMessage}
-                  getChats={this.getChats}
-                  handleReceivedChats={this.handleReceivedChats}
-                  handleReceivedMessage={this.handleReceivedMessage}/>
-              : <Redirect to='/'/>}/>
-            <Route component={Error}/>
+        </Switch>
 
-          </Switch>
+      </div>
 
-        </div>
       </BrowserRouter>
     );  
   }
