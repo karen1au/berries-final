@@ -8,7 +8,7 @@ class ChatsList extends React.Component {
 
 
   componentDidMount() {
-    this.props.getChats()
+    // this.props.getChats()
   }
 
 

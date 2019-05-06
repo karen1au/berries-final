@@ -9,7 +9,8 @@ module Api::V1
           if notification.save
             target_user = User.find(@user.user_id)
             allNoti = target_user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :email, :noti_type, :sender_id)
-            byebug
+            #allNoti[0] id, [1] sender email, [2] notitype, [3] sender_id, [4] chatID
+            allNoti[0] << params[:chat]
             ActionCable.server.broadcast("current_user_#{target_user.id}", allNoti)
           end
         end

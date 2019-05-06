@@ -51,6 +51,19 @@ class App extends Component {
         }
       }))
     })
+
+    fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+    .then(res => res.json())
+    .then(chats => {
+      let chatKey = {};
+      Object.keys(chats).map( chatID => {
+        chatKey[chatID] = false
+      })
+      this.setState({ ...this.state, chats: chats, chatKey }
+        ,(() => {
+        console.log("all chats", this.state)
+      }))
+    })
   }
 
   loadNotifications = () => {
@@ -65,50 +78,41 @@ class App extends Component {
   }
 
  //For Chatlist 
- getChats = () => {
-  fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
-  .then(res => res.json())
-  .then(chats => {
-    let chatKey = {};
-    Object.keys(chats).map( chatID => {
-      chatKey[chatID] = false
-    })
-    this.setState({ ...this.state, chats: chats, chatKey }
-      ,(() => {
-      console.log("all chats", this.state)
-    }))
-  })
-}
+//  getChats = () => {
+//   fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+//   .then(res => res.json())
+//   .then(chats => {
+//     let chatKey = {};
+//     Object.keys(chats).map( chatID => {
+//       chatKey[chatID] = false
+//     })
+//     this.setState({ ...this.state, chats: chats, chatKey }
+//       ,(() => {
+//       console.log("all chats", this.state)
+//     }))
+//   })
+// }
 
 
   
   //action cable
   handleReceivedChats = res => {
-    console.log('chat response: ', res);
-
     this.setState({ chats: [...this.state.chats, res] })
-    
   };
 
   handleReceivedMessage = res => {
     console.log('message response: ', res);
     console.log('message chatid: ', res[0][4]);
     console.log('actual chatid: ', this.state.activeChat);
-    let key = res[0][4];
-    if (this.state.chatKey.hasOwnProperty(key)){
-      this.setState({ ...this.state, chatKey: { [key]: true}}, () => console.log("after msg",this.state))
-    }
     if (res[0][4] == this.state.activeChat){
       let newMsg = this.state.messages
       newMsg.push(res[0])
       this.setState({messages: newMsg})
     } 
-  };
-
-
-  // handleClick = id => {
-  //   this.setState({ activeChat: id });
-  // };
+    if (this.state.chatKey.hasOwnProperty(res[0][4]) && this.props.activeChat !== res[0][4]){
+      this.setState({ ...this.state, chatKey: { [res[0][4]]: true}}, () => console.log("received msg state",this.state))
+    }
+  }
 
   displayMessage = (chatID) => {
     event.preventDefault();
@@ -116,7 +120,7 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/messages?chat=${chatID}`)
     .then(res => res.json())  
     .then(msg => {
-      this.setState({messages: msg})
+      this.setState({messages: msg, chatKey: {chatID: false}})
       console.log(this.state.messages)
       this.getFriendList(this.state.activeChat, this.state.current_user)
       // console.log("this is messages",this.state.messages)
@@ -299,7 +303,11 @@ class App extends Component {
         this.setState(prevState => ({ jam_request: true, notifications: [...prevState.notifications, noti]}))
       }
       if (noti[2] == "new message"){
-        this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
+        if (this.state.chatKey.hasOwnProperty(noti[4])){
+          this.setState({ ...this.state, chatKey: { [noti[4]]: true}}, () => console.log("after msg",this.state))
+          this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
+        }
+         this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
       }
     })
   }
@@ -371,10 +379,13 @@ class App extends Component {
               handleLogOut={this.handleLogOut} 
               onAccept={this.onAccept}
               onRefuse={this.onRefuse}
+              openNoti={this.openNoti}
+              openChat={this.openChat}
               handleNotifications={this.handleNotifications}
               jam_request={this.state.jam_request}
               new_message={this.state.new_message}
-              notifications={this.state.notifications}/>
+              notifications={this.state.notifications}
+              current_user={this.state.current_user}/>
           }/>
           
           <Switch>
