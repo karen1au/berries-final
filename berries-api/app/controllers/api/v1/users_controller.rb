@@ -57,8 +57,8 @@ module Api::V1
         geocode_user(@user)
         @user.save!
         puts 'user success', @user
-        return
-        # redirect_to :controller => 'users', :action => 'show', status: 301 and return
+        # return
+        redirect_to api_vi_root_path and return
       else
         puts 'user error'
       end
@@ -71,8 +71,8 @@ module Api::V1
         @user_exp.save!
         end
         puts 'instrument success', @user_exp
-        return
-        # redirect_to :controller => 'users', :action => 'show', status: 301 and return
+        redirect_to api_vi_root_path and return
+
       else
         puts 'instrument error'
       end
@@ -84,8 +84,7 @@ module Api::V1
         @user_genre.save!
         end  
         puts 'genre success', @user_genre
-        return
-        # redirect_to :controller => 'users', :action => 'show', status: 301 and return
+        redirect_to api_vi_root_path and return
       else
         puts 'genre error'
       end
