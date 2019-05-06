@@ -5,13 +5,10 @@ import UserGenres from './UserGenres';
 
 class ProfileEdit extends Component{
   state = { 
-    user: {
-    // errors: false,
-    // errorMessage: '',
-    // redirect: false
-    },
+    user: {},
     genre: [],
-    instrument: []
+    instrument: [],
+    // redirect: true
   }
 
   componentDidMount() {
@@ -59,7 +56,6 @@ class ProfileEdit extends Component{
     console.log(this.props.current_user)
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
     // .then(res => res.json())
-    .then(console.log(this.state))
   }
 
   // handleResponse = (resp) => {
@@ -149,7 +145,7 @@ class ProfileEdit extends Component{
           </Form.Group>
           <Button onClick={this.onClick}>Update Profile</Button>
         </Form>
-        {this.state.redirect && <Redirect to={"/"} />}
+        {/* {this.state.redirect && <Redirect to={"/"} />} */}
       </Container>
     )
   }
