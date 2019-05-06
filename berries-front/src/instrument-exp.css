@@ -1,0 +1,12 @@
+#add.ui.button {
+  background-color: #4F072C;
+  color: white;
+}
+
+#delete.ui.button {
+  background-color: #4F072C;
+  color: white;
+  height: 100%;
+  position: relative;
+  top: 23px;
+}
