@@ -77,11 +77,11 @@ class InstrumentExperience extends Component {
       <div>
         {this.createUI()}
         <Button onClick={this.onClick}>Add Instrument</Button>
-        {this.props.instruments.map((instrument, index) => { 
+        {/* {this.props.instruments.map((instrument, index) => { 
           return (
             <p key={index}>{instrument.name} - {instrument.experience}</p>
           )
-        })}
+        })} */}
       </div>
     )
   }      

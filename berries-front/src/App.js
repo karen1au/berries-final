@@ -34,7 +34,7 @@ class App extends Component {
       messages: [],
       jam_request: false,
       new_message: false,
-      signup: false
+      signup: false,
     } 
   }
 
@@ -324,38 +324,6 @@ class App extends Component {
           }/>
           
           <Switch>
-          <Route path="/users/:id" 
-            render={() => (this.state.auth)
-              ? <ProfileEdit current_user={this.state.current_user}/> 
-              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/> 
-          <Route exact path="/"
-            render={() => (this.state.auth)
-              ? <Home 
-                  cable={this.props.cable} 
-                  users={this.state.users} 
-                  queryResults={this.queryResults} 
-                  handleSelection={this.handleSelection}/>
-              : <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }/>
-          <Route path="/login" 
-            render={() => (this.state.auth)
-            ? <Redirect to='/'/>
-            : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
-          <Route path="/chats" 
-            render={() => (this.state.auth)
-            ? <ChatsList current_user={this.state.current_user}
-                chats={this.state.chats}
-                messages={this.state.messages}
-                activeChat={this.state.activeChat}
-                displayMessage={this.displayMessage}
-                getChats={this.getChats}
-                handleReceivedChats={this.handleReceivedChats}
-                handleReceivedMessage={this.handleReceivedMessage}
-                leaveChat={this.leaveChat}
-                addUser={this.addUser}
-                friendOptions={this.state.friendOptions}
-                chatKey={this.state.chatKey}/>
-            : <Redirect to='/'/>}/>
-          <Route component={Error}/>
 
             <Route path="/users/:id" 
               render={() => (this.state.auth)
