@@ -134,8 +134,10 @@ class ProfileEdit extends Component{
             {/* </div> */}
           </Form.Group>
           <Modal trigger={<Button onClick={this.onClick}>Update Profile</Button>}>
-          <Modal.Header>Profile Updated!</Modal.Header>
-            <Button href='/'>Start Searching For Jams!</Button>
+            <Modal.Header>Profile Updated!</Modal.Header>
+            <Modal.Content>
+              <Button href='/'>Start Searching For Jams!</Button>
+            </Modal.Content>
           </Modal> 
         </Form>
         {/* {this.state.redirect && <Redirect to={"/"} />} */}
