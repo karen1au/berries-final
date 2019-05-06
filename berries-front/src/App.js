@@ -16,7 +16,7 @@ class App extends Component {
     super();
     this.state = {
       auth: Auth.isUserAuthenticated(),
-      user: '',
+      genres: [],
       users: [],
       parameters: {
         currentCommitment: null,
@@ -145,14 +145,13 @@ class App extends Component {
     fetch(this.createURL())
     .then(res => res.json())
     .then(user => {
-      // console.log(user)
       this.setState({
         users: user,
       })
     })
   }
 
-//User Authentication
+  //User Authentication
   handleSignUpSubmit = (e, data) => {
     e.preventDefault();
     const options = {
@@ -316,7 +315,7 @@ class App extends Component {
           
           <Switch>
 
-            <Route path="/users/:id/show" render={() =><UserContainer users={this.state.users}/> } />
+            {/* <Route path="/users/:id/show" render={() =><UserContainer users={this.state.users}/> } /> */}
 
             <Route path="/users/:id" 
               render={() => (this.state.auth)

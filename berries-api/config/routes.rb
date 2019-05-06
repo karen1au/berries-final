@@ -4,14 +4,15 @@ Rails.application.routes.draw do
 
       get 'users/search' => 'users#search' 
       get 'users/:id/show' => 'users#show' 
-
       resources :users
+      
+      get 'instruments/search' => 'instruments#search'
       resources :instruments
       
       get 'genres/search' => 'genres#search'
-      
       resources :user_genres 
       resources :genres
+
       resources :chats
       resources :messages
       resources :notifications
