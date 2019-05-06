@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Icon, Popup, Grid } from 'semantic-ui-react'
+import { Button, Icon, Popup, Grid, Menu, Container } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import Auth from '../services/Auth';
 
@@ -39,24 +39,26 @@ class Nav extends Component {
       let navElement;
       (Auth.getToken()) ?
       navElement = 
-        <div className="nav-btn">
-        <Button positive as="a" href={"/"}>Home</Button>
-        <Button onClick={this.props.handleLogOut}>Logout</Button>
-        <Button basic color={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
-        <Button positive as="a" href={`/users/${this.props.current_user}`}>Profile</Button>
-
+        <Container>
+        <Menu.Item  as="a" href={"/"}>Home</Menu.Item>
+        <Menu.Item  as="a" href={`/users/${this.props.current_user}`}>Profile</Menu.Item>
+        <Button color={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
         <div className="notification-group">
-        <Popup trigger={<Button basic color={jam} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
+        <Popup trigger={<Button style={{color: "red"}} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
         {noti_list}
         </Popup></div>
-        </div>
-      : navElement = <Button positive as="a" href={"/login"}>Login</Button>
+        <Menu.Item position="right" onClick={this.props.handleLogOut}>Logout</Menu.Item>
+        </Container>
+      : navElement = <Container><Menu.Item positive as="a" href={"/login"}>Login</Menu.Item></Container>
 
     return (
       <div>
         <ActionCable  channel={{ channel: 'NotificationsChannel', current_user: this.props.current_user}}
             onReceived={(res) => this.props.handleNotifications(res)}/>
-      {navElement}
+      <Menu color="violet" inverted pointing secondary>
+
+              {navElement}
+            </Menu>
       </div>
     )
   }
