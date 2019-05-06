@@ -53,6 +53,9 @@ module Api::V1
         geocode_user(@user)
         @user.save!
         puts 'user success', @user
+
+        return
+
       else
         puts 'no user info'
       end
@@ -66,6 +69,8 @@ module Api::V1
         end
         
         puts 'instrument success', @user_exp
+        return
+
       else
         puts 'no instruments'
       end
@@ -78,6 +83,8 @@ module Api::V1
         end  
         
         puts 'genre success', @user_genre
+        return
+
       else
         puts 'no genres'
       end

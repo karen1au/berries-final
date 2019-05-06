@@ -35,6 +35,7 @@ class App extends Component {
       jam_request: false,
       new_message: false,
       signup: false,
+      friendOptions: []
     } 
   }
 
@@ -48,6 +49,19 @@ class App extends Component {
         if (this.state.current_user) {
           this.loadNotifications();
         }
+      }))
+    })
+
+    fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+    .then(res => res.json())
+    .then(chats => {
+      let chatKey = {};
+      Object.keys(chats).map( chatID => {
+        chatKey[chatID] = false
+      })
+      this.setState({ ...this.state, chats: chats, chatKey }
+        ,(() => {
+        console.log("all chats", this.state)
       }))
     })
   }
@@ -64,46 +78,41 @@ class App extends Component {
   }
 
  //For Chatlist 
-  getChats = () => {
-    fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
-    .then(res => res.json())
-    .then(chats => {
-      let chatKey = {};
-      Object.keys(chats).map( chatID => {
-        chatKey[chatID] = false
-      })
-      this.setState({ ...this.state, chats: chats, chatKey }
-        ,(() => {
-        console.log("all chats", this.state)
-      }))
-    })
-  }
+//  getChats = () => {
+//   fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+//   .then(res => res.json())
+//   .then(chats => {
+//     let chatKey = {};
+//     Object.keys(chats).map( chatID => {
+//       chatKey[chatID] = false
+//     })
+//     this.setState({ ...this.state, chats: chats, chatKey }
+//       ,(() => {
+//       console.log("all chats", this.state)
+//     }))
+//   })
+// }
+
+
   
   //action cable
   handleReceivedChats = res => {
-    console.log('chat response: ', res);
-
     this.setState({ chats: [...this.state.chats, res] })
-    
   };
 
   handleReceivedMessage = res => {
+    console.log('message response: ', res);
     console.log('message chatid: ', res[0][4]);
     console.log('actual chatid: ', this.state.activeChat);
-    let key = res[0][4];
-    if (this.state.chatKey.hasOwnProperty(key)){
-      this.setState({ ...this.state, chatKey: { [key]: true}}, () => console.log("after msg",this.state))
-    }
     if (res[0][4] == this.state.activeChat){
       let newMsg = this.state.messages
       newMsg.push(res[0])
       this.setState({messages: newMsg})
     } 
-  };
-
-  // handleClick = id => {
-  //   this.setState({ activeChat: id });
-  // };
+    if (this.state.chatKey.hasOwnProperty(res[0][4]) && this.props.activeChat !== res[0][4]){
+      this.setState({ ...this.state, chatKey: { [res[0][4]]: true}}, () => console.log("received msg state",this.state))
+    }
+  }
 
   displayMessage = (chatID) => {
     event.preventDefault();
@@ -111,7 +120,9 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/messages?chat=${chatID}`)
     .then(res => res.json())  
     .then(msg => {
-      this.setState({messages: msg})
+      this.setState({messages: msg, chatKey: {chatID: false}})
+      console.log(this.state.messages)
+      this.getFriendList(this.state.activeChat, this.state.current_user)
       // console.log("this is messages",this.state.messages)
       })
     }))
@@ -256,31 +267,34 @@ class App extends Component {
   }
 
   onAccept = (senderID) => {
-    // event.preventDefault();
+    event.preventDefault();
     const options = {
       method: 'post',
       headers: {
         'content-type': 'application/json',
         'accept': 'application/json'
       },
-      body: JSON.stringify({user1_id: this.props.current_user, user2_id: senderID})
+      body: JSON.stringify({user1_id: this.state.current_user, user2_id: senderID})
     }
     fetch(`http://localhost:3000/api/v1/relationships`, options)
     .then(()=>{
+      console.log(`clicked accept, user1:, ${this.state.current_user},user2: ${senderID}` )
       this.loadNotifications();
       })
-    .then( () => {
-      const options = {
-        method: 'post',
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json'
-        },
-        body: JSON.stringify({sender: this.state.current_user, receiver: senderID, noti_type: "new message" })
-      }
-      fetch(`http://localhost:3000/api/v1/notifications`,options)
-        .then( res => console.log('chat notification posted'))
-    })
+    .then(() => { this.postNotification(this.state.current_user, senderID)})
+        // .then( res => console.log('initial notification posted'))
+  }
+
+  postNotification = (sender, receiver) => {
+    const options = {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({sender: sender, receiver: receiver, noti_type: "new message" })
+    }
+    fetch(`http://localhost:3000/api/v1/notifications`,options)
   }
 
   categorizeNoti = (noti) => {
@@ -289,14 +303,19 @@ class App extends Component {
         this.setState(prevState => ({ jam_request: true, notifications: [...prevState.notifications, noti]}))
       }
       if (noti[2] == "new message"){
-        this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
+        if (this.state.chatKey.hasOwnProperty(noti[4])){
+          this.setState({ ...this.state, chatKey: { [noti[4]]: true}}, () => console.log("after msg",this.state))
+          this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
+        }
+         this.setState(prevState => ({new_message: true, notifications: [...prevState.notifications, noti]}))
       }
     })
   }
-    handleNotifications = (res) => {
+  handleNotifications = (res) => {
     console.log("this is notification",res)
     this.categorizeNoti(res)
   }
+
 
   openNoti = () => {
     event.preventDefault();
@@ -308,6 +327,49 @@ class App extends Component {
     console.log("clicked chat button")
   }
 
+    //Chat options
+  leaveChat = (chatID) => {
+    const options = {
+      method: 'delete',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({chat_id: chatID, user_id: this.state.current_user})
+    }
+    fetch(`http://localhost:3000/api/v1/bye`, options)
+    .then(() => {
+      this.setState({activeChat: null})
+      this.getChats()
+    })
+  }
+
+  getFriendList = (chatID, userID) => {
+    fetch(`http://localhost:3000/api/v1/users?chat=${chatID}&user=${userID}`)
+    .then(res => res.json())
+    .then(users => {
+      console.log("received options:", users)
+      this.setState({friendOptions: users})
+    })
+  }
+
+  addUser = (selectedUser) => {
+    const options = {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({user: selectedUser, chat: this.state.activeChat})
+    }
+    fetch(`http://localhost:3000/api/v1/chat_users`,options)
+    .then(()=> {
+      this.postNotification(this.state.current_user, selectedUser);
+      this.getChats()
+    })
+  }
+  
+
   render() {
     return (
       <BrowserRouter>
@@ -317,10 +379,13 @@ class App extends Component {
               handleLogOut={this.handleLogOut} 
               onAccept={this.onAccept}
               onRefuse={this.onRefuse}
+              openNoti={this.openNoti}
+              openChat={this.openChat}
               handleNotifications={this.handleNotifications}
               jam_request={this.state.jam_request}
               new_message={this.state.new_message}
-              notifications={this.state.notifications}/>
+              notifications={this.state.notifications}
+              current_user={this.state.current_user}/>
           }/>
           
           <Switch>
@@ -349,14 +414,18 @@ class App extends Component {
               : <LogIn handleLogInSubmit={this.handleLogInSubmit}/>} />
             <Route path="/chats" 
               render={() => (this.state.auth)
-              ? <ChatsList current_user={this.state.current_user}
-                  chats={this.state.chats}
-                  messages={this.state.messages}
-                  activeChat={this.state.activeChat}
-                  displayMessage={this.displayMessage}
-                  getChats={this.getChats}
-                  handleReceivedChats={this.handleReceivedChats}
-                  handleReceivedMessage={this.handleReceivedMessage}/>
+                ? <ChatsList current_user={this.state.current_user}
+                chats={this.state.chats}
+                messages={this.state.messages}
+                activeChat={this.state.activeChat}
+                displayMessage={this.displayMessage}
+                getChats={this.getChats}
+                handleReceivedChats={this.handleReceivedChats}
+                handleReceivedMessage={this.handleReceivedMessage}
+                leaveChat={this.leaveChat}
+                addUser={this.addUser}
+                friendOptions={this.state.friendOptions}
+                chatKey={this.state.chatKey}/>
               : <Redirect to='/'/>}/>
             <Route component={Error}/>
 
