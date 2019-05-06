@@ -18,8 +18,10 @@ class ChatsList extends React.Component {
     const allchats = chatlist
     const entries = Object.entries(allchats)
     for (const [allchat, count] of entries){
+      console.log(allchat)
       container.push(
-        <Button onClick={() => this.props.displayMessage(allchat)} name={allchat}>
+        <Button basic color={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'black' : 'red'}
+          name={allchat} onClick={() => this.props.displayMessage(allchat)} name={allchat}>
         <h4>{allchat}</h4>
         {count.map((user)=> <p>{user}</p>)}
         </Button>
@@ -62,6 +64,7 @@ class ChatsList extends React.Component {
       )}
        )
       }
+
 
     return (
       <div className="chatsList">
