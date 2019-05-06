@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup } from 'semantic-ui-react'
+import { Form, Button, Container, Input, Radio, Message, Redirect, Select, FormGroup, Modal } from 'semantic-ui-react'
 import InstrumentExperience from './InstrumentExperience';
 import UserGenres from './UserGenres';
 
@@ -8,13 +8,13 @@ class ProfileEdit extends Component{
     user: {},
     genre: [],
     instrument: [],
-    // redirect: true
   }
 
   componentDidMount() {
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
+      console.log(user);
       this.setState({ user })
     })
   }
@@ -58,16 +58,10 @@ class ProfileEdit extends Component{
     // .then(res => res.json())
   }
 
-  // handleResponse = (resp) => {
-  //   if (resp.status === 400){
-  //     this.setState({errors: true, errorMessage: resp.messages[0]})
-  //   } else if (resp.status === 200){
-  //     this.props.logIn({auth: {email: this.state.email, password:this.state.password}})
-  //     this.setState({redirect:true})
-  //   }
-  // }
+  render(){
+    
+    console.log(this.state);
 
-  render(){ 
     const commitmentOptions = [
       { key: 'c', text: 'Casual Jam', value: 'causal jam' },
       { key: 'o', text: 'Ongoing Jam', value: 'ongoing jam' }
@@ -123,7 +117,7 @@ class ProfileEdit extends Component{
             <Form.Input label='Password'  defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
             <Form.Input label='Confirm Password' defaultValue={this.state.user.password_confirmation} placeholder='Password' type='password' name='password_confirmation' onChange={this.onChange} />
             <Form.Input label='Location' defaultValue={this.state.user.location} placeholder='Enter your address / city' name='location' required onChange={this.onChange} />
-            <Form.Input label='Description (Optional)' defaultValue={this.state.user.description} placeholder='Write a Description of Yourself' name='description' onChange={this.onChange} />
+            <Form.Input label='Description (Optional)' defaultValue={this.state.user.description} placeholder='Tell the world about yourself!' name='description' onChange={this.onChange} />
             <Form.Field control={Select} defaultValue={this.state.user.commitment} label='Commitment' name='commitment' options={commitmentOptions} placeholder='Commitment' onChange={this.onChange} />
             <Form.Field control={Select} label='Genre' name='genre' fluid multiple selection options={genreOptions} placeholder='Genre' onChange={this.onGenreChange}/>
               <UserGenres current_user={this.props.current_user}/>            
@@ -143,7 +137,12 @@ class ProfileEdit extends Component{
             <Form.Field control={Input} defaultValue={this.state.user.youtube} label='YouTube' placeholder='username' name='youtube' onChange={this.onChange} />
             {/* </div> */}
           </Form.Group>
-          <Button onClick={this.onClick}>Update Profile</Button>
+          <Modal trigger={<Button onClick={this.onClick}>Update Profile</Button>}>
+            <Modal.Header>Profile Updated!</Modal.Header>
+            <Modal.Content>
+              <Button href='/'>Start Searching For Jams!</Button>
+            </Modal.Content>
+          </Modal> 
         </Form>
         {/* {this.state.redirect && <Redirect to={"/"} />} */}
       </Container>
