@@ -5,13 +5,13 @@ module Api::V1
     def index
       puts 'params', params
       @current_user = User.find_by_id(JSON.parse(params[:user]))
-      puts '@current_user: '@current_user
+      puts @current_user
 
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
       @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
       @users = @users.where.not(id:params[:user])
       @users = @users.where.not(band: @current_user.band)
-      puts '@users: ' @users
+      puts 'index users: ', @users
       render json: @users
     end
 
@@ -30,6 +30,7 @@ module Api::V1
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
       @users = @users.joins(:user_exps).where('user_exps.years' => params[:currentExperience]) if params[:currentExperience].present?
+      puts 'search users: ', @users
       render json: @users
     end
   
