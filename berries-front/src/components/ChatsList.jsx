@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Grid, Button, Dropdown, Header, Image, Comment } from 'semantic-ui-react'
+import { Feed, Grid, Button, Dropdown, Header, Image, Comment } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import NewMessageForm from './NewMessageForm';
 import Moment from 'react-moment';
@@ -59,21 +59,22 @@ class ChatsList extends React.Component {
       show_msg = <div><h3>There is no message yet...</h3></div> :
       show_msg = this.props.messages.map((msg) => { 
       return (
+        <div className="msg-container" style={{margin: "20px 0"}}>
+        <div className="msg-info" style={{minWidth: "50px", width: "auto", margin: "10px 0"}}>
+        <h4 style={{display: "inline-block", marginBottom: "0"}}>{msg[1]}</h4>
+        <span style={{marginLeft: "5px", color: "grey", fontSize: "10px"}}><Moment fromNow>{msg[3]}</Moment></span>
+        </div>
+        <span style={{display: "inline", marginLeft: "10px", border: "1px solid #4F072C", borderRadius: "8px", padding: "5px"}}>{msg[2]}</span>
+        </div>
+      //   <Feed.Event>
+      //   <Feed.Label image={msg[5]} />
+      //   <Feed.Content>
+      //     <Feed.Meta><Moment fromNow>{msg[3]}</Moment></Feed.Meta>
+      //     <Feed.Summary>{msg[1]}</Feed.Summary>
+      //     <Feed.Extra text>{msg[2]}</Feed.Extra>
+      //   </Feed.Content>
+      // </Feed.Event>
 
-        <Comment>
-        <Image size="mini" src={msg[5]} circular/>
-        <Comment.Content>
-          <Comment.Author>{msg[1]}</Comment.Author>
-          <Comment.Metadata>
-            <div><Moment fromNow>{msg[3]}</Moment></div>
-          </Comment.Metadata>
-          <Comment.Text>{msg[2]}</Comment.Text>
-        </Comment.Content>
-      </Comment>
-        //  <div id={msg[0]}>
-        //  <span>{msg[1]}:{msg[2]}</span>
-        //  <span><Moment fromNow>{msg[3]}</Moment></span>
-        //  </div>
       )}
        )
       }
@@ -90,14 +91,13 @@ class ChatsList extends React.Component {
         <Grid divided textAlign='left' columns={2}>
         <Grid.Column scrolling width={4}>
         <Header size="large">Chats</Header>
-        <div style={{width: "100%", height: "600px"}}>
+        <div style={{width: "100%", height: "550px"}}>
         {this.renderChats(this.props.chats)}
         </div>
         </Grid.Column>
         {this.props.activeChat
          ?<Grid.Column width={12}>
-          <div style={{width: "100%", height: "500px", padding: "20px"}}>
-          <div className="chatrm-btn" style={{marginBottom: "20px"}}>
+          <div className="chatrm-btn" style={{width: "100%", padding: "10px"}}>
           <Dropdown
             text='Add user'
             icon='add user'
@@ -115,13 +115,16 @@ class ChatsList extends React.Component {
           </Dropdown>
             <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
           </div>
+          <div style={{width: "100%", height: "450px", padding: "0 20px 20px 20px", overflowY: "auto"}}>
+          <Feed>
             {show_msg}
-         {/* <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div> */}
+            </Feed>
+         <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div>
          </div>
           <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
         : <Grid.Column width={12}>
-          <Segment textAlign='center'><Header size="huge"> Pick a Jar</Header></Segment>
+          <div textAlign='center'><Header size="huge"> Pick a Jar</Header></div>
           </Grid.Column>}
         </Grid>
       </div>
