@@ -238,19 +238,14 @@ Genre.create!(name: 'funk')
 Genre.create!(name: 'soul')
 Genre.create!(name: 'dance')
 
-UserGenre.create!(genre_id: 1, user_id: 1)
-UserGenre.create!(genre_id: 1, user_id: 2)
-UserGenre.create!(genre_id: 2, user_id: 1)
-UserGenre.create!(genre_id: 3, user_id: 3)
-UserGenre.create!(genre_id: 4, user_id: 3)
-UserGenre.create!(genre_id: 2, user_id: 4)
-UserGenre.create!(genre_id: 5, user_id: 5)
-UserGenre.create!(genre_id: 5, user_id: 6)
+200.times do
+  UserGenre.create!(genre_id: rand(1..18), user_id: rand(1..60))
+end
 
-UserExp.create!(user_id: 1, instrument_id: 1, years: '0-2')
-UserExp.create!(user_id: 2, instrument_id: 1, years: '0-2')
-UserExp.create!(user_id: 1, instrument_id: 2, years: '2-4')
-UserExp.create!(user_id: 3, instrument_id: 2, years: '2-4')
+200.times do
+  options = ['0-2', '2-4', '4-6', '6-8', '8-10', '10+']
+  UserExp.create!(user_id: rand(1..60), instrument_id: rand(1..11), years: options.sample)
+end
 
 
 
