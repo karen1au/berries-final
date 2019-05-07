@@ -32,7 +32,7 @@ class InstrumentSearch extends Component {
     const { selectedOption } = this.state;
     return (
       <div className="search-item">
-      <h4>Instrument</h4>
+      <h4>That plays...</h4>
         <Select
           value={selectedOption}
           onChange={this.handleChange}

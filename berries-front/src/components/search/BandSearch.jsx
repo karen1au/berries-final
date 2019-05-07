@@ -25,7 +25,7 @@ class BandSearch extends Component {
     const { selectedOption } = this.state;
     return (
       <div className="search-item">
-      <h4>I am looking for:</h4>
+      <h4>I am looking for a...</h4>
         <Select
           value={selectedOption}
           onChange={this.handleChange}

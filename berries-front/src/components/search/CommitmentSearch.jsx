@@ -25,7 +25,7 @@ class CommitmentSearch extends Component {
     const { selectedOption } = this.state;
     return (
       <div className="search-item">
-      <h4>Commitment</h4>
+      <h4>To have a...</h4>
         <Select
           value={selectedOption}
           onChange={this.handleChange}
