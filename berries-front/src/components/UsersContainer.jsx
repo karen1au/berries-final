@@ -54,6 +54,7 @@ class UsersContainer extends Component {
                     <Card.Header>{user.name}</Card.Header>
                     <Card.Meta>
                       {user.location}
+                      {user.band ? <p>band</p> : <p>individual musician</p> }
                     </Card.Meta>
                     <Card.Description>
                       {user.description}
