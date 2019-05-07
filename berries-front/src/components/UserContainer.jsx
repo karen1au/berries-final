@@ -13,23 +13,22 @@ class UserContainer extends Component {
     fetch(`http://localhost:3000/api/v1/genres/search/?user=${this.props.user.id}`)
     .then(res => res.json())
     .then(genres => {
+      console.log(genres);
       let map = genres.map(g => {
         return g.name;
       })
       this.setState({ genres: map }, () => {
-        console.log(this.state)
       })
     })
 
     fetch(`http://localhost:3000/api/v1/instruments/search/?user=${this.props.user.id}`)
     .then(res => res.json())
     .then(instruments => {
-      console.log(instruments)
+      console.log(instruments);
       let map = instruments.map(i => {
         return i.name;
       })
       this.setState({ instruments: map }, () => {
-        console.log(this.state)
       })
     })
   }

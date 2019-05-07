@@ -39,173 +39,173 @@ end
   )
 end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: true,
-    location: 'Stouffville',
-    commitment: 'formal jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.439705861e2,
-    lng: -0.792442842e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: true,
+#     location: 'Stouffville',
+#     commitment: 'formal jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.439705861e2,
+#     lng: -0.792442842e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: true,
-    location: 'Oshawa',
-    commitment: 'formal jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.438970929e2,
-    lng: -0.7886579119999999e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: true,
+#     location: 'Oshawa',
+#     commitment: 'formal jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.438970929e2,
+#     lng: -0.7886579119999999e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: false,
-    location: 'Etobicoke',
-    description: 'Test description for Etobicoke',
-    commitment: 'formal jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.436204946e2,
-    lng: -0.795131983e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: false,
+#     location: 'Etobicoke',
+#     description: 'Test description for Etobicoke',
+#     commitment: 'formal jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.436204946e2,
+#     lng: -0.795131983e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: false,
-    location: 'Toronto',
-    description: 'Test description for Toronto',
-    commitment: 'formal jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.43653226e2,
-    lng: -0.793831843e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: false,
+#     location: 'Toronto',
+#     description: 'Test description for Toronto',
+#     commitment: 'formal jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.43653226e2,
+#     lng: -0.793831843e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: false,
-    location: 'Mississauga',
-    description: 'Test description for Mississauga',
-    commitment: 'casual jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.435890452e2,
-    lng: -0.796441198e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: false,
+#     location: 'Mississauga',
+#     description: 'Test description for Mississauga',
+#     commitment: 'casual jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.435890452e2,
+#     lng: -0.796441198e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: false,
-    location: 'Toronto',
-    description: 'Test description for Toronto',
-    commitment: 'casual jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.43653226e2,
-    lng: -0.793831843e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: false,
+#     location: 'Toronto',
+#     description: 'Test description for Toronto',
+#     commitment: 'casual jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.43653226e2,
+#     lng: -0.793831843e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: true,
-    location: 'Etobicoke',
-    description: 'Test description for Etobicoke',
-    commitment: 'formal jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.436204946e2,
-    lng: -0.795131983e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: true,
+#     location: 'Etobicoke',
+#     description: 'Test description for Etobicoke',
+#     commitment: 'formal jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.436204946e2,
+#     lng: -0.795131983e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: true,
-    location: 'Toronto',
-    description: 'Test description for Toronto',
-    commitment: 'formal jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.43653226e2,
-    lng: -0.793831843e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: true,
+#     location: 'Toronto',
+#     description: 'Test description for Toronto',
+#     commitment: 'formal jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.43653226e2,
+#     lng: -0.793831843e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: true,
-    location: 'Mississauga',
-    description: 'Test description for Mississauga',
-    commitment: 'casual jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.435890452e2,
-    lng: -0.796441198e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: true,
+#     location: 'Mississauga',
+#     description: 'Test description for Mississauga',
+#     commitment: 'casual jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.435890452e2,
+#     lng: -0.796441198e2
+#   )
+# end
 
-5.times do 
-  User.create!(
-    name: Faker::Name.unique.name,
-    email: Faker::Internet.free_email,
-    password: "12345678",
-    avatar: UiFaces.face,
-    band: true,
-    location: 'Oshawa',
-    description: 'Test description for Oshawa',
-    commitment: 'casual jam',
-    soundcloud: 'hoodasaurus',
-    youtube: 'watch?v=U1tFH01cqj8',
-    lat: 0.438970929e2,
-    lng: -0.7886579119999999e2
-  )
-end
+# 5.times do 
+#   User.create!(
+#     name: Faker::Name.unique.name,
+#     email: Faker::Internet.free_email,
+#     password: "12345678",
+#     avatar: UiFaces.face,
+#     band: true,
+#     location: 'Oshawa',
+#     description: 'Test description for Oshawa',
+#     commitment: 'casual jam',
+#     soundcloud: 'hoodasaurus',
+#     youtube: 'watch?v=U1tFH01cqj8',
+#     lat: 0.438970929e2,
+#     lng: -0.7886579119999999e2
+#   )
+# end
 
 Instrument.create!(name: 'electric guitar')
 Instrument.create!(name: 'drums')
@@ -246,27 +246,3 @@ end
   options = ['0-2', '2-4', '4-6', '6-8', '8-10', '10+']
   UserExp.create!(user_id: rand(1..60), instrument_id: rand(1..11), years: options.sample)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

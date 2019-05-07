@@ -381,16 +381,16 @@ class App extends Component {
         <div>
         
           <Route path="/" render={() => <Nav  
-              handleLogOut={this.handleLogOut} 
-              onAccept={this.onAccept}
-              onRefuse={this.onRefuse}
-              openNoti={this.openNoti}
-              openChat={this.openChat}
-              handleNotifications={this.handleNotifications}
-              jam_request={this.state.jam_request}
-              new_message={this.state.new_message}
-              notifications={this.state.notifications}
-              current_user={this.state.current_user}/>
+            handleLogOut={this.handleLogOut} 
+            onAccept={this.onAccept}
+            onRefuse={this.onRefuse}
+            openNoti={this.openNoti}
+            openChat={this.openChat}
+            handleNotifications={this.handleNotifications}
+            jam_request={this.state.jam_request}
+            new_message={this.state.new_message}
+            notifications={this.state.notifications}
+            current_user={this.state.current_user}/>
           }/>
           
           <Switch>
@@ -406,10 +406,10 @@ class App extends Component {
                   return <ProfileEdit current_user={this.state.current_user}/>}
                 else if (this.state.auth) {
                   return <Home 
-                      cable={this.props.cable}
-                      grabUserID={this.grabUserID} 
-                      users={this.state.users} 
-                      queryResults={this.queryResults} 
+                    cable={this.props.cable}
+                    grabUserID={this.grabUserID} 
+                    users={this.state.users} 
+                    queryResults={this.queryResults} 
                   handleSelection={this.handleSelection}/> }
                 else {
                   return <SignUp handleSignUpSubmit={this.handleSignUpSubmit}/> }}}/>
