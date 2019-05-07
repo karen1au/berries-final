@@ -8,8 +8,8 @@
 }
 
 .home.ui.button {
-  background-color: #4F072C;
-  color: white;
+  background-color: #4F072C !important;
+  color: white !important;
 }
 
 .search-header {

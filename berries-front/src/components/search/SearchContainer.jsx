@@ -29,6 +29,7 @@ class SearchContainer extends Component {
             }} 
             className="home ui button" type="submit" 
             onClick={this.props.queryResults}
+            toggle={false}
           >
             Search
           </button>
