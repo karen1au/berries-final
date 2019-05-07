@@ -31,7 +31,8 @@ class GenreSearch extends Component {
   render() {
     const { selectedOption } = this.state;
     return (
-      <div>
+      <div className="search-item">
+      <h4>Genre</h4>
         <Select
           onChange={this.handleChange}
           options={this.state.genres}

@@ -14,8 +14,7 @@ class Home extends Component {
     return (
       <div>
         <Container>
-          <SearchContainer handleSelection={this.props.handleSelection}/>
-          <button className="ui button" type="submit" onClick={this.props.queryResults}>Submit</button>
+          <SearchContainer handleSelection={this.props.handleSelection} queryResults={this.props.queryResults}/>
         </Container>
         <UsersContainer grabUserID={this.props.grabUserID} cable={this.props.cable} users={this.props.users}/>
       </div>
