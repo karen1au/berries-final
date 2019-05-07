@@ -31,7 +31,7 @@ class GenreSearch extends Component {
   render() {
     const { selectedOption } = this.state;
     return (
-      <div className="search-item">
+      <div style={{"margin": "0 2%"}} className="search-item">
       <h4>Genre</h4>
         <Select
           onChange={this.handleChange}

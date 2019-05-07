@@ -1,4 +1,4 @@
-import { Button, Header, Divider, Image, Modal, Tab } from 'semantic-ui-react'
+import { Button, Header, Divider, Image, Loader, Modal, Tab } from 'semantic-ui-react'
 import React, { Component } from 'react'
 // import Auth from '../services/Auth'
 // import { ActionCable } from 'react-actioncable-provider';
@@ -38,6 +38,7 @@ class UserContainer extends Component {
     return(
       
       <Modal trigger={<Button style={{color: "#4F072C"}}>Details</Button>}>
+
         <Modal.Header>Profile Picture</Modal.Header>
 
         <Modal.Content image>
@@ -46,19 +47,17 @@ class UserContainer extends Component {
             <Header as="h1">{this.props.user.name}</Header>
             <p>{this.props.user.description}</p>
             <Divider />
-            <h3>Genres of Interest:</h3>
-
+            
             <br/>
             <h3>Genres:</h3>
-
             <ul>
               {this.state.genres.map(g => {
                 return <li>{g}</li>
               })}
             </ul>
+            
             <Divider />
-            <h2>The Juice</h2>
-            <br/>
+            
             <h2>Instruments:</h2>
             <ul>
               {this.state.instruments.map(i => {
