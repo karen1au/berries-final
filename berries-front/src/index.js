@@ -5,7 +5,8 @@ import './index.css';
 import './search-container.css';
 import './signup.css';
 import './profile-edit.css';
-import './instrument-exp.css'
+import './instrument-exp.css';
+import './nav.css'
 // import {BrowserRouter as Router} from "react-router-dom"
 
 import 'semantic-ui-css/semantic.min.css';
