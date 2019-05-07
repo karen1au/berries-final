@@ -23,7 +23,7 @@ class ChatsList extends React.Component {
         <Button className={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'chatrm-off' : 'chatrm-on'} 
           // color={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'black' : 'yellow'}
           name={allchat} onClick={() => this.props.displayMessage(allchat)} name={allchat}>
-        <h4>{allchat}</h4>
+        {/* <h4>{allchat}</h4> */}
         <Image.Group size='mini' circular>
         {count.map((user)=> <Image src={user}/>)}
         </Image.Group>
@@ -90,8 +90,8 @@ class ChatsList extends React.Component {
           onReceived={(res) => this.props.handleReceivedMessage(res)} />
         <Grid divided textAlign='left' columns={2}>
         <Grid.Column scrolling width={4}>
-        <Header size="large">Chats</Header>
-        <div style={{width: "100%", height: "550px"}}>
+        <div style={{width: "100%", height: "550px", padding: "20px", textAlign:"center"}}>
+        <h1>Jars</h1>
         {this.renderChats(this.props.chats)}
         </div>
         </Grid.Column>
