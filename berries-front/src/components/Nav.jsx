@@ -8,15 +8,15 @@ class Nav extends Component {
   render(){
     let jam;
     if(this.props.jam_request) {
-      jam = "red"
+      jam = "jam-on-btn"
     } else {
-      jam = "black"
+      jam = "jam-off-btn"
     }
     let message;
     if(this.props.new_message) {
-      message = "red"
+      message = "msg-on-btn"
     } else {
-      message = "black"
+      message = "msg-off-btn"
     }
 
     let noti_list;
@@ -32,6 +32,7 @@ class Nav extends Component {
             <Icon name='close'/>
           </Button>
           </div>
+
       </Grid.Row>
       )}
       })} else {
@@ -44,11 +45,11 @@ class Nav extends Component {
         <Container id="nav">
           <Menu.Item as="a" href={"/"} style={{ color: 'white', fontSize: '125%' }} >Home</Menu.Item>
           <Menu.Item as="a" href={`/users/${this.props.current_user}`} style={{ color: 'white', fontSize: '125%' }} >Profile</Menu.Item>
-          <Button color={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
           <div className="notification-group">
-          <Popup trigger={<Button style={{color: "red"}} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
+          <Popup trigger={<Button className={jam} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
           {noti_list}
           </Popup></div>
+          <Button className={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
           <Menu.Item position="right" onClick={this.props.handleLogOut} style={{ color: 'white', fontSize: '125%' }}>Logout</Menu.Item>
         </Container>
       : navElement = <Container><Menu.Item style={{ color: 'white', fontSize: '125%' }} positive as="a" href={"/login"}>Login</Menu.Item></Container>
