@@ -3,7 +3,11 @@ import React, { Component } from 'react'
 import UserContainer from './UserContainer'
 // import { ActionCable } from 'react-actioncable-provider';
 
+<<<<<<< HEAD
 import { Button, Container, Divider, Grid, Header, Image, Popup, Segment, Card } from 'semantic-ui-react'
+=======
+import { Button, Container, Grid, Header, Image, Popup, Card } from 'semantic-ui-react'
+>>>>>>> 69b619edc09fcb88c1b44a039010368cbcd9b891
 
 class UsersContainer extends Component {
   constructor() {
@@ -49,6 +53,7 @@ class UsersContainer extends Component {
         {this.props.users.map(user => {
           return(
 
+<<<<<<< HEAD
             <div>
 
               <Divider style={{ "width": "60%", "margin": "auto" }}/>
@@ -68,6 +73,22 @@ class UsersContainer extends Component {
                   <Popup 
                       trigger={
                         <Button inverted color='red' 
+=======
+            <Card color="grey" style={{margin: "2vw"}}>
+              <Image src={user.avatar} wrapped ui={false} />
+              <Card.Content>
+                <Card.Header>{user.name}</Card.Header>
+                <Card.Meta>
+                  {user.commitment}
+                </Card.Meta>
+                <Card.Description>
+                  {user.description}
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <Popup trigger={
+                  <Button inverted color='red' 
+>>>>>>> 69b619edc09fcb88c1b44a039010368cbcd9b891
                           name={user.id}
                           onMouseOver={this.onChange}
                           onClick={(e) => this.handleConnectClick(e, this.state)}
@@ -76,6 +97,7 @@ class UsersContainer extends Component {
                       content="Request sent!"
                       on="click"
                       position="right center"
+<<<<<<< HEAD
                   />
                   <UserContainer user={user} onChange={this.onChange} handleConnectClick={this.handleConnectClick} data={this.state}/>
                 </Card.Content>
@@ -83,6 +105,15 @@ class UsersContainer extends Component {
             
             </div>
             
+=======
+                    />
+                  <UserContainer user={user} onChange={this.onChange} handleConnectClick={this.handleConnectClick}
+                  data={this.state}/>
+
+              </Card.Content>
+            </Card>
+      
+>>>>>>> 69b619edc09fcb88c1b44a039010368cbcd9b891
           )
         })}        
   </Card.Group>
