@@ -13,7 +13,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Container className="search-container">
+        <Container>
           <SearchContainer handleSelection={this.props.handleSelection}/>
           <button className="ui button" type="submit" onClick={this.props.queryResults}>Submit</button>
         </Container>

@@ -12,9 +12,9 @@ class SearchContainer extends Component {
       <div>
         <Container className="search-container">
           <GenreSearch handleSelection={this.props.handleSelection} /> 
-          <CommitmentSearch handleSelection={this.props.handleSelection} /> 
-          <InstrumentSearch handleSelection={this.props.handleSelection} /> 
-          <ExperienceSearch handleSelection={this.props.handleSelection} /> 
+          <CommitmentSearch handleSelection={this.props.handleSelection}  /> 
+          <InstrumentSearch handleSelection={this.props.handleSelection}  /> 
+          <ExperienceSearch handleSelection={this.props.handleSelection}  /> 
         </Container> 
       </div>
     )
