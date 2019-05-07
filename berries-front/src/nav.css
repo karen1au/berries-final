@@ -3,10 +3,9 @@
   color: white;
   margin-bottom: 2%;
   height: 55px;
-  position: fixed;
-  top: '80px';
   z-index: 3;
   width: 100%; 
+  border-radius: 0%;
 }
 
 /* .nav.ui.container {

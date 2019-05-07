@@ -61,7 +61,7 @@ class UsersContainer extends Component {
                   </Card.Content>
                   <Card.Content extra>
                     <Popup trigger={
-                      <Button inverted color='red' 
+                      <Button style={{background: "#4F072C", color: "white"}}
                               name={user.id}
                               onMouseOver={this.onChange}
                               onClick={(e) => this.handleConnectClick(e, this.state)}

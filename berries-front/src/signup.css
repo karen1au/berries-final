@@ -1,12 +1,5 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
-
-/* .background-img {
-  background-image: url("https://images.pexels.com/photos/87818/background-berries-berry-blackberries-87818.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
-  padding: 50px 0 50px 0;
-  background-size: 100%;
-} */
-
 .signup-btn.ui.button {
   background-color: #4F072C;
   color: white

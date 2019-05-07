@@ -59,7 +59,6 @@ class Nav extends Component {
         <ActionCable  channel={{ channel: 'NotificationsChannel', current_user: this.props.current_user}}
             onReceived={(res) => this.props.handleNotifications(res)}/>
       <Menu id="nav" size="large">
-
               {navElement}
             </Menu>
       </div>
