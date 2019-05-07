@@ -8,7 +8,7 @@ module Api::V1
       puts @current_user
 
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
-      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll).order('location ASC')
       @users = @users.where.not(id:params[:user])
       @users = @users.where.not(band: @current_user.band)
       puts 'index users: ', @users
@@ -23,7 +23,7 @@ module Api::V1
     def search
       @current_user = User.find_by_id(JSON.parse(params[:user]))
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
-      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll).order('location ASC')
       @users = @users.where.not(id:params[:user])
       @users = @users.where.not(band: @current_user.band)
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
