@@ -17,8 +17,8 @@ require 'faker'
     location: 'Markham',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus',
-    lat: 43.089558,
-    lng: -79.084944
+    lat: 43.8561,
+    lng: -79.3370
   )
 end
 
@@ -32,8 +32,8 @@ end
     location: 'Toronto',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus',
-    lat: 43.089558,
-    lng: -79.084944
+    lat: 43.6543,
+    lng: -79.3860
   )
 end
 
@@ -47,8 +47,8 @@ end
     location: 'Scarborough',
     commitment: 'ongoing jam',
     soundcloud: 'hoodasaurus',
-    lat: 43.089558,
-    lng: -79.084944
+    lat: 43.7764,
+    lng: -79.2318
   )
 end
 
@@ -62,8 +62,8 @@ end
     location: 'Toronto',
     commitment: 'ongoing jam',
     soundcloud: 'hoodasaurus',
-    lat: 43.089558,
-    lng: -79.084944
+    lat: 43.6543,
+    lng: -79.3860
   )
 end
 
@@ -75,11 +75,11 @@ end
     avatar: UiFaces.face,
     band: false,
     location: 'Etobicoke',
-    description: 'Test description for Toronto',
+    description: 'Test description for Etobicoke',
     commitment: 'ongoing jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.6205,
+    lng: -79.5132
   )
 end
 
@@ -94,8 +94,8 @@ end
     description: 'Test description for Toronto',
     commitment: 'ongoing jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.6543,
+    lng: -79.3860
   )
 end
 
@@ -107,11 +107,11 @@ end
     avatar: UiFaces.face,
     band: false,
     location: 'Mississauga',
-    description: 'Test description for Toronto',
+    description: 'Test description for Mississauga',
     commitment: 'casual jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.5890,
+    lng: -79.6441
   )
 end
 
@@ -126,8 +126,8 @@ end
     description: 'Test description for Toronto',
     commitment: 'casual jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.6543,
+    lng: -79.3860
   )
 end
 
@@ -139,11 +139,11 @@ end
     avatar: UiFaces.face,
     band: true,
     location: 'Etobicoke',
-    description: 'Test description for Toronto',
+    description: 'Test description for Etobicoke',
     commitment: 'ongoing jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.6205,
+    lng: -79.5132
   )
 end
 
@@ -158,8 +158,8 @@ end
     description: 'Test description for Toronto',
     commitment: 'ongoing jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.6543,
+    lng: -79.3860
   )
 end
 
@@ -171,11 +171,11 @@ end
     avatar: UiFaces.face,
     band: true,
     location: 'Mississauga',
-    description: 'Test description for Toronto',
+    description: 'Test description for Mississauga',
     commitment: 'casual jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.5890,
+    lng: -79.6441
   )
 end
 
@@ -190,8 +190,8 @@ end
     description: 'Test description for Toronto',
     commitment: 'casual jam',
     youtube: 'SmartBooksMedia',
-    lat: 43.644175,
-    lng: -79.4022042
+    lat: 43.6543,
+    lng: -79.3860
   )
 end
 
