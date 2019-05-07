@@ -5,13 +5,13 @@ module Api::V1
     def index
       puts 'params', params
       @current_user = User.find_by_id(JSON.parse(params[:user]))
-      puts @current_user
+      puts '@current_user: '@current_user
 
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
       @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
-      # @users = User.all
       @users = @users.where.not(id:params[:user])
       @users = @users.where.not(band: @current_user.band)
+      puts '@users: ' @users
       render json: @users
     end
 

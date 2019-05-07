@@ -45,14 +45,14 @@ class UserContainer extends Component {
             <Header as="h1">{this.props.user.name}</Header>
             <p>{this.props.user.description}</p>
             <br/>
-            <h3>Genres of Interest:</h3>
+            <h3>Genres:</h3>
             <ul>
               {this.state.genres.map(g => {
                 return <li>{g}</li>
               })}
             </ul>
             <br/>
-            <h2>The Juice</h2>
+            <h2>Instruments:</h2>
             <ul>
               {this.state.instruments.map(i => {
                 return <li>{i}</li>
