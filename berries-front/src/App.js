@@ -78,20 +78,20 @@ class App extends Component {
   }
 
  //For Chatlist 
-//  getChats = () => {
-//   fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
-//   .then(res => res.json())
-//   .then(chats => {
-//     let chatKey = {};
-//     Object.keys(chats).map( chatID => {
-//       chatKey[chatID] = false
-//     })
-//     this.setState({ ...this.state, chats: chats, chatKey }
-//       ,(() => {
-//       console.log("all chats", this.state)
-//     }))
-//   })
-// }
+ getChats = () => {
+  fetch(`http://localhost:3000/api/v1/chats?user=${this.state.current_user}`)
+  .then(res => res.json())
+  .then(chats => {
+    let chatKey = {};
+    Object.keys(chats).map( chatID => {
+      chatKey[chatID] = false
+    })
+    this.setState({ ...this.state, chats: chats, chatKey }
+      ,(() => {
+      console.log("all chats", this.state)
+    }))
+  })
+}
 
 
   
@@ -345,7 +345,7 @@ class App extends Component {
   }
 
   getFriendList = (chatID, userID) => {
-    fetch(`http://localhost:3000/api/v1/users?chat=${chatID}&user=${userID}`)
+    fetch(`http://localhost:3000/api/v1/chat_users?chat=${chatID}&user=${userID}`)
     .then(res => res.json())
     .then(users => {
       console.log("received options:", users)

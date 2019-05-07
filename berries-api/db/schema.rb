@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_05_175556) do
+ActiveRecord::Schema.define(version: 2019_05_07_003255) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 2019_05_05_175556) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-    t.string "avatar"
+    t.string "avatar", default: "https://www.shareicon.net/data/2016/05/05/760038_food_512x512.png"
     t.boolean "band"
     t.string "location"
     t.string "commitment"
