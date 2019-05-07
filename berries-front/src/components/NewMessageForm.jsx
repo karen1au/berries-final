@@ -1,5 +1,6 @@
 import React from 'react';
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
+import { Button, Form, TextArea } from 'semantic-ui-react'
 import 'react-piano/dist/styles.css';
 
 const firstNote = MidiNumbers.fromNote('c3');
@@ -55,8 +56,8 @@ class NewMessageForm extends React.Component {
 
   render = () => {
     return (
-      <div className="newMessageForm">
-          <Piano
+      <div className="newMessageForm" style={{margin: "2vw"}}>
+          {/* <Piano
       noteRange={{ first: firstNote, last: lastNote }}
       playNote={(midiNumber) => {
         // Play a given note - see notes below
@@ -66,8 +67,15 @@ class NewMessageForm extends React.Component {
       }}
       width={1000}
       keyboardShortcuts={keyboardShortcuts}
-    />
-        <form onSubmit={this.handleSubmit}>
+    /> */}
+      <Form onSubmit={this.handleSubmit}>
+    <TextArea placeholder='Tell us more' rows={2}
+            type="text"
+            value={this.state.content}
+            onChange={this.handleChange}/>
+          <Button className="msg-btn" type='submit' floated='right'>Submit</Button>
+  </Form >
+        {/* <form onSubmit={this.handleSubmit}>
           <label>New Message:</label>
           <br />
           <input
@@ -76,7 +84,7 @@ class NewMessageForm extends React.Component {
             onChange={this.handleChange}
           />
           <input type="submit" />
-        </form>
+        </form> */}
       </div>
     );
   };

@@ -3,13 +3,19 @@ module Api::V1
     def index
       @related = Relationship.where(user1_id: params[:user])
                   .or(Relationship.where(user2_id: params[:user]))
-                  .pluck(:user1_id, :user2_id)
-      @chat_user = ChatUser.where(chat_id: params[:chat]).pluck(:user_id)
-      @filtered = @related << @chat_user
-      @filtered.flatten!.uniq!.map do |user|
+                  .pluck(:user1_id, :user2_id).flatten!.uniq!
+      @exclude_current = @related.reject { |n| n == params[:user].to_i}
+      @filtered = []
+      @exclude_current.each do |user|
+        if !ChatUser.where(chat_id: params[:chat], user_id: user).present?
+          @filtered << user
+        end
+      end
+      @final = @filtered.map do |user|
         User.find(user)
       end
-      render json: @filtered
+      # byebug
+      render json: @final
     end
 
     def create

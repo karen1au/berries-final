@@ -1,4 +1,4 @@
-import { Button, Header, Icon, Image, Modal } from 'semantic-ui-react'
+import { Button, Header, Icon, Image, Modal, Tab } from 'semantic-ui-react'
 import React, { Component } from 'react'
 // import Auth from '../services/Auth'
 // import { ActionCable } from 'react-actioncable-provider';
@@ -37,7 +37,7 @@ class UserContainer extends Component {
   render() {
     return(
       
-      <Modal trigger={<Button>Inspect</Button>}>
+      <Modal trigger={<Button>Details</Button>}>
         <Modal.Header>Profile Picture</Modal.Header>
         <Modal.Content image>
           <Image size='medium' src={this.props.user.avatar} wrapped />
@@ -58,16 +58,26 @@ class UserContainer extends Component {
                 return <li>{i}</li>
               })}
             </ul>
-            <h3>SoundCloud</h3>
-            <iframe id="sc-widget" src="https://w.soundcloud.com/player/?url=http://soundcloud.com/hoodasaurus&amp;color=AF0E49" width="100%" height="350" scrolling="no" frameborder="no"></iframe>
-            <h3>Youtube</h3>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed?listType=user_uploads&list=croutoncrackerjacks" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <Tab menu={{ secondary: true, pointing: true }} panes={[
+            { menuItem: 'SoundCloud', render: () => 
+              <Tab.Pane>
+                <iframe id="sc-widget" src={`https://w.soundcloud.com/player/?url=http://soundcloud.com/${this.props.user.soundcloud}&amp;color=AF0E49`} width="100%" height="350" scrolling="no" frameBorder="no"></iframe>
+              </Tab.Pane> },
+            { menuItem: 'Youtube', render: () => 
+              <Tab.Pane>
+                <iframe width="560" height="315" src={`https://www.youtube.com/embed?listType=user_uploads&list=${this.props.user.youtube}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              </Tab.Pane> }
+          ]} />
+
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-          <Button primary>
-            Proceed <Icon name='chevron right' />
-          </Button>
+        <Button inverted color='red' 
+                  name={this.props.user.id}
+                  onMouseOver={this.props.onChange}
+                  onClick={(e) => this.props.handleConnectClick(e, this.props.data)}
+                  >Jam</Button>
         </Modal.Actions>
       </Modal>
 

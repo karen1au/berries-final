@@ -1,10 +1,9 @@
 .chatrm-on.ui.button {
-  opacity: 1;
   margin: 1vw;
   border: 1px solid #4F072C;
   border-radius: 50% / 100%;
   background-color: rgba(255,0,0,0);
-  animation-name: bounce; 
+  animation-name: shake; 
   animation-duration: 1s; 
   animation-fill-mode: both; 
   animation-iteration-count:infinite; 
@@ -12,9 +11,11 @@
 
 .chatrm-off.ui.button {
   border: 1px solid #4F072C;
-  border-radius: 50% / 100%;
+  border-radius: 30% / 100%;
   background-color: rgba(255,0,0,0);
   color: white;
   margin: 1vw;
-  opacity: 0.8;
+  height: 8vw;
+  overflow: auto;
+  
 }

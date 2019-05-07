@@ -46,6 +46,7 @@ class App extends Component {
       this.setState({
         users: users,
       }, (() => {
+        console.log("users:", this.state.users)
         if (this.state.current_user) {
           this.loadNotifications();
         }

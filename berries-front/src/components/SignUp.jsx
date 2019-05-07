@@ -44,7 +44,7 @@ class SignUp extends Component{
           </Segment>
         </Form>
         <Divider horizontal>Or</Divider>
-        <Message className="login-msg">Already a berry? <span><a href={"/login"} style={{color:"white"}}>&nbsp;Login</a></span></Message>
+        <Message className="login-msg">Already a berry? <span><a href={"/login"} style={{color:"#4F072C"}}>&nbsp;Login</a></span></Message>
       </Grid.Column>
       </Grid>
       </div>
