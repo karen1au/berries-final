@@ -29,7 +29,7 @@ class ExperienceSearch extends Component {
     const { selectedOption } = this.state;
     return (
       <div className="search-item">
-      <h4>Instrument Experience</h4>
+      <h4>For these many years...</h4>
         <Select
           value={selectedOption}
           onChange={this.handleChange}

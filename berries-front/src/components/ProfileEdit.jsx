@@ -65,7 +65,7 @@ class ProfileEdit extends Component{
 
     const commitmentOptions = [
       { key: 'c', text: 'Casual Jam', value: 'causal jam' },
-      { key: 'o', text: 'Ongoing Jam', value: 'ongoing jam' }
+      { key: 'o', text: 'Formal Jam', value: 'formal jam' }
     ]
     const genreOptions = [
       { key: '1', text: 'African', value: 'african' },

@@ -11,13 +11,16 @@ class SearchContainer extends Component {
   render() {
     return (
       <div>
+        <h2 className="search-header">Find Your Jam ♭</h2>
+        <br/>
         <Container className="search-container">
           <BandSearch handleSelection={this.props.handleSelection} />
+          <InstrumentSearch handleSelection={this.props.handleSelection} /> 
+          <ExperienceSearch handleSelection={this.props.handleSelection} />           
           <GenreSearch handleSelection={this.props.handleSelection} /> 
-          <CommitmentSearch handleSelection={this.props.handleSelection}  /> 
-          <InstrumentSearch handleSelection={this.props.handleSelection}  /> 
-          <ExperienceSearch handleSelection={this.props.handleSelection}  /> 
+          <CommitmentSearch handleSelection={this.props.handleSelection} /> 
         </Container> 
+          <br/>
           <button 
             style={{ 
               "width": "10%", 

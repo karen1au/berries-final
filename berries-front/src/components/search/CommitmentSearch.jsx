@@ -3,7 +3,7 @@ import Select from 'react-select'
 
 const options = [   
   { value: 'casual jam', label: 'casual jam' },
-  { value: 'ongoing jam', label: 'ongoing jam' },
+  { value: 'formal jam', label: 'formal jam' },
 ]
 
 class CommitmentSearch extends Component {
@@ -25,7 +25,7 @@ class CommitmentSearch extends Component {
     const { selectedOption } = this.state;
     return (
       <div className="search-item">
-      <h4>Commitment</h4>
+      <h4>To have a...</h4>
         <Select
           value={selectedOption}
           onChange={this.handleChange}
