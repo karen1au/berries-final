@@ -33,10 +33,10 @@ class GenreSearch extends Component {
     return (
       <div>
         <Select
-          value={selectedOption}
           onChange={this.handleChange}
           options={this.state.genres}
           isClearable
+          value={selectedOption}
         />
       </div>
     )
