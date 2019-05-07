@@ -96,6 +96,7 @@ class ProfileEdit extends Component{
           <Segment className="profile">
             <h3 style={{ color: "#4F072C"}}>Personal Information</h3>
             <img className="ui small circular image" src={this.state.user.avatar}/>
+            <Form.Input label='Avatar URL' defaultValue={this.state.user.avatar} placeholder='Change your avatar' name='avatar' onChange={this.onChange} />
             <Form.Input label='Name' defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange} />
             <Form.Input label='Email' defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange }/>
             <Form.Input label='Password' defaultValue={this.state.user.password} placeholder='Password' type='password' name='password' onChange={this.onChange} />
