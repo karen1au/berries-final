@@ -3,6 +3,10 @@
   color: white;
   margin-bottom: 2%;
   height: 55px;
+  position: fixed;
+  top: '80px';
+  z-index: 3;
+  width: 100%; 
 }
 
 /* .nav.ui.container {
@@ -45,4 +49,5 @@
   margin: 5px;
   padding: 10px;
   height: 40px; 
+  
 }
