@@ -6,10 +6,6 @@ import { Container } from 'semantic-ui-react'
 
 class Home extends Component {
 
-// onClick = () => {
-//   this.props.queryResults()
-// }
-
   render() {
     return (
       <div>

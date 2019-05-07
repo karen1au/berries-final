@@ -53,7 +53,7 @@ class UsersContainer extends Component {
                   <Card.Content>
                     <Card.Header>{user.name}</Card.Header>
                     <Card.Meta>
-                      {user.commitment}
+                      {user.location}
                     </Card.Meta>
                     <Card.Description>
                       {user.description}

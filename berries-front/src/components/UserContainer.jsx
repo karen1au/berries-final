@@ -37,12 +37,11 @@ class UserContainer extends Component {
   render() {
     return(
       
-      <Modal trigger={<Button style={{color: "#4F072C"}}>Details</Button>}>
+      <Modal size="small" trigger={<Button style={{color: "#4F072C"}}>Details</Button>}>
 
-        <Modal.Header>Profile Picture</Modal.Header>
-
+        <Modal.Header>Profile</Modal.Header>
         <Modal.Content image>
-          <Image size='large' src={this.props.user.avatar} wrapped />
+          <Image size='small' src={this.props.user.avatar} wrapped/>
           <Modal.Description>
             <Header as="h1">{this.props.user.name}</Header>
             <p>{this.props.user.description}</p>
@@ -58,7 +57,7 @@ class UserContainer extends Component {
             
             <Divider />
             
-            <h2>Instruments:</h2>
+            <h3>Instruments:</h3>
             <ul>
               {this.state.instruments.map(i => {
                 return <li>{i}</li>
@@ -68,11 +67,11 @@ class UserContainer extends Component {
             <Tab menu={{ secondary: true, pointing: true }} panes={[
             { menuItem: 'SoundCloud', render: () => 
               <Tab.Pane>
-                <iframe id="sc-widget" src={`https://w.soundcloud.com/player/?url=http://soundcloud.com/${this.props.user.soundcloud}&amp;color=AF0E49`} width="100%" height="350" scrolling="no" frameBorder="no"></iframe>
+                <iframe id="sc-widget" src={`https://w.soundcloud.com/player/?url=http://soundcloud.com/${this.props.user.soundcloud}&amp;color=AF0E49`} width="100%" height="300" scrolling="no" frameBorder="no"></iframe>
               </Tab.Pane> },
             { menuItem: 'Youtube', render: () => 
               <Tab.Pane>
-                <iframe width="100%" height="" src={`https://www.youtube.com/embed?listType=user_uploads&list=${this.props.user.youtube}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                <iframe width="100%" height="300" src={`https://www.youtube.com/embed?listType=user_uploads&list=${this.props.user.youtube}`} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               </Tab.Pane> }
           ]} />
 
@@ -85,7 +84,6 @@ class UserContainer extends Component {
                   onClick={(e) => this.props.handleConnectClick(e, this.props.data)}
                   >Jam</Button>
         </Modal.Actions>
-        <Divider vertical>♭</Divider>
       </Modal>
       
     )
