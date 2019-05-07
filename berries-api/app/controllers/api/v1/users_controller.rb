@@ -8,10 +8,10 @@ module Api::V1
       puts @current_user
 
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
-      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
-      # @users = User.all
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll).order('location ASC')
       @users = @users.where.not(id:params[:user])
       @users = @users.where.not(band: @current_user.band)
+      puts 'index users: ', @users
       render json: @users
     end
 
@@ -23,13 +23,14 @@ module Api::V1
     def search
       @current_user = User.find_by_id(JSON.parse(params[:user]))
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
-      @users = User.within(50, :units => :kms, :origin => @somewhere.ll)
+      @users = User.within(50, :units => :kms, :origin => @somewhere.ll).order('location ASC')
       @users = @users.where.not(id:params[:user])
       @users = @users.where.not(band: @current_user.band)
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
       @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
       @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
       @users = @users.joins(:user_exps).where('user_exps.years' => params[:currentExperience]) if params[:currentExperience].present?
+      puts 'search users: ', @users
       render json: @users
     end
   

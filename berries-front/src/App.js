@@ -155,7 +155,7 @@ class App extends Component {
       }
     }
     fullURL = fullURL.replace(/ /g, '%20')
-    // console.log(fullURL)
+    console.log(fullURL)
     return fullURL;
   }
 
