@@ -21,6 +21,7 @@ class App extends Component {
       genres: [],
       users: [],
       parameters: {
+        currentBand: null,
         currentCommitment: null,
         currentInstrument: null,
         currentGenre: null,
@@ -139,6 +140,8 @@ class App extends Component {
       this.setState({ parameters: {...this.state.parameters, currentGenre: value} })
     } else if (key === 'experience') {
       this.setState({ parameters: {...this.state.parameters, currentExperience: value} })
+    } else if (key === 'band') {
+      this.setState({ parameters: {...this.state.parameters, currentBand: value} })
     }
   }
 
@@ -160,12 +163,13 @@ class App extends Component {
   }
 
   queryResults = () => {
-    console.log('hello')
     fetch(this.createURL())
     .then(res => res.json())
     .then(user => {
       this.setState({
         users: user,
+      }, () => {
+        console.log(this.state)
       })
     })
   }

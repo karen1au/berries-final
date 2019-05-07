@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import GenreSearch from './GenreSearch'
-import InstrumentSearch from './InstrumentSearch'
+import BandSearch from './BandSearch'
 import CommitmentSearch from './CommitmentSearch'
 import ExperienceSearch from './ExperienceSearch'
+import InstrumentSearch from './InstrumentSearch'
 import { Segment, Container, Form } from 'semantic-ui-react'
 
 class SearchContainer extends Component {
@@ -11,6 +12,7 @@ class SearchContainer extends Component {
     return (
       <div>
         <Container className="search-container">
+          <BandSearch handleSelection={this.props.handleSelection} />
           <GenreSearch handleSelection={this.props.handleSelection} /> 
           <CommitmentSearch handleSelection={this.props.handleSelection}  /> 
           <InstrumentSearch handleSelection={this.props.handleSelection}  /> 
