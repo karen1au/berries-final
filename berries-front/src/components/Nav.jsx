@@ -39,23 +39,23 @@ class Nav extends Component {
       let navElement;
       (Auth.getToken()) ?
       navElement = 
-        <Container>
-        <Menu.Item  as="a" href={"/"}>Home</Menu.Item>
-        <Menu.Item  as="a" href={`/users/${this.props.current_user}`}>Profile</Menu.Item>
-        <Button color={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
-        <div className="notification-group">
-        <Popup trigger={<Button style={{color: "red"}} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
-        {noti_list}
-        </Popup></div>
-        <Menu.Item position="right" onClick={this.props.handleLogOut}>Logout</Menu.Item>
+        <Container id="nav">
+          <Menu.Item as="a" href={"/"} style={{ color: 'white' }}>Home</Menu.Item>
+          <Menu.Item as="a" href={`/users/${this.props.current_user}`} style={{ color: 'white' }} >Profile</Menu.Item>
+          <Button color={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
+          <div className="notification-group">
+          <Popup trigger={<Button style={{color: "red"}} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
+          {noti_list}
+          </Popup></div>
+          <Menu.Item position="right" onClick={this.props.handleLogOut} style={{ color: 'white' }}>Logout</Menu.Item>
         </Container>
-      : navElement = <Container><Menu.Item positive as="a" href={"/login"}>Login</Menu.Item></Container>
+      : navElement = <Container><Menu.Item style={{ color: 'white' }} positive as="a" href={"/login"}>Login</Menu.Item></Container>
 
     return (
       <div>
         <ActionCable  channel={{ channel: 'NotificationsChannel', current_user: this.props.current_user}}
             onReceived={(res) => this.props.handleNotifications(res)}/>
-      <Menu color="violet" inverted pointing secondary>
+      <Menu id="nav">
 
               {navElement}
             </Menu>
