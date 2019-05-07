@@ -90,13 +90,14 @@ class ChatsList extends React.Component {
         <Grid divided textAlign='left' columns={2}>
         <Grid.Column scrolling width={4}>
         <Header size="large">Chats</Header>
-        <Segment>
+        <div style={{width: "100%", height: "600px"}}>
         {this.renderChats(this.props.chats)}
-        </Segment>
+        </div>
         </Grid.Column>
         {this.props.activeChat
          ?<Grid.Column width={12}>
-          <Segment>
+          <div style={{width: "100%", height: "500px", padding: "20px"}}>
+          <div className="chatrm-btn" style={{marginBottom: "20px"}}>
           <Dropdown
             text='Add user'
             icon='add user'
@@ -113,11 +114,10 @@ class ChatsList extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
             <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
-            </Segment>
-          <Segment>
+          </div>
             {show_msg}
          {/* <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div> */}
-          </Segment>
+         </div>
           <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
         : <Grid.Column width={12}>
