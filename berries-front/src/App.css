@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+
 .App {
+  font-family: 'Josefin Sans', cursive;
   text-align: center;
 }
 
@@ -22,4 +25,3 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-

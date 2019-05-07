@@ -54,7 +54,6 @@ class UsersContainer extends Component {
                     <Card.Header>{user.name}</Card.Header>
                     <Card.Meta>
                       {user.location}
-                      {user.band ? <p>band</p> : <p>individual musician</p> }
                     </Card.Meta>
                     <Card.Description>
                       {user.description}
@@ -70,7 +69,7 @@ class UsersContainer extends Component {
                           }
                           content="Request sent!"
                           on="click"
-                          position="right center"
+                          position="bottom right"
                       />
 
                   <UserContainer user={user} onChange={this.onChange} handleConnectClick={this.handleConnectClick}
