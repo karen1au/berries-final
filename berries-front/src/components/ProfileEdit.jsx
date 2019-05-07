@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Container, Input, Radio, Message, Select, Segment, Modal } from 'semantic-ui-react'
+import { Form, Button, Container, Image, Input, Radio, Select, Segment, Modal } from 'semantic-ui-react'
 import InstrumentExperience from './InstrumentExperience';
 import UserGenres from './UserGenres';
 
@@ -95,7 +95,8 @@ class ProfileEdit extends Component{
         <Form >
           <Segment className="profile">
             <h3 style={{ color: "#4F072C"}}>Personal Information</h3>
-            <img className="ui small bordered circular image" src={this.state.user.avatar}/>
+            <Image size="small" src={this.state.user.avatar}/>
+            <br/>
             <Form.Input label='Avatar URL' defaultValue={this.state.user.avatar} placeholder='Change your avatar' name='avatar' onChange={this.onChange} />
             <Form.Input label='Name' defaultValue={this.state.user.name} placeholder='Enter your name' name='name' required onChange={this.onChange} />
             <Form.Input label='Email' defaultValue={this.state.user.email} placeholder='Email' name='email' required onChange={this.onChange }/>
