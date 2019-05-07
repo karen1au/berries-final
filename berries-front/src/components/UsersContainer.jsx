@@ -71,6 +71,7 @@ class UsersContainer extends Component {
                           on="click"
                           position="right center"
                       />
+
                   <UserContainer user={user} onChange={this.onChange} handleConnectClick={this.handleConnectClick}
                     data={this.state}/>
                   </Card.Content>

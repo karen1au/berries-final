@@ -61,7 +61,7 @@ class ChatsList extends React.Component {
       return (
 
         <Comment>
-        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' circular/>
+        <Image size="mini" src={msg[5]} circular/>
         <Comment.Content>
           <Comment.Author>{msg[1]}</Comment.Author>
           <Comment.Metadata>

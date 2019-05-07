@@ -37,8 +37,8 @@ class UserContainer extends Component {
   render() {
     return(
       
-      <Modal trigger={<Button>Details</Button>}>
-        <Loader />
+      <Modal trigger={<Button style={{color: "#4F072C"}}>Details</Button>}>
+
         <Modal.Header>Profile Picture</Modal.Header>
 
         <Modal.Content image>

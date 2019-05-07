@@ -2,11 +2,52 @@
   background-color: #4F072C;
   color: white;
   margin-bottom: 2%;
-  height: 70px;
-  /* height: 55px; */
+  height: 55px;
+  position: fixed;
+  top: '80px';
+  z-index: 3;
+  width: 100%; 
 }
 
-.nav.ui.container {
+/* .nav.ui.container {
   background-color: #4F072C;
   color: white;
+} */
+
+.jam-on-btn.ui.button {
+  background-color: white;
+  color: #4F072C;
+  font-size: 16px;
+  border: 2px solid #4F072C;
+  margin: 5px;
+  padding: 10px;
+}
+
+.jam-off-btn.ui.button {
+  background-color: #4F072C;
+  color: white;
+  font-size: 16px;
+  border: 2px solid white;
+  margin: 5px;
+  padding: 10px;
+}
+
+.msg-off-btn.ui.button {
+  background-color: #4F072C;
+  color: white;
+  font-size: 15px;
+  border: 2px solid white;
+  margin: 5px;
+  padding: 10px;
+  height: 40px; 
+}
+.msg-on-btn.ui.button {
+  background-color: white;
+  color: #4F072C;
+  font-size: 15px;
+  border: 2px solid #4F072C;
+  margin: 5px;
+  padding: 10px;
+  height: 40px; 
+  
 }
