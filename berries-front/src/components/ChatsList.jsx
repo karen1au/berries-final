@@ -24,8 +24,8 @@ class ChatsList extends React.Component {
           // color={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'black' : 'yellow'}
           name={allchat} onClick={() => this.props.displayMessage(allchat)} name={allchat}>
         <h4>{allchat}</h4>
-        <Image.Group size='tiny' circular>
-        {count.map((user)=> <Image src={user} />)}
+        <Image.Group size='mini' circular>
+        {count.map((user)=> <Image src={user}/>)}
         </Image.Group>
         </Button>
       )
@@ -79,14 +79,14 @@ class ChatsList extends React.Component {
           onReceived={(res) => this.props.handleReceivedMessage(res)} />
         <Grid columns='equal' divided rows='equal' textAlign="center">
           <Grid.Row stretched>
-        <Grid.Column scrolling width={4}>
+        <Grid.Column scrolling width={5}>
         <Header size="large">Chats</Header>
         
         {this.renderChats(this.props.chats)}
 
         </Grid.Column>
         {this.props.activeChat
-        ? <Grid.Column width={12}>
+        ? <Grid.Column width={11}>
           <Dropdown
             text='Add user'
             icon='add user'
@@ -108,7 +108,7 @@ class ChatsList extends React.Component {
           </Segment>
           <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
-        : <Grid.Column width={12}>
+        : <Grid.Column width={11}>
           <h3>Pick a Jar</h3>
           </Grid.Column>}
           </Grid.Row>
