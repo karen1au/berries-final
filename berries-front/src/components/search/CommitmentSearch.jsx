@@ -3,7 +3,7 @@ import Select from 'react-select'
 
 const options = [   
   { value: 'casual jam', label: 'casual jam' },
-  { value: 'ongoing jam', label: 'ongoing jam' },
+  { value: 'formal jam', label: 'formal jam' },
 ]
 
 class CommitmentSearch extends Component {

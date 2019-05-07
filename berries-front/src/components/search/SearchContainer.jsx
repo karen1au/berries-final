@@ -20,6 +20,7 @@ class SearchContainer extends Component {
           <GenreSearch handleSelection={this.props.handleSelection} /> 
           <CommitmentSearch handleSelection={this.props.handleSelection} /> 
         </Container> 
+          <br/>
           <button 
             style={{ 
               "width": "10%", 
