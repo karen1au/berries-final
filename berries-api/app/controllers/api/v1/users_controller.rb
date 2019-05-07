@@ -21,6 +21,7 @@ module Api::V1
     end
 
     def search
+      puts 'search params:', params
       @current_user = User.find_by_id(JSON.parse(params[:user]))
       @somewhere = Geokit::Geocoders::GoogleGeocoder.geocode(@current_user.location)
       @users = User.all
@@ -56,7 +57,7 @@ module Api::V1
         @user.save!
         puts 'user success', @user
 
-        return
+        #return
 
       else
         puts 'no user info'
@@ -71,7 +72,7 @@ module Api::V1
         end
         
         puts 'instrument success', @user_exp
-        return
+        #return
 
       else
         puts 'no instruments'
@@ -85,7 +86,7 @@ module Api::V1
         end  
         
         puts 'genre success', @user_genre
-        return
+        #return
 
       else
         puts 'no genres'
