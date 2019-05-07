@@ -20,7 +20,7 @@ class SearchContainer extends Component {
             style={{ 
               "width": "10%", 
               "display": "block", 
-              "margin": "2% auto" 
+              "margin": "2% auto 5% auto" 
             }} 
             className="home ui button" type="submit" 
             onClick={this.props.queryResults}
