@@ -8,7 +8,7 @@ module Api::V1
           notification = Notification.new(sender_id: params[:sender], receiver_id: @user.user_id, noti_type: params[:noti_type])
           if notification.save
             target_user = User.find(@user.user_id)
-            allNoti = target_user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :email, :noti_type, :sender_id)
+            allNoti = target_user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :name, :noti_type, :sender_id)
             #allNoti[0] id, [1] sender email, [2] notitype, [3] sender_id, [4] chatID
             allNoti[0] << params[:chat]
             ActionCable.server.broadcast("current_user_#{target_user.id}", allNoti)
@@ -20,7 +20,7 @@ module Api::V1
         notification = Notification.new(sender_id: params[:sender], receiver_id: params[:receiver], noti_type: params[:noti_type])
         if notification.save
           user = User.find(params[:receiver])
-          allNoti = user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :email, :noti_type, :sender_id)
+          allNoti = user.received_notifications.joins(:sender).where(id: notification.id).pluck(:id, :name, :noti_type, :sender_id, :avatar)
         # serialized_data = ActiveModelSerializers::Adapter::Json.new(
         #   NotificationSerializer.new(notification)
         # ).serializable_hash
@@ -31,8 +31,8 @@ module Api::V1
 
     def index
       user = User.find(params[:user])
-      #[0] is notification id, [1] is sender email, [2] is noti_type [3] is senderID
-      @notifications = user.received_notifications.joins(:sender).order(:created_at).pluck(:id, :email, :noti_type, :sender_id)
+      #[0] is notification id, [1] is sender email, [2] is noti_type [3] is senderID [4]avatar
+      @notifications = user.received_notifications.joins(:sender).order(:created_at).pluck(:id, :name, :noti_type, :sender_id, :avatar)
       # render json: @notifications.map do |n|
       #   {
       #     id: n[0],

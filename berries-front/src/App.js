@@ -46,6 +46,7 @@ class App extends Component {
       this.setState({
         users: users,
       }, (() => {
+        console.log("users:", this.state.users)
         if (this.state.current_user) {
           this.loadNotifications();
         }
@@ -154,7 +155,7 @@ class App extends Component {
       }
     }
     fullURL = fullURL.replace(/ /g, '%20')
-    // console.log(fullURL)
+    console.log(fullURL)
     return fullURL;
   }
 

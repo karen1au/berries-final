@@ -14,11 +14,72 @@ require 'faker'
     password: "12345678",
     avatar: Faker::Avatar.image,
     band: true,
+    location: 'Markham',
+    commitment: 'casual jam',
+    soundcloud: 'hoodasaurus',
+    lat: 43.089558,
+    lng: -79.084944
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::Music::RockBand.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: Faker::Avatar.image,
+    band: true,
     location: 'Toronto',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus',
     lat: 43.089558,
     lng: -79.084944
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::Music::RockBand.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: Faker::Avatar.image,
+    band: true,
+    location: 'Scarborough',
+    commitment: 'ongoing jam',
+    soundcloud: 'hoodasaurus',
+    lat: 43.089558,
+    lng: -79.084944
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::Music::RockBand.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: Faker::Avatar.image,
+    band: true,
+    location: 'Toronto',
+    commitment: 'ongoing jam',
+    soundcloud: 'hoodasaurus',
+    lat: 43.089558,
+    lng: -79.084944
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: false,
+    location: 'Etobicoke',
+    description: 'Test description for Toronto',
+    commitment: 'ongoing jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
   )
 end
 
@@ -35,6 +96,150 @@ end
     youtube: 'SmartBooksMedia',
     lat: 43.644175,
     lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: false,
+    location: 'Mississauga',
+    description: 'Test description for Toronto',
+    commitment: 'casual jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: false,
+    location: 'Toronto',
+    description: 'Test description for Toronto',
+    commitment: 'casual jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: true,
+    location: 'Etobicoke',
+    description: 'Test description for Toronto',
+    commitment: 'ongoing jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: true,
+    location: 'Toronto',
+    description: 'Test description for Toronto',
+    commitment: 'ongoing jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: true,
+    location: 'Mississauga',
+    description: 'Test description for Toronto',
+    commitment: 'casual jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: "12345678",
+    avatar: UiFaces.face,
+    band: true,
+    location: 'Toronto',
+    description: 'Test description for Toronto',
+    commitment: 'casual jam',
+    youtube: 'SmartBooksMedia',
+    lat: 43.644175,
+    lng: -79.4022042
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: Faker::Number.number(10),
+    avatar: UiFaces.face,
+    band: false,
+    location: 'Montreal',
+    description: 'Test description for Montreal',
+    commitment: 'casual jam',
+    youtube: 'SmartBooksMedia',
+    lat: 45.5017,
+    lng: -73.5673
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: Faker::Number.number(10),
+    avatar: UiFaces.face,
+    band: true,
+    location: 'Montreal',
+    description: 'Test description for Montreal',
+    commitment: 'ongoing jam',
+    youtube: 'SmartBooksMedia',
+    lat: 45.5017,
+    lng: -73.5673
+  )
+end
+
+5.times do 
+  User.create!(
+    name: Faker::FunnyName.unique.name,
+    email: Faker::Internet.free_email,
+    password: Faker::Number.number(10),
+    avatar: UiFaces.face,
+    band: true,
+    location: 'Montreal',
+    description: 'Test description for Montreal',
+    commitment: 'casual jam',
+    youtube: 'SmartBooksMedia',
+    lat: 45.5017,
+    lng: -73.5673
   )
 end
 

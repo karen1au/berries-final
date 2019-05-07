@@ -2,7 +2,8 @@ import Auth from '../services/Auth'
 import React, { Component } from 'react'
 import UserContainer from './UserContainer'
 // import { ActionCable } from 'react-actioncable-provider';
-import { Button, Container, Divider, Grid, Header, Image, Popup, Segment } from 'semantic-ui-react'
+
+import { Button, Container, Grid, Header, Image, Segment, Card } from 'semantic-ui-react'
 
 class UsersContainer extends Component {
   constructor() {
@@ -43,9 +44,11 @@ class UsersContainer extends Component {
   render() {
     return (
       <div>
-
+        <Container>
+        <Card.Group centered stackable itemsPerRow={5}>
         {this.props.users.map(user => {
           return(
+
 
             <div>
 
@@ -78,9 +81,55 @@ class UsersContainer extends Component {
               <Divider style={{ "width": "60%", "margin": "auto" }}/>
 
             </div>
+=======
+            <Card color="grey" style={{margin: "2vw"}}>
+              <Image src={user.avatar} wrapped ui={false} />
+              <Card.Content>
+                <Card.Header>{user.name}</Card.Header>
+                <Card.Meta>
+                  {user.commitment}
+                </Card.Meta>
+                <Card.Description>
+                  {user.description}
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+              <Button inverted color='red' 
+                  name={user.id}
+                  onMouseOver={this.onChange}
+                  onClick={(e) => this.handleConnectClick(e, this.state)}
+                  >Jam</Button>
+                  <UserContainer user={user} onChange={this.onChange} handleConnectClick={this.handleConnectClick}
+                  data={this.state}/>
+
+              </Card.Content>
+            </Card>
+            
+            // <Grid columns={2} centered divided padded>
+            //   <Grid.Row>
+            //     <Grid.Column width={4}>
+            //       <Header as='h2'>{user.name}</Header>
+            //       <Image size='small' wrapped src={user.avatar} circular/>
+            //       <UserContainer user={user}/>
+            //       <Button inverted color='red' 
+            //       name={user.id}
+            //       onMouseOver={this.onChange}
+            //       onClick={(e) => this.handleConnectClick(e, this.state)}
+            //       >Jam</Button>
+            //     </Grid.Column>
+                
+            //     <Grid.Column width={4}>
+            //       <Header as='h3'>{user.location}</Header>
+            //       <p>{user.description}</p>
+            //       {/* <Image size='small' wrapped src={user.avatar}/> */}
+            //     </Grid.Column>
+            //   </Grid.Row>
+            // </Grid>
+            
           )
         })}        
-
+  </Card.Group>
+  </Container>
       </div>
     )
   }
