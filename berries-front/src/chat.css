@@ -1,8 +1,11 @@
 .chatrm-on.ui.button {
-  margin: 1vw;
+  width: 100%;
   border: 1px solid #4F072C;
-  border-radius: 50% / 100%;
+  border-radius: 8px;
   background-color: rgba(255,0,0,0);
+  color: white;
+  margin: 1vw;
+  height: auto;
   animation-name: shake; 
   animation-duration: 1s; 
   animation-fill-mode: both; 
