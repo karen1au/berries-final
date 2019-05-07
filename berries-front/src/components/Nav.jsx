@@ -25,11 +25,13 @@ class Nav extends Component {
         if(notification[2] == "jam request"){
         return (
         <Grid.Row textAlign='left' key={notification[0]}>
-          <span><Image size="mini" circular src={notification[4]}/><b>{notification[1]}</b> would like to Jam with you!</span>
+          <div><Image size="mini" circular src={notification[4]}/><b>{notification[1]}</b> would like to Jam with you!</div>
+          <div>
           <Button icon name={notification[3]} onClick={() => this.props.onAccept(notification[3])}><Icon name='check'/></Button>
           <Button icon name={notification[0]} onClick={() => this.props.onRefuse(notification[0])}>
             <Icon name='close'/>
           </Button>
+          </div>
       </Grid.Row>
       )}
       })} else {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Grid, Button, Dropdown, Header, Image } from 'semantic-ui-react'
+import { Segment, Grid, Button, Dropdown, Header, Image, Comment } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import NewMessageForm from './NewMessageForm';
 import Moment from 'react-moment';
@@ -59,11 +59,21 @@ class ChatsList extends React.Component {
       show_msg = <div><h3>There is no message yet...</h3></div> :
       show_msg = this.props.messages.map((msg) => { 
       return (
-         <div id={msg[0]}>
-         <span>{msg[1]}:{msg[2]}</span>
-         <span><Moment fromNow>{msg[3]}</Moment></span>
-         <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div>
-         </div>
+
+        <Comment>
+        <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' circular/>
+        <Comment.Content>
+          <Comment.Author>{msg[1]}</Comment.Author>
+          <Comment.Metadata>
+            <div><Moment fromNow>{msg[3]}</Moment></div>
+          </Comment.Metadata>
+          <Comment.Text>{msg[2]}</Comment.Text>
+        </Comment.Content>
+      </Comment>
+        //  <div id={msg[0]}>
+        //  <span>{msg[1]}:{msg[2]}</span>
+        //  <span><Moment fromNow>{msg[3]}</Moment></span>
+        //  </div>
       )}
        )
       }
@@ -77,16 +87,16 @@ class ChatsList extends React.Component {
         <ActionCable
           channel={{ channel: 'MessagesChannel', current: this.props.current_user }}
           onReceived={(res) => this.props.handleReceivedMessage(res)} />
-        <Grid columns='equal' divided rows='equal' textAlign="center">
-          <Grid.Row stretched>
-        <Grid.Column scrolling width={5}>
+        <Grid divided textAlign='left' columns={2}>
+        <Grid.Column scrolling width={4}>
         <Header size="large">Chats</Header>
-        
+        <Segment>
         {this.renderChats(this.props.chats)}
-
+        </Segment>
         </Grid.Column>
         {this.props.activeChat
-        ? <Grid.Column width={11}>
+         ?<Grid.Column width={12}>
+          <Segment>
           <Dropdown
             text='Add user'
             icon='add user'
@@ -103,15 +113,16 @@ class ChatsList extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
             <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
+            </Segment>
           <Segment>
             {show_msg}
+         {/* <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div> */}
           </Segment>
           <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
-        : <Grid.Column width={11}>
-          <h3>Pick a Jar</h3>
+        : <Grid.Column width={12}>
+          <Segment textAlign='center'><Header size="huge"> Pick a Jar</Header></Segment>
           </Grid.Column>}
-          </Grid.Row>
         </Grid>
       </div>
     );
