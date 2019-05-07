@@ -15,6 +15,7 @@ class SearchContainer extends Component {
           <CommitmentSearch handleSelection={this.props.handleSelection}  /> 
           <InstrumentSearch handleSelection={this.props.handleSelection}  /> 
           <ExperienceSearch handleSelection={this.props.handleSelection}  /> 
+          <button className="home ui button" type="submit" onClick={this.props.queryResults}>Search</button>
         </Container> 
       </div>
     )

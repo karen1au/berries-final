@@ -1,4 +1,13 @@
 .search-container.ui.container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+.search-item {
+  width: 25%;
+}
+
+.home.ui.button {
+  background-color: #4F072C;
+  color: white;
 }
