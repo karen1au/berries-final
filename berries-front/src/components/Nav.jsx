@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Icon, Popup, Grid, Menu, Container, Image } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import Auth from '../services/Auth';
+import logo from '../../public/berries.png'
 
 class Nav extends Component {
 
@@ -43,6 +44,7 @@ class Nav extends Component {
       (Auth.getToken()) ?
       navElement = 
         <Container id="nav">
+        <a href="/"><img src={logo} style={{height: "40px", width: "auto", marginTop:"5px", marginRight: "20px"}} alt="BERRIES" /></a>
           <Menu.Item as="a" href={"/"} style={{ color: 'white', fontSize: '125%' }} >Home</Menu.Item>
           <Menu.Item as="a" href={`/users/${this.props.current_user}`} style={{ color: 'white', fontSize: '125%' }} >Profile</Menu.Item>
           <div className="notification-group">

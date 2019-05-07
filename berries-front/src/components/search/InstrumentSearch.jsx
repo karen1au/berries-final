@@ -13,7 +13,7 @@ class InstrumentSearch extends Component {
     .then(instrument => {
       // console.log(instrument)
       const options = instrument.map(i => { 
-      const map = { value: null, label: 'No Option' }
+      const map = {}
         map['value'] = i.name, map['label'] = i.name
         return map
       })

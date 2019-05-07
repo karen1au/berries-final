@@ -77,7 +77,7 @@ class UserContainer extends Component {
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
-        <Button inverted color='red' 
+        <Button style={{background: "#4F072C", color: "white"}}
                   name={this.props.user.id}
                   onMouseOver={this.props.onChange}
                   onClick={(e) => this.props.handleConnectClick(e, this.props.data)}
