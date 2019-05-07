@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Grid, Button, Dropdown } from 'semantic-ui-react'
+import { Segment, Grid, Button, Dropdown, Header, Image } from 'semantic-ui-react'
 import { ActionCable } from 'react-actioncable-provider';
 import NewMessageForm from './NewMessageForm';
 import Moment from 'react-moment';
@@ -20,10 +20,13 @@ class ChatsList extends React.Component {
     for (const [allchat, count] of entries){
       console.log(allchat)
       container.push(
-        <Button basic color={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'black' : 'red'}
+        <Button className={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'chatrm-off' : 'chatrm-on'} 
+          // color={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'black' : 'yellow'}
           name={allchat} onClick={() => this.props.displayMessage(allchat)} name={allchat}>
         <h4>{allchat}</h4>
-        {count.map((user)=> <p>{user}</p>)}
+        <Image.Group size='tiny' circular>
+        {count.map((user)=> <Image src={user} />)}
+        </Image.Group>
         </Button>
       )
       } return container;
@@ -74,10 +77,10 @@ class ChatsList extends React.Component {
         <ActionCable
           channel={{ channel: 'MessagesChannel', current: this.props.current_user }}
           onReceived={(res) => this.props.handleReceivedMessage(res)} />
-        <Grid columns='equal' divided rows='equal'>
+        <Grid columns='equal' divided rows='equal' textAlign="center">
           <Grid.Row stretched>
-        <Grid.Column>
-        <h2>Chats</h2>
+        <Grid.Column scrolling width={4}>
+        <Header size="large">Chats</Header>
         
         {this.renderChats(this.props.chats)}
 
