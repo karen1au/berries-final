@@ -17,6 +17,7 @@ require 'faker'
     location: 'North York',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.437615377e2,
     lng: -0.7941107939999999e2
   )
@@ -32,6 +33,7 @@ end
     location: 'Toronto',
     commitment: 'casual jam',
     soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.43653226e2,
     lng: -0.793831843e2
   )
@@ -47,6 +49,7 @@ end
     location: 'Stouffville',
     commitment: 'ongoing jam',
     soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.439705861e2,
     lng: -0.792442842e2
   )
@@ -62,6 +65,7 @@ end
     location: 'Oshawa',
     commitment: 'ongoing jam',
     soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.438970929e2,
     lng: -0.7886579119999999e2
   )
@@ -77,7 +81,8 @@ end
     location: 'Etobicoke',
     description: 'Test description for Etobicoke',
     commitment: 'ongoing jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.436204946e2,
     lng: -0.795131983e2
   )
@@ -93,7 +98,8 @@ end
     location: 'Toronto',
     description: 'Test description for Toronto',
     commitment: 'ongoing jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.43653226e2,
     lng: -0.793831843e2
   )
@@ -109,7 +115,8 @@ end
     location: 'Mississauga',
     description: 'Test description for Mississauga',
     commitment: 'casual jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.435890452e2,
     lng: -0.796441198e2
   )
@@ -125,7 +132,8 @@ end
     location: 'Toronto',
     description: 'Test description for Toronto',
     commitment: 'casual jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.43653226e2,
     lng: -0.793831843e2
   )
@@ -141,7 +149,8 @@ end
     location: 'Etobicoke',
     description: 'Test description for Etobicoke',
     commitment: 'ongoing jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.436204946e2,
     lng: -0.795131983e2
   )
@@ -157,7 +166,8 @@ end
     location: 'Toronto',
     description: 'Test description for Toronto',
     commitment: 'ongoing jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.43653226e2,
     lng: -0.793831843e2
   )
@@ -173,7 +183,8 @@ end
     location: 'Mississauga',
     description: 'Test description for Mississauga',
     commitment: 'casual jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.435890452e2,
     lng: -0.796441198e2
   )
@@ -189,7 +200,8 @@ end
     location: 'Oshawa',
     description: 'Test description for Oshawa',
     commitment: 'casual jam',
-    youtube: 'SmartBooksMedia',
+    soundcloud: 'hoodasaurus',
+    youtube: 'watch?v=U1tFH01cqj8',
     lat: 0.438970929e2,
     lng: -0.7886579119999999e2
   )
