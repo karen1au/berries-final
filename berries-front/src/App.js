@@ -110,9 +110,11 @@ class App extends Component {
       let newMsg = this.state.messages
       newMsg.push(res[0])
       this.setState({messages: newMsg})
-    } 
-    if (this.state.chatKey.hasOwnProperty(res[0][4]) && this.props.activeChat !== res[0][4]){
-      this.setState({ ...this.state, chatKey: { [res[0][4]]: true}}, () => console.log("received msg state",this.state))
+    } else {
+
+      // if (this.state.activeChat !== res[0][4]){
+        this.setState({ ...this.state, chatKey: { [res[0][4]]: true}}, () => console.log("received msg state",this.state))
+    
     }
   }
 
