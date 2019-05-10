@@ -45,24 +45,8 @@ class UserContainer extends Component {
             <Header as="h1">{this.props.user.name}</Header>
             <p>{this.props.user.description}</p>
             <Divider />
+            <h4>Music</h4>
             
-            <br/>
-            <h3>Genres:</h3>
-            <ul>
-              {this.state.genres.map(g => {
-                return <li>{g}</li>
-              })}
-            </ul>
-            
-            <Divider />
-            
-            <h3>Instruments:</h3>
-            <ul>
-              {this.state.instruments.map(i => {
-                return <li>{i}</li>
-              })}
-            </ul>
-
             <Tab menu={{ secondary: true, pointing: true }} panes={[
             { menuItem: 'SoundCloud', render: () => 
               <Tab.Pane>

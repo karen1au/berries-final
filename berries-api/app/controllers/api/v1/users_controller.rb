@@ -29,9 +29,9 @@ module Api::V1
       @users = @users.where.not(id:params[:user])
       @users = @users.where(commitment: params[:currentCommitment]) if params[:currentCommitment].present?
       @users = @users.where(band: params[:currentBand]) if params[:currentBand].present?
-      @users = @users.joins(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
-      @users = @users.joins(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
-      @users = @users.joins(:user_exps).where('user_exps.years' => params[:currentExperience]) if params[:currentExperience].present?
+      @users = @users.includes(user_exps: :instrument).where('instruments.name' => params[:currentInstrument]) if params[:currentInstrument].present?
+      @users = @users.includes(user_genres: :genre).where('genres.name' => params[:currentGenre]) if params[:currentGenre].present?
+      @users = @users.includes(:user_exps).where('user_exps.years' => params[:currentExperience]) if params[:currentExperience].present?
       puts 'search users: ', @users
       render json: @users
     end
