@@ -15,21 +15,20 @@ class ProfileEdit extends Component{
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`)
     .then(res => res.json())
     .then(user => {
-      console.log(user);
       this.setState({ user })
     })
   }
 
   toggleStatus = (e, { value }) => {
-    this.setState({ user: {...this.state.user, band: value}}, () => console.log(this.state))
+    this.setState({ user: {...this.state.user, band: value}})
   }
 
   onChange = (e, { name, value }) => {
-    this.setState({ user: {...this.state.user, [name]: value }}, () => console.log('STATE', this.state))
+    this.setState({ user: {...this.state.user, [name]: value }})
   }
 
   onGenreChange = (e, { name, value }) => {
-    this.setState({[name]: value }, () => console.log('STATE', this.state))
+    this.setState({[name]: value })
   }
 
   addInstrument = (name, years) => {
@@ -53,15 +52,11 @@ class ProfileEdit extends Component{
       },
       body: JSON.stringify({ user: this.state.user, genre: this.state.genre, instrument: this.state.instrument })
     }
-    console.log('options body', options.body)
-    console.log(this.props.current_user)
     fetch(`http://localhost:3000/api/v1/users/${this.props.current_user}`, options)
-    .then(this.setState({modal: true}), () => console.log(this.state))
+    .then(this.setState({modal: true}))
   }
 
   render(){
-    
-    console.log(this.state);
 
     const commitmentOptions = [
       { key: 'c', text: 'Casual Jam', value: 'causal jam' },
@@ -91,7 +86,6 @@ class ProfileEdit extends Component{
     return(
       <Container >  
         <h2 style={{ color: "#4F072C"}}>Update Your Berries Profile</h2>        
-        {/* {this.state.errors && <Message negative>{this.state.errorMessage}</Message>} */}
         <Form >
           <Segment className="profile">
             <h3 style={{ color: "#4F072C"}}>Personal Information</h3>
@@ -147,7 +141,6 @@ class ProfileEdit extends Component{
             </Modal.Content>
           </Modal> 
         </Form>
-        {/* {this.state.redirect && <Redirect to={"/"} />} */}
       </Container>
     )
   }

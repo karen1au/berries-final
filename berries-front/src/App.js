@@ -9,8 +9,6 @@ import ProfileEdit from './components/ProfileEdit'
 import Nav from './components/Nav'
 import Auth from './services/Auth'
 import ChatsList from  './components/ChatsList'
-import { timingSafeEqual } from 'crypto';
-import UserContainer from  './components/UserContainer'
 import { createHashHistory } from 'history'
 
 class App extends Component {
@@ -47,7 +45,6 @@ class App extends Component {
       this.setState({
         users: users,
       }, (() => {
-        console.log("users:", this.state.users)
         if (this.state.current_user) {
           this.loadNotifications();
         }
@@ -61,10 +58,7 @@ class App extends Component {
       Object.keys(chats).map( chatID => {
         chatKey[chatID] = false
       })
-      this.setState({ ...this.state, chats: chats, chatKey }
-        ,(() => {
-        console.log("all chats", this.state)
-      }))
+      this.setState({ ...this.state, chats: chats, chatKey })
     })
   }
 
@@ -75,7 +69,6 @@ class App extends Component {
         this.setState({
           notifications: notis
         })
-        // console.log("Component did mount user_id:", Auth.getCookie())
       })
   }
 
@@ -88,33 +81,23 @@ class App extends Component {
     Object.keys(chats).map( chatID => {
       chatKey[chatID] = false
     })
-    this.setState({ ...this.state, chats: chats, chatKey }
-      ,(() => {
-      console.log("all chats", this.state)
-    }))
+    this.setState({ ...this.state, chats: chats, chatKey })
   })
 }
 
 
-  
   //action cable
   handleReceivedChats = res => {
     this.setState({ chats: [...this.state.chats, res] })
   };
 
   handleReceivedMessage = res => {
-    console.log('message response: ', res);
-    console.log('message chatid: ', res[0][4]);
-    console.log('actual chatid: ', this.state.activeChat);
     if (res[0][4] == this.state.activeChat){
       let newMsg = this.state.messages
       newMsg.push(res[0])
       this.setState({messages: newMsg})
     } else {
-
-      // if (this.state.activeChat !== res[0][4]){
-        this.setState({ ...this.state, chatKey: { [res[0][4]]: true}}, () => console.log("received msg state",this.state))
-    
+      this.setState({ ...this.state, chatKey: { [res[0][4]]: true}})
     }
   }
 
@@ -125,9 +108,7 @@ class App extends Component {
     .then(res => res.json())  
     .then(msg => {
       this.setState({messages: msg, chatKey: {chatID: false}})
-      console.log(this.state.messages)
       this.getFriendList(this.state.activeChat, this.state.current_user)
-      // console.log("this is messages",this.state.messages)
       })
     }))
   }
@@ -160,7 +141,6 @@ class App extends Component {
       }
     }
     fullURL = fullURL.replace(/ /g, '%20')
-    console.log(fullURL)
     return fullURL;
   }
 
@@ -169,9 +149,7 @@ class App extends Component {
     .then(res => res.json())
     .then(user => {
       this.setState({
-        users: user,
-      }, () => {
-        console.log(this.state)
+        users: user
       })
     })
   }
@@ -193,20 +171,17 @@ class App extends Component {
     .then( res => {
       Auth.authenticateToken(res.token);
       Auth.setCookie(res.user_id);
-      // console.log(res)
       this.setState({
         auth: Auth.isUserAuthenticated(),
         current_user: Auth.getCookie(),
         signup: true
       })
-      // console.log(this.state)
     })
     .catch(err => console.log(err))
   }
 
   handleLogInSubmit = (e, data) => {
     e.preventDefault();
-    // console.log("LOGIN", data)
     const options = {
       method: 'post',
       headers: {
@@ -253,8 +228,6 @@ class App extends Component {
     console.log('user id:', name);
     this.setState({
       user: name
-    }, () => {
-      console.log(this.state.user)
     })
   }
 
@@ -285,11 +258,9 @@ class App extends Component {
     }
     fetch(`http://localhost:3000/api/v1/relationships`, options)
     .then(()=>{
-      console.log(`clicked accept, user1:, ${this.state.current_user},user2: ${senderID}` )
       this.loadNotifications();
       })
     .then(() => { this.postNotification(this.state.current_user, senderID)})
-        // .then( res => console.log('initial notification posted'))
   }
 
   postNotification = (sender, receiver) => {
@@ -319,7 +290,6 @@ class App extends Component {
     })
   }
   handleNotifications = (res) => {
-    console.log("this is notification",res)
     this.categorizeNoti(res)
   }
 
@@ -331,7 +301,6 @@ class App extends Component {
 
   openChat = () => {
     this.setState({new_message: false})
-    console.log("clicked chat button")
   }
 
     //Chat options
@@ -355,7 +324,6 @@ class App extends Component {
     fetch(`http://localhost:3000/api/v1/chat_users?chat=${chatID}&user=${userID}`)
     .then(res => res.json())
     .then(users => {
-      console.log("received options:", users)
       this.setState({friendOptions: users})
     })
   }
@@ -381,7 +349,6 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-        
           <Route path="/" render={() => <Nav  
             handleLogOut={this.handleLogOut} 
             onAccept={this.onAccept}
@@ -394,9 +361,7 @@ class App extends Component {
             notifications={this.state.notifications}
             current_user={this.state.current_user}/>
           }/>
-          
           <Switch>
-
             <Route path="/users/:id" 
               render={() => (this.state.auth)
                 ? <ProfileEdit current_user={this.state.current_user}/> 
@@ -435,12 +400,8 @@ class App extends Component {
                 chatKey={this.state.chatKey}/>
               : <Redirect to='/'/>}/>
             <Route component={Error}/>
-
-        </Switch>
-
-
-      </div>
-
+          </Switch>
+        </div>
       </BrowserRouter>
     );  
   }

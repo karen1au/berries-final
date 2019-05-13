@@ -1,8 +1,7 @@
 import Auth from '../services/Auth'
 import React, { Component } from 'react'
 import UserContainer from './UserContainer'
-// import { ActionCable } from 'react-actioncable-provider';
-import { Button, Container, Grid, Header, Image, Popup, Card } from 'semantic-ui-react'
+import { Button, Container, Image, Popup, Card } from 'semantic-ui-react'
 
 class UsersContainer extends Component {
   constructor() {
@@ -47,7 +46,6 @@ class UsersContainer extends Component {
           <Card.Group centered stackable itemsPerRow={5}>
             {this.props.users.map(user => {
               return(
-
                 <Card color="grey" style={{margin: "2vw"}}>
                   <Image src={user.avatar} wrapped ui={false} />
                   <Card.Content>

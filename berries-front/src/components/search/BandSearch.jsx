@@ -11,27 +11,21 @@ class BandSearch extends Component {
     selectedOption: null
   }
 
-  componentDidMount() {
-    // console.log(this.props.handleSelection);
-    // console.log(this.state)
-  }
-
   handleChange = (selectedOption) => {
     this.setState({ selectedOption }, () => { this.props.handleSelection('band', selectedOption) });
-    // console.log('Option selected:', selectedOption);
   }
 
   render() {
     const { selectedOption } = this.state;
     return (
       <div className="search-item">
-      <h4>I am looking for a...</h4>
-        <Select
+        <h4>I am looking for a...</h4>
+          <Select
           value={selectedOption}
           onChange={this.handleChange}
           options={options}
           isClearable
-        />
+          />
       </div>
     )
   }
