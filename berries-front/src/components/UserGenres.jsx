@@ -9,7 +9,6 @@ class UserGenres extends Component {
     fetch(`http://localhost:3000/api/v1/genres/search/?user=${this.props.current_user}`)
     .then(res => res.json())
     .then(genre => {
-      console.log(genre)
       let map = genre.map( g => {
         return g.name;
       })
@@ -33,7 +32,6 @@ class UserGenres extends Component {
       }
 
       fetch(`http://localhost:3000/api/v1/user_genres/${this.props.current_user}?genre=${genre}`, options)
-        // .then(res => res.json())
         .then(console.log(this.state))
     });
 

@@ -1,7 +1,5 @@
 import { Button, Header, Divider, Image, Loader, Modal, Tab } from 'semantic-ui-react'
 import React, { Component } from 'react'
-// import Auth from '../services/Auth'
-// import { ActionCable } from 'react-actioncable-provider';
 
 class UserContainer extends Component {
   state = {
@@ -13,7 +11,6 @@ class UserContainer extends Component {
     fetch(`http://localhost:3000/api/v1/genres/search/?user=${this.props.user.id}`)
     .then(res => res.json())
     .then(genres => {
-      console.log(genres);
       let map = genres.map(g => {
         return g.name;
       })
@@ -24,7 +21,6 @@ class UserContainer extends Component {
     fetch(`http://localhost:3000/api/v1/instruments/search/?user=${this.props.user.id}`)
     .then(res => res.json())
     .then(instruments => {
-      console.log(instruments);
       let map = instruments.map(i => {
         return i.name;
       })
@@ -37,7 +33,6 @@ class UserContainer extends Component {
     return(
       
       <Modal size="small" trigger={<Button style={{color: "#4F072C"}}>Details</Button>}>
-
         <Modal.Header>Profile</Modal.Header>
         <Modal.Content image>
           <Image size='small' src={this.props.user.avatar} wrapped/>

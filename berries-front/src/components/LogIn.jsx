@@ -18,20 +18,19 @@ class LogIn extends Component{
     return(
       <Container>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header style={{ color: "#4F072C"}}size='huge' textAlign='center'>Welcome back!</Header>
-        <Form size='large' onSubmit={(e) => this.props.handleLogInSubmit(e, this.state)}>
-          <Segment stacked>
-          <Form.Input icon='mail' iconPosition='left' placeholder='Email' name='email' onChange={this.onChange} required/>
-          <Form.Input icon='lock' iconPosition='left' placeholder='password' type='password' name='password' onChange={this.onChange} required/>
-          <Button className="login-btn" type='submit'>Submit</Button>
-          </Segment>
-        </Form>
-        <Divider horizontal>Or</Divider>
-        <Message className="login-msg">Still fresh? <span><a href={"/"} style={{color:"#4F072C"}}>&nbsp;SignUp today</a></span></Message>
-      </Grid.Column>
-      </Grid>
-
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header style={{ color: "#4F072C"}}size='huge' textAlign='center'>Welcome back!</Header>
+            <Form size='large' onSubmit={(e) => this.props.handleLogInSubmit(e, this.state)}>
+              <Segment stacked>
+                <Form.Input icon='mail' iconPosition='left' placeholder='Email' name='email' onChange={this.onChange} required/>
+                <Form.Input icon='lock' iconPosition='left' placeholder='password' type='password' name='password' onChange={this.onChange} required/>
+                <Button className="login-btn" type='submit'>Submit</Button>
+              </Segment>
+            </Form>
+            <Divider horizontal>Or</Divider>
+            <Message className="login-msg">Still fresh? <span><a href={"/"} style={{color:"#4F072C"}}>&nbsp;SignUp today</a></span></Message>
+          </Grid.Column>
+        </Grid>
       </Container>
     )
   }

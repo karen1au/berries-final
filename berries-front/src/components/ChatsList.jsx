@@ -7,42 +7,34 @@ import Moment from 'react-moment';
 class ChatsList extends React.Component {
 
 
-  componentDidMount() {
-    // this.props.getChats()
-  }
-
-
   renderChats = (chatlist) => {
     if (chatlist){
-    const container = [];
-    const allchats = chatlist
-    const entries = Object.entries(allchats)
-    for (const [allchat, count] of entries){
-      console.log(allchat)
-      container.push(
-        <Button className={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'chatrm-off' : 'chatrm-on'} 
-          // color={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'black' : 'yellow'}
-          name={allchat} onClick={() => this.props.displayMessage(allchat)} name={allchat}>
-        {/* <h4>{allchat}</h4> */}
-        <Image.Group size='mini' circular>
-        {count.map((user)=> <Image src={user}/>)}
-        </Image.Group>
-        </Button>
-      )
-      } return container;
-    } else {
-      return <h3>No chat yet...</h3>
+      const container = [];
+      const allchats = chatlist
+      const entries = Object.entries(allchats)
+      for (const [allchat, count] of entries){
+        container.push(
+          <Button className={ (!this.props.chatKey[allchat]) || (this.props.chatKey[allchat] == this.props.activeChat) ? 'chatrm-off' : 'chatrm-on'} 
+            name={allchat} onClick={() => this.props.displayMessage(allchat)} name={allchat}>
+          <Image.Group size='mini' circular>
+            {count.map((user)=> <Image src={user}/>)}
+          </Image.Group>
+          </Button>
+        )
+        } return container;
+      } else {
+        return <h3>No chat yet...</h3>
     }
   }
 
   getOption = (list) => {
     let options = [];
     for (let i = 0; i < list.length; i++){
-        let eachUser = {
-        key: list[i].id,
-        text: list[i].name,
-        value: list[i].id,
-        image: { avatar: true, src: list[i].avatar}
+      let eachUser = {
+      key: list[i].id,
+      text: list[i].name,
+      value: list[i].id,
+      image: { avatar: true, src: list[i].avatar}
       }
      options.push(eachUser)
     } return options;
@@ -66,15 +58,6 @@ class ChatsList extends React.Component {
         </div>
         <span style={{display: "inline", marginLeft: "10px", border: "1px solid #4F072C", borderRadius: "8px", padding: "5px"}}>{msg[2]}</span>
         </div>
-      //   <Feed.Event>
-      //   <Feed.Label image={msg[5]} />
-      //   <Feed.Content>
-      //     <Feed.Meta><Moment fromNow>{msg[3]}</Moment></Feed.Meta>
-      //     <Feed.Summary>{msg[1]}</Feed.Summary>
-      //     <Feed.Extra text>{msg[2]}</Feed.Extra>
-      //   </Feed.Content>
-      // </Feed.Event>
-
       )}
        )
       }
@@ -90,41 +73,41 @@ class ChatsList extends React.Component {
           onReceived={(res) => this.props.handleReceivedMessage(res)} />
         <Grid divided textAlign='left' columns={2}>
         <Grid.Column scrolling width={4}>
-        <div style={{width: "100%", height: "550px", padding: "20px", textAlign:"center"}}>
-        <h1>Jars</h1>
-        {this.renderChats(this.props.chats)}
-        </div>
+          <div style={{width: "100%", height: "550px", padding: "20px", textAlign:"center"}}>
+            <h1>Jars</h1>
+            {this.renderChats(this.props.chats)}
+          </div>
         </Grid.Column>
         {this.props.activeChat
-         ?<Grid.Column width={12}>
+        ? <Grid.Column width={12}>
           <div className="chatrm-btn" style={{width: "100%", padding: "10px"}}>
-          <Dropdown
-            text='Add user'
-            icon='add user'
-            floating
-            labeled
-            button
-            className='icon'
-          >
-          <Dropdown.Menu>
-              <Dropdown.Header content='Berries You Connected To' />
-              {this.getOption(this.props.friendOptions).map(option => (
-                <Dropdown.Item onClick={()=> this.props.addUser(option.value)} key={option.value} {...option} />
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+            <Dropdown
+              text='Add user'
+              icon='add user'
+              floating
+              labeled
+              button
+              className='icon'
+            >
+              <Dropdown.Menu>
+                <Dropdown.Header content='Berries You Connected To' />
+                {this.getOption(this.props.friendOptions).map(option => (
+                  <Dropdown.Item onClick={()=> this.props.addUser(option.value)} key={option.value} {...option} />
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
             <Button onClick={ () => this.props.leaveChat(this.props.activeChat)}>BYE</Button>
           </div>
           <div style={{width: "100%", height: "450px", padding: "0 20px 20px 20px", overflowY: "auto"}}>
-          <Feed>
-            {show_msg}
+            <Feed>
+             {show_msg}
             </Feed>
-         <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div>
-         </div>
+            <div ref={(el)=> el && el.scrollIntoView({ behavior: "smooth" })}></div>
+          </div>
           <NewMessageForm current_user={this.props.current_user} chat={this.props.activeChat}/> 
           </Grid.Column>
         : <Grid.Column width={12}>
-          <div textAlign='center'><Header size="huge"> Pick a Jar</Header></div>
+            <div textAlign='center'><Header size="huge"> Pick a Jar</Header></div>
           </Grid.Column>}
         </Grid>
       </div>

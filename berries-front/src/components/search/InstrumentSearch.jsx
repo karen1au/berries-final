@@ -11,7 +11,6 @@ class InstrumentSearch extends Component {
     fetch('http://localhost:3000/api/v1/instruments.json')
     .then(res => res.json())
     .then(instrument => {
-      // console.log(instrument)
       const options = instrument.map(i => { 
       const map = {}
         map['value'] = i.name, map['label'] = i.name
@@ -25,7 +24,6 @@ class InstrumentSearch extends Component {
 
   handleChange = (selectedOption) => {
     this.setState({ selectedOption }, () => { this.props.handleSelection('instrument', selectedOption) });
-    // console.log(`Option selected:`, selectedOption);
   }
 
   render() {

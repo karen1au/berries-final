@@ -4,7 +4,7 @@ import BandSearch from './BandSearch'
 import CommitmentSearch from './CommitmentSearch'
 import ExperienceSearch from './ExperienceSearch'
 import InstrumentSearch from './InstrumentSearch'
-import { Segment, Container, Form } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 
 class SearchContainer extends Component {
 
@@ -21,18 +21,18 @@ class SearchContainer extends Component {
           <CommitmentSearch handleSelection={this.props.handleSelection} /> 
         </Container> 
           <br/>
-          <button 
-            style={{ 
-              "width": "10%", 
-              "display": "block", 
-              "margin": "2% auto 5% auto" 
-            }} 
-            className="home ui button" type="submit" 
-            onClick={this.props.queryResults}
-            toggle={false}
-          >
-            Search
-          </button>
+        <button 
+          style={{ 
+            "width": "10%", 
+            "display": "block", 
+            "margin": "2% auto 5% auto" 
+          }} 
+          className="home ui button" type="submit" 
+          onClick={this.props.queryResults}
+          toggle={false}
+        >
+          Search
+        </button>
       </div>
     )
   }

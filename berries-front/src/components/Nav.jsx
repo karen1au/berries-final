@@ -28,15 +28,16 @@ class Nav extends Component {
         <Grid.Row textAlign='left' key={notification[0]}>
           <div><Image size="mini" circular src={notification[4]}/><b>{notification[1]}</b> would like to Jam with you!</div>
           <div>
-          <Button icon name={notification[3]} onClick={() => this.props.onAccept(notification[3])}><Icon name='check'/></Button>
-          <Button icon name={notification[0]} onClick={() => this.props.onRefuse(notification[0])}>
-            <Icon name='close'/>
-          </Button>
+            <Button icon name={notification[3]} onClick={() => this.props.onAccept(notification[3])}><Icon name='check'/></Button>
+            <Button icon name={notification[0]} onClick={() => this.props.onRefuse(notification[0])}>
+              <Icon name='close'/>
+            </Button>
           </div>
 
-      </Grid.Row>
-      )}
-      })} else {
+        </Grid.Row>
+        )}
+      })
+    } else {
         noti_list = <span>You don't have notifications yet...</span>
       }
 
@@ -44,12 +45,12 @@ class Nav extends Component {
       (Auth.getToken()) ?
       navElement = 
         <Container id="nav">
-        <a href="/"><img src={logo} style={{height: "40px", width: "auto", marginTop:"5px", marginRight: "20px"}} alt="BERRIES" /></a>
+          <a href="/"><img src={logo} style={{height: "40px", width: "auto", marginTop:"5px", marginRight: "20px"}} alt="BERRIES" /></a>
           <Menu.Item as="a" href={"/"} style={{ color: 'white', fontSize: '125%' }} >Home</Menu.Item>
           <Menu.Item as="a" href={`/users/${this.props.current_user}`} style={{ color: 'white', fontSize: '125%' }} >Profile</Menu.Item>
           <div className="notification-group">
           <Popup trigger={<Button className={jam} onClick={this.props.openNoti}>Jam Request</Button>} on='click' >
-          {noti_list}
+            {noti_list}
           </Popup></div>
           <Button className={message} onClick={this.props.openChat} as="a" href={"/chats"}>Chat</Button>
           <Menu.Item position="right" onClick={this.props.handleLogOut} style={{ color: 'white', fontSize: '125%' }}>Logout</Menu.Item>
@@ -60,9 +61,9 @@ class Nav extends Component {
       <div>
         <ActionCable  channel={{ channel: 'NotificationsChannel', current_user: this.props.current_user}}
             onReceived={(res) => this.props.handleNotifications(res)}/>
-      <Menu id="nav" size="large">
-              {navElement}
-            </Menu>
+        <Menu id="nav" size="large">
+          {navElement}
+        </Menu>
       </div>
     )
   }

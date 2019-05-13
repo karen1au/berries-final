@@ -1,25 +1,12 @@
 import React from 'react';
-import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import { Button, Form, TextArea } from 'semantic-ui-react'
-import 'react-piano/dist/styles.css';
 
-const firstNote = MidiNumbers.fromNote('c3');
-const lastNote = MidiNumbers.fromNote('f5');
-const keyboardShortcuts = KeyboardShortcuts.create({
-  firstNote: firstNote,
-  lastNote: lastNote,
-  keyboardConfig: KeyboardShortcuts.HOME_ROW,
-})
 
 class NewMessageForm extends React.Component {
   state = {
     content: '',
     chat_id: this.props.chat
   };
-
-  // componentWillReceiveProps = nextProps => {
-  //   this.setState({ chat_id: nextProps.chat_id });
-  // };
 
   handleChange = e => {
     this.setState({ content: e.target.value, chat_id: this.props.chat });
@@ -57,34 +44,14 @@ class NewMessageForm extends React.Component {
   render = () => {
     return (
       <div className="newMessageForm" style={{margin: "2vw"}}>
-          {/* <Piano
-      noteRange={{ first: firstNote, last: lastNote }}
-      playNote={(midiNumber) => {
-        // Play a given note - see notes below
-      }}
-      stopNote={(midiNumber) => {
-        // Stop playing a given note - see notes below
-      }}
-      width={1000}
-      keyboardShortcuts={keyboardShortcuts}
-    /> */}
-      <Form onSubmit={this.handleSubmit}>
-    <TextArea placeholder='Tell us more' rows={2}
-            type="text"
-            value={this.state.content}
-            onChange={this.handleChange}/>
+
+        <Form onSubmit={this.handleSubmit}>
+        <TextArea placeholder='Tell us more' rows={2}
+              type="text"
+              value={this.state.content}
+              onChange={this.handleChange}/>
           <Button className="msg-btn" type='submit' floated='right'>Submit</Button>
-  </Form >
-        {/* <form onSubmit={this.handleSubmit}>
-          <label>New Message:</label>
-          <br />
-          <input
-            type="text"
-            value={this.state.content}
-            onChange={this.handleChange}
-          />
-          <input type="submit" />
-        </form> */}
+        </Form >
       </div>
     );
   };
